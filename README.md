@@ -104,7 +104,7 @@ Settings → Pages → Source: **GitHub Actions**. Every push to `main` runs the
 
 After editing, run `npm run build:data` and bump `VERSION` in `app/sw.js` so installed phones refresh. If the board changes the Google Doc, update `house_rules_source.txt` and the matching rows in `house_rules.csv` together.
 
-How answers use the data: Sunshine house rules always come first. A house rule that overrides a rulebook rule (bats, pitch counts, dropped third strike, batting order) hides that rulebook rule from the answer. 18U answers never use Little League rules. The Little League and Babe Ruth summaries are marked as drafts until someone checks them; the house rules are marked as the league's own.
+How answers use the data: Sunshine house rules come first when one covers the question directly. When none does, the league's fallback rulebook answers (Little League for 10U and 13U, as house rule H001 says; Babe Ruth League for 18U, H002), and the answer says so. When neither the house rules nor the rulebook summaries in the app answer it, the app says the full rulebook applies instead of showing a loosely related rule. A house rule that overrides a rulebook rule (bats, pitch counts, dropped third strike, batting order) hides that rulebook rule from the answer. 18U answers never use Little League rules. The Little League and Babe Ruth summaries are marked as drafts until someone checks them; the house rules are marked as the league's own.
 
 ### Open questions for the Sunshine Board
 

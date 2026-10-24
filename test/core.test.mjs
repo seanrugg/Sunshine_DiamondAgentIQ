@@ -131,3 +131,25 @@ test('model citations outside the given context are dropped', () => {
   assert.deepEqual(cited, [given]);
   assert.deepEqual(dropped, ['F999']);
 });
+
+test('Little League is the fallback when the house rules do not cover the question directly', () => {
+  const a = ask({ question: 'Can a courtesy runner run for my catcher?', role: 'coach', division: '13U' });
+  assert.match(a.verdict, /house rules don't cover this directly, so the Little League rules apply/);
+  assert.equal(top(a), 'F019');                              // the Little League courtesy-runner rule leads
+  assert.ok(a.rules.some((r) => r.id === 'H001'));           // the house rule that names Little League as the fallback
+  const c = ask({ question: 'Can my catcher pitch after catching 4 innings?', role: 'coach', division: '13U' });
+  assert.equal(top(c), 'F008');
+});
+
+test('a house rule still leads when it covers the question', () => {
+  const a = ask({ question: 'Can my kid wear cleats?', role: 'parent', division: '10U' });
+  assert.match(a.verdict, /^Sunshine's house rule covers this/);
+});
+
+test('questions neither rulebook in the app answers point to the full rulebook, not a loose match', () => {
+  for (const question of ['How many mound visits do I get?', 'What happens with an infield fly?', 'Can my player bunt?']) {
+    const a = ask({ question, role: 'coach', division: '13U' });
+    assert.match(a.verdict, /full Little League rulebook applies/, question);
+  }
+  assert.match(ask({ question: 'Can a courtesy runner run for my catcher?', role: 'coach', division: '18U' }).verdict, /Babe Ruth League rulebook/);
+});

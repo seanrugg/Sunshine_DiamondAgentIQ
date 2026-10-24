@@ -2,7 +2,7 @@
 // or installed phones keep the old copy.
 // The phone AI model is cached separately by WebLLM (caches named "webllm/..."):
 // this worker never deletes those, so app updates don't force a re-download.
-const VERSION = 'sunshine-v7';
+const VERSION = 'sunshine-v8';
 const ASSETS = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest', 'data/kb.json',
   'js/app.js', 'js/core/answer.js', 'js/core/pitchRest.js', 'js/core/philosophy.js', 'js/core/retrieve.js', 'js/core/providers.js',

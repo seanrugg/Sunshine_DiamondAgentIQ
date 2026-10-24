@@ -3,6 +3,7 @@
 // with checkCitations(), falling back to composeOffline on any failure.
 import { PHILOSOPHY, DISCLAIMER } from './philosophy.js';
 import { computeRest } from './pitchRest.js';
+import { STRONG_MATCH } from './retrieve.js';
 
 const JUDGMENT_WORDS = ['strike zone', 'balls and strikes', 'missed a call', 'missed the call', 'zone', 'safe', 'called', 'bad call', 'the call', 'tagged', 'balk', 'fair', 'foul', 'obstruction', 'interference', 'umpire', 'ump'];
 const RULE_WORDS = ['how many', 'allowed', 'rule', 'limit', 'legal', 'eligible', 'pitches', 'rest', 'bat', 'bats', 'innings', 'courtesy', 'cleats', 'dugout', 'mercy', 'forfeit', 'lineup', 'steal', 'slide', 'warm-up', 'warmup', 'gum', 'seeds'];
@@ -63,7 +64,17 @@ export function composeOffline(kb, input, retrieved) {
   const callType = classifyCall(input.question, retrieved);
   const div = retrieved.division;
   const book = SANCTION_LABELS[div?.base_sanction] || 'Little League / Babe Ruth';
-  const rules = [...retrieved.house_rules, ...retrieved.rule_facts].slice(0, 4);
+  // Order the sources by what actually answers the question (see retrieve.primary).
+  const relevantFacts = retrieved.rule_facts.filter((f) => f.score >= 2);
+  const related = (retrieved.related_house_rules || []).filter((h) => h.score >= STRONG_MATCH);
+  let rules;
+  if (retrieved.primary === 'house') rules = [...retrieved.house_rules, ...relevantFacts];
+  else if (retrieved.primary === 'rulebook') {
+    // The house rules themselves name the rulebook as the fallback (H001 for 10U/13U, H002 for 18U).
+    const basis = kb.house_rules.find((h) => h.topic === 'rulebook' && div && h.divisions.includes(div.id));
+    rules = [...relevantFacts.slice(0, 3), ...(basis ? [basis] : [])];
+  } else rules = [...related, ...relevantFacts.filter((f) => f.score >= STRONG_MATCH)];
+  rules = rules.slice(0, 4);
   // Judgment calls: always show how Sunshine handles questions about a call.
   if (callType === 'judgment' || callType === 'judgment_and_rule') {
     const must = ['H035', 'H034'];
@@ -88,14 +99,16 @@ export function composeOffline(kb, input, retrieved) {
     verdict = tip ? `${tip.text} ${tip.try_this}` : lesson.principle;
   } else if (callType === 'judgment') {
     verdict = "This sounds like the umpire's judgment: calls like balls and strikes or safe and out belong to the umpire. In Sunshine, only a head coach or manager may discuss a call with the umpire, preferably between innings, and taunting or arguing with umpires leads to ejection after one warning. The best move is to adjust to the call and learn from the moment.";
-  } else if (rules.length) {
-    verdict = rules[0].kind === 'house_rule'
-      ? `Sunshine's house rule covers this: ${rules[0].text}`
-      : `Sunshine's house rules don't cover this, so ${book} rules apply${div ? ` for ${div.label}` : ''}: ${rules[0].text}`;
+  } else if (retrieved.primary === 'house') {
+    verdict = `Sunshine's house rule covers this: ${rules[0].text}`;
+  } else if (retrieved.primary === 'rulebook') {
+    verdict = `Sunshine's house rules don't cover this directly, so the ${book} rules apply${div ? ` for ${div.label}` : ''}: ${rules[0].text}`;
   } else if (callType === 'coaching') {
     verdict = 'This is a coaching moment more than a rules question. Here is a way to think about it.';
   } else {
-    verdict = `I couldn't find this in the Sunshine house rules or the ${book} rules loaded in the app. Ask your coach or a board member.`;
+    verdict = `Neither the Sunshine house rules nor the ${book} rules in this app answer that directly. ` +
+      `Where the house rules are silent, the full ${book} rulebook applies${book === 'Little League' ? ' (it\'s in the Little League app)' : ''}, so check it or ask your coach or a board member.` +
+      (rules.length ? ' These rules may be related:' : '');
   }
 
   const draft = rules.some((r) => !r.verified);
@@ -130,6 +143,7 @@ export function buildPrompt(kb, input, retrieved, { compact = false } = {}) {
     pending_house_rules: compact ? [] : retrieved.pending_house_rules,
   };
   for (const h of retrieved.house_rules) ctx.push(`[${h.id}] SUNSHINE HOUSE RULE (${h.divisions.join('/')}, ${h.section}): ${h.text}`);
+  for (const h of (retrieved.related_house_rules || []).filter((x) => x.score >= STRONG_MATCH).slice(0, compact ? 0 : 2)) ctx.push(`[${h.id}] SUNSHINE HOUSE RULE, MAY NOT APPLY (${h.divisions.join('/')}, ${h.section}): ${h.text}`);
   for (const f of retrieved.rule_facts) ctx.push(`[${f.id}] ${(SANCTION_LABELS[f.sanction] || 'RULEBOOK').toUpperCase()} (ages ${f.age_min ?? '?'}-${f.age_max ?? '?'}, ${f.topic}${f.rule_ref ? ', ' + f.rule_ref : ''}): ${f.text}`);
   for (const l of retrieved.lessons) ctx.push(`[${l.id}] LESSON "${l.title}": ${l.principle} For a ${input.role}: ${l.for[input.role] || ''}`);
   for (const i of retrieved.insights) ctx.push(`[${i.id}] TIP (${i.topic}): ${i.text} Try this: ${i.try_this}`);
@@ -142,6 +156,7 @@ ${compact ? 'Be encouraging. The umpire is the authority on the field. Safety fi
 
 Rules for your answer:
 - Use ONLY the numbered context below. Sunshine house rules override the rulebook (Little League for 10U and 13U, Babe Ruth League for 18U). If the context doesn't answer the question, say so and suggest asking a coach or board member.
+- If no SUNSHINE HOUSE RULE below covers the question directly, say so and answer from the rulebook rules (Little League for 10U and 13U, Babe Ruth League for 18U): that is the league's fallback. If nothing below answers it, say the full rulebook applies and suggest checking it or asking a coach.
 - If a needed house rule is "not entered yet", say the league hasn't published it in the app yet.
 - Say whether it is the umpire's judgment, a written rule, both, or a coaching moment.
 - Speak to a ${input.role}${div ? ` in the ${div.label} division (ages ${div.age_min}-${div.age_max})` : ''}. Plain words, warm, short.
