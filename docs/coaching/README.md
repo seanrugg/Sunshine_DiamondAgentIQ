@@ -22,3 +22,8 @@ What the agents teach from, as readable pages. The data lives in `data/coaching/
 9. Keep it fun and keep them playing. More reps, more sports and more enjoyment build better players than more pressure.
 10. Everyone is human. Forgive the mistakes of others, take responsibility for your own, and believe in teammates most when they fail. Win as a team, lose as a team.
 11. Respect opponents. Today's opponents may be tomorrow's teammates; compete hard, then treat them as fellow athletes, especially after the game.
+
+
+## Sunshine additions
+
+- [Situational baserunning](baserunning.md): lessons L012-L013, situations SIT006-SIT010, tips C020-C023 (draft)

@@ -104,6 +104,7 @@ export function buildKb() {
 
   const situations = csv('data/coaching/situations.csv').map((r) => ({
     id: r.situation_id, kind: 'situation', name: r.name, topic: r.topic, bases: r.bases, outs: r.outs, count: r.count,
+    rule_fact_codes: r.rule_fact_codes.split(';').filter(Boolean),
     offense: r.offense, defense: r.defense, common_mistakes: r.common_mistakes,
     lesson_ids: r.lesson_ids.split(';').filter(Boolean), verified: bool(r.verified),
   }));

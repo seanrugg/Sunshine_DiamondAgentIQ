@@ -26,6 +26,8 @@ const SYNONYMS = {
   fence: ['parent_coaching'], sideline: ['parent_coaching'], sidelines: ['parent_coaching'], stands: ['fan_conduct'], forfeit: ['minimum_players'], slide: ['sliding'], sliding: ['sliding'], headfirst: ['sliding'],
   warmup: ['warmups'], warm: ['warmups'], pool: ['pool_players'], taunt: ['sportsmanship'], taunting: ['sportsmanship'], ejected: ['injury_ejection', 'sportsmanship'],
   distance: ['field_size'], far: ['field_size'], bases: ['field_size'], long: ['game_length'], time: ['game_length'],
+  occupy: ['two_runners_same_base'], occupied: ['two_runners_same_base'], occupying: ['two_runners_same_base'],
+  forced: ['force_play'], force: ['force_play'], flyball: ['tag_up'], retouch: ['tag_up'], tagging: ['tag_up'],
   foul: ['run_it_out'], hustle: ['run_it_out'], obstruction: ['obstruction'], interference: ['interference', 'obstruction'],
 };
 
@@ -65,10 +67,18 @@ export function unknownWords(kb, question) {
 /** Below this, a match is too loose to call it the answer (a topic hit alone scores 4+). */
 export const STRONG_MATCH = 4;
 
+const PHRASES = [
+  [/same base|two runners|both runners|2 runners/, ['two_runners_same_base']],
+  [/tag(ging)? up|fly ?ball|pop ?up/, ['tag_up']],
+  [/forced to (run|advance)|force (out|play)/, ['force_play']],
+];
+
 export function tokenize(text) {
   const words = String(text || '').toLowerCase().replace(/[^a-z0-9_\s-]/g, ' ').split(/[\s-]+/)
     .filter((w) => w && !STOP.has(w));
   const out = new Set(words);
+  const low = String(text || '').toLowerCase();
+  for (const [re, topics] of PHRASES) if (re.test(low)) topics.forEach((t) => out.add(t));
   for (const w of words) {
     if (w.endsWith('s') && w.length > 3) out.add(w.slice(0, -1));
     for (const s of SYNONYMS[w] || []) out.add(s);
@@ -122,6 +132,8 @@ export function retrieve(kb, { question, division, age, role, limit = 5 }) {
     .slice(0, limit)
     .map((x) => ({ ...x.it, score: x.s }));
 
+  // Challenger-division rules only when the question is about Challenger play.
+  const askedChallenger = /challenger|buddy|buddies|disab|special needs/i.test(String(question || ''));
   const inDivision = (h) => !div || h.divisions.includes('all') || h.divisions.includes(div.id);
   const houseRules = rank(kb.house_rules.filter((h) => h.text && inDivision(h)), (h) => [h.topic, h.section, h.keywords, h.text], 2);
   const pendingHouseRules = rank(kb.house_rules.filter((h) => !h.text && inDivision(h)), (h) => [h.topic, h.section, h.keywords, h.question]).slice(0, 2);
@@ -132,7 +144,8 @@ export function retrieve(kb, { question, division, age, role, limit = 5 }) {
   const overridden = (f) => overrides.has(f.key) || overrides.has(f.topic) ||
     (overrides.has('bat_standard') && /\bbats?\b/i.test(f.text));
   const facts = rank(
-    kb.rule_facts.filter((f) => (!div || f.sanction === div.base_sanction) && ageOverlap(f, div) && !overridden(f)),
+    kb.rule_facts.filter((f) => (!div || f.sanction === div.base_sanction) && ageOverlap(f, div) && !overridden(f) &&
+      (askedChallenger || !/challenger/i.test(`${f.division} ${f.topic}`))),
     (f) => [f.topic, f.key, f.division, f.text],
   ).slice(0, Math.max(2, limit - houseRules.length));
   const lessons = rank(kb.lessons, (l) => [l.tags.join(' '), l.title, l.principle]).slice(0, 2);
@@ -153,7 +166,9 @@ export function retrieve(kb, { question, division, age, role, limit = 5 }) {
   // isn't answered by a rule that only shares a word with it.
   const unknown = unknownWords(kb, question);
   let primary = 'none';
-  if (Math.max(bestHouse, bestFact) >= STRONG_MATCH && !unknown.length) primary = bestHouse >= bestFact ? 'house' : 'rulebook';
+  const best = Math.max(bestHouse, bestFact);
+  // An unknown word only overrules a weak match; a strong one (several topic words) still answers.
+  if (best >= STRONG_MATCH && (!unknown.length || best >= 7)) primary = bestHouse >= bestFact ? 'house' : 'rulebook';
   // "Direct" = close to the best house rule and at least as strong as the best rulebook rule.
   const direct = primary === 'house' ? houseRules.filter((h) => h.score >= bestFact && h.score >= bestHouse - 3) : [];
   const related = houseRules.filter((h) => !direct.includes(h));

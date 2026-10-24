@@ -90,6 +90,19 @@ export function composeOffline(kb, input, retrieved) {
   const teach = buildTeachable(kb, input, { callType, rules, division: div });
   const tip = teach.next_step ? { text: teach.next_step } : null;
 
+  // Strategy questions about a game situation (when to run, tag up, hold) are answered from the
+  // situation itself, with the rules it rests on, unless a rule already answers the question.
+  const sit = teach.situation;
+  const sitData = sit && kb.situations.find((x) => x.id === sit.id);
+  const BASERUNNING = ['two_runners_same_base', 'fly_ball_baserunning', 'two_out_baserunning', 'ground_ball_baserunning', 'base_coach_signals'];
+  const situationLed = !!sitData && BASERUNNING.includes(sitData.topic) && retrieved.primary !== 'house' &&
+    !(retrieved.primary === 'rulebook' && rules[0] && sitData.rule_fact_codes.includes(rules[0].id));
+  if (situationLed) {
+    const linked = kb.rule_facts.filter((f) => sitData.rule_fact_codes.includes(f.id) && (!div || f.sanction === div.base_sanction));
+    const basis = kb.house_rules.find((h) => h.topic === 'rulebook' && div && h.divisions.includes(div.id));
+    rules = [...linked, ...rules.filter((r) => r.kind === 'house_rule' && r.topic !== 'rulebook' && (r.score ?? 0) >= STRONG_MATCH), ...(linked.length && basis ? [basis] : [])].slice(0, 4);
+  }
+
   const pitch = pitchQuestion(kb, input);
   let verdict;
   if (pitch?.ok) {
@@ -97,6 +110,8 @@ export function composeOffline(kb, input, retrieved) {
       `${pitch.over_limit ? `, and ${pitch.pitches} is over the ${pitch.division} daily limit of ${pitch.daily_max}` : ''}. Use the Pitch Count tab to get the exact date they can pitch again.`;
     const rule = kb.house_rules.find((h) => h.id === pitch.house_rule?.id);
     if (rule && !rules.some((r) => r.id === rule.id)) rules.unshift(rule);
+  } else if (situationLed) {
+    verdict = `This is situational baserunning: ${sit.name.toLowerCase()}. ${sit.offense}`;
   } else if (callType === 'coaching') {
     verdict = teach.moment;
   } else if (callType === 'judgment') {
@@ -112,10 +127,11 @@ export function composeOffline(kb, input, retrieved) {
   }
 
   const draft = rules.some((r) => !r.verified);
+  const shownType = situationLed && !pitch?.ok ? 'coaching' : callType;
   return {
     mode: 'offline',
-    call_type: callType,
-    call_label: CALL_LABELS[callType],
+    call_type: shownType,
+    call_label: situationLed && !pitch?.ok ? 'Game situation' : CALL_LABELS[callType],
     verdict,
     rules: rules.map((r) => ({ id: r.id, text: r.text, ...citationOf(r, kb) })),
     pending_house_rules: retrieved.pending_house_rules.map((h) => ({ id: h.id, question: h.question })),

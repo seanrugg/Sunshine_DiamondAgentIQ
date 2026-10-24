@@ -12,6 +12,11 @@ const ROLE_LABEL = { player: 'Player', parent: 'Parent', coach: 'Coach', umpire:
 
 // Words people use -> lesson tags (data/coaching/lessons.csv `tags`).
 const TAG_WORDS = [
+  [/same base|two runners|both runners|2 runners|occup/, ['two_runners', 'baserunning', 'situational']],
+  [/tag(ging)? up|fly ?ball|pop ?up|line drive|halfway|doubled off/, ['tag_up', 'baserunning', 'situational']],
+  [/base coach|coach'?s? (sign|signal)|signals?\b|stop sign|waved|third[- ]base coach|first[- ]base coach/, ['base_coach', 'signals', 'listening']],
+  [/\b\d\s*outs?\b|\b(no|one|two|1|2) outs?\b|how many outs|run on contact/, ['outs', 'situational']],
+  [/baserunn|running the bases|when to run|hold (the|a|his|her|their) base|stay on (the|his|her) base|advance|forced|force play|picked off|ran into an out|thrown out at/, ['baserunning', 'situational', 'force']],
   [/struck out|strike ?out|strikeouts?|whiff/, ['strikeout', 'failure']],
   [/last out|ended the game|end the game|game[- ]ending/, ['last_out', 'loss', 'blame']],
   [/\berror|mistake|messed up|dropped the ball|booted/, ['error', 'mistake', 'responsibility']],
@@ -30,7 +35,7 @@ const TAG_WORDS = [
   [/opponent|other team|handshake|shake hands|taunt|trash/, ['sportsmanship', 'opponents', 'respect']],
   [/teammate|team ?mate/, ['teammates', 'team', 'encouragement']],
   [/first year|new player|never played|first season/, ['first_year', 'opportunity']],
-  [/bench|playing time|sit|innings on defense/, ['team', 'development']],
+  [/bench|playing time|\bsit\b|sits out|innings on defense/, ['team', 'development']],
 ];
 
 // House-rule and rule topics -> lesson tags, so rule answers carry a lesson too.
@@ -40,13 +45,16 @@ const TOPIC_TAGS = {
   pitch_count: ['pitch_count', 'arm_care', 'development'], warmups: ['arm_care', 'development'],
   batting_order: ['team'], playing_time: ['team', 'development'], late_player: ['team', 'responsibility'],
   injury_ejection: ['responsibility', 'conflict'], minimum_players: ['team'], pool_players: ['team', 'opportunity'],
-  dropped_third_strike: ['dropped_third_strike'], uncaught_third_strike: ['dropped_third_strike'], baserunning: ['hustle', 'learning'],
+  dropped_third_strike: ['dropped_third_strike'], uncaught_third_strike: ['dropped_third_strike'], baserunning: ['baserunning', 'situational'],
+  two_runners_same_base: ['two_runners', 'baserunning', 'situational'], force_play: ['force', 'baserunning', 'situational'], tag_up: ['tag_up', 'baserunning', 'situational'],
   sliding: ['hustle', 'learning'], run_cap: ['team'], mercy_rule: ['sportsmanship', 'respect'], judgment: ['umpire'],
   protest: ['umpire', 'conflict'], courtesy_runner: ['team'], catcher: ['arm_care', 'development'],
 };
 
 // Words -> coaching-tip topics (data/coaching/insights.csv `topic`).
 const TIP_WORDS = [
+  [/same base|two runners|both runners|2 runners|occup|baserunn|when to run|hold (the|a|his|her|their) base|tag(ging)? up|fly ?ball|line drive|forced|advance|doubled off|ran into an out|thrown out|run on contact|\b(no|one|two|1|2) outs?\b|how many outs/, ['situational_baserunning', 'baserunning_mistake', 'situational_baserunning_drill']],
+  [/base coach|signals?\b|stop sign|waved/, ['base_coach_signals', 'situational_baserunning_drill']],
   [/struck out|strike ?out|ended the game|last out/, ['failure_recovery', 'two_strike_approach', 'plate_coverage']],
   [/outside|away|reach/, ['plate_coverage']],
   [/looking|took (a|the) (pitch|strike)|called strike|strike zone/, ['strike_zone', 'two_strike_approach']],
@@ -77,13 +85,14 @@ const DEFAULT_LESSON = { judgment: 'L002', judgment_and_rule: 'L010', coaching: 
 
 /** The lesson whose tags fit best; a lesson's first two tags are what it's mainly about. Null if none fit. */
 export function pickLesson(kb, tags) {
-  let best = null;
-  let bestScore = 0;
-  for (const l of kb.lessons) {
-    const s = l.tags.reduce((sum, t, i) => sum + (tags.has(t) ? (i < 2 ? 1.5 : 1) : 0), 0);
-    if (s > bestScore) { best = l; bestScore = s; }
-  }
-  return best;
+  return scoreLessons(kb, tags)[0]?.lesson || null;
+}
+
+function scoreLessons(kb, tags) {
+  return kb.lessons
+    .map((l) => ({ lesson: l, score: l.tags.reduce((sum, t, i) => sum + (tags.has(t) ? (i < 2 ? 1.5 : 1) : 0), 0) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score);
 }
 
 // A rule question with no lesson in it still teaches: the matching point of the team's philosophy.
@@ -115,8 +124,14 @@ export function pickTips(kb, question, role, division) {
 export function pickSituation(kb, question, lesson) {
   const q = String(question || '').toLowerCase();
   let pool = [];
-  if (has(q, /dropped third|uncaught third|third strike|strike three|dropped strike/)) pool = kb.situations.filter((s) => s.topic === 'dropped_third_strike');
-  else if (has(q, /foul|fair\b/)) pool = kb.situations.filter((s) => s.topic.startsWith('fair_foul'));
+  const topic = (t) => kb.situations.filter((s) => s.topic === t);
+  if (has(q, /dropped third|uncaught third|third strike|strike three|dropped strike/)) pool = topic('dropped_third_strike');
+  else if (has(q, /same base|two runners|both runners|2 runners|occup/)) pool = topic('two_runners_same_base');
+  else if (has(q, /tag(ging)? up|fly ?ball|pop ?up|halfway|doubled off/)) pool = topic('fly_ball_baserunning');
+  else if (has(q, /\b(two|2) outs?\b.*\b(run|go|hold)|run on contact/)) pool = topic('two_out_baserunning');
+  else if (has(q, /ground ?ball|grounder|in front of|behind (him|her|me|the runner)|line drive/) && has(q, /runner|run|hold|second|2nd/)) pool = topic('ground_ball_baserunning');
+  else if (has(q, /base coach|signals?\b|stop sign|waved|rounding|rounded/)) pool = topic('base_coach_signals');
+  if (pool.length) { /* found above */ } else if (has(q, /foul|fair\b/)) pool = kb.situations.filter((s) => s.topic.startsWith('fair_foul'));
   else if (has(q, /hit by (the|a) (batted )?ball|ball hit (the|a) runner|runner (was )?hit/)) pool = kb.situations.filter((s) => s.topic === 'runner_hit_by_batted_ball');
   if (!pool.length) return null;
   // Prefer the one whose bases and outs the question mentions.
@@ -173,9 +188,15 @@ const MOMENT = {
 export function buildTeachable(kb, input, { callType, rules = [], division = null }) {
   const role = ROLES.includes(input.role) ? input.role : 'parent';
   const tags = momentTags(input.question, rules, callType);
-  const lesson = pickLesson(kb, tags) || (DEFAULT_LESSON[callType] ? kb.lessons.find((l) => l.id === DEFAULT_LESSON[callType]) : null);
+  const ranked = scoreLessons(kb, tags);
+  const situation = pickSituation(kb, input.question, ranked[0]?.lesson || null);
+  // A game situation brings its own lessons; use one of them unless the question points clearly elsewhere.
+  let lesson = ranked[0]?.lesson || null;
+  if (situation && (!lesson || (!situation.lesson_ids.includes(lesson.id) && ranked[0].score < 3))) {
+    lesson = kb.lessons.find((l) => l.id === situation.lesson_ids[0]) || lesson;
+  }
+  lesson ||= DEFAULT_LESSON[callType] ? kb.lessons.find((l) => l.id === DEFAULT_LESSON[callType]) : null;
   const tips = pickTips(kb, input.question, role, division);
-  const situation = pickSituation(kb, input.question, lesson);
   // The coach's story only when it is really about this kind of moment.
   const STORY_TAGS = ['opportunity', 'playoffs', 'confidence', 'scared_hitter', 'pitch_count', 'development'];
   const story = (situation && kb.stories.find((s) => s.situation_ids.includes(situation.id))) ||

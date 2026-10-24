@@ -132,7 +132,7 @@ function wireAsk() {
     const btn = e.submitter || $('#ask-form .primary');
     btn.disabled = true; btn.textContent = state.ai.tier === 'offline' ? 'Looking it up…' : 'Thinking…';
     try {
-      renderAnswer(await ask(input));
+      renderAnswer(await ask(input), input);
     } finally {
       btn.disabled = false; btn.textContent = 'Ask';
     }
@@ -143,11 +143,16 @@ async function ask(input) {
   return answerQuestion(state.kb, input, state.ai, state.device);
 }
 
-function renderAnswer(a) {
+function renderAnswer(a, input = {}) {
   const ct = a.call_type || 'coaching';
   const parts = [];
+  const div = state.kb.league.divisions.find((d) => d.id === a.division);
+  let forLine = div ? `Answer for ${div.label} (ages ${div.age_min}-${div.age_max})` : '';
+  if (div && Number.isFinite(input.age) && div.id !== state.division) forLine += `, from the age you entered (${input.age}), not the ${state.division} picked at the top`;
+  else if (div && Number.isFinite(input.age)) forLine += `, age ${input.age}`;
   parts.push(`<div class="card verdict">
     <span class="stamp ${esc(ct)}">${esc(a.call_label || CALL_LABELS[ct])}</span>
+    ${forLine ? `<div class="for-div">${esc(forLine)}</div>` : ''}
     <p>${esc(a.verdict)}</p>
     ${a.engine ? `<div class="cite">Written by ${esc(a.engine)} from the rules below.</div>` : ''}
     ${a.fallback_reason ? `<div class="cite">AI not available right now (${esc(a.fallback_reason)}), so this answer comes straight from the rules.</div>` : ''}

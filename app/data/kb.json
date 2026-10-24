@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-24T16:55:20.800Z",
+ "built_at": "2026-10-24T17:47:50.752Z",
  "league": {
   "_note": "League facts from the league's public page (clubs.bluesombrero.com/sunshinebaseball, 2026-10-24) and the Sunshine house rules document. Anything marked TODO needs a board member to confirm.",
   "name": "Sunshine Baseball League",
@@ -2052,6 +2052,78 @@
    "verified": false
   },
   {
+   "id": "F301",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
+   "source_id": "LL-RULEBOOK",
+   "division": "",
+   "age_min": 8,
+   "age_max": 16,
+   "topic": "two_runners_same_base",
+   "key": "lead_runner_entitled",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Rule 7.03(a)",
+   "call_type": "rule",
+   "text": "Two runners may not occupy the same base. If two runners are touching the same base while the ball is live, the base belongs to the lead (preceding) runner, and the trailing runner is out when tagged.",
+   "url": "https://www.littleleague.org/playing-rules/",
+   "verified": false
+  },
+  {
+   "id": "F302",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
+   "source_id": "LL-RULEBOOK",
+   "division": "",
+   "age_min": 8,
+   "age_max": 16,
+   "topic": "two_runners_same_base",
+   "key": "forced_lead_runner_loses_base",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Rule 7.03(b)",
+   "call_type": "rule",
+   "text": "Exception: if the lead runner was forced to advance because the batter became a runner, the base belongs to the trailing runner. The forced lead runner is out when tagged, or when a fielder holding the ball touches the base that runner was forced to.",
+   "url": "https://www.littleleague.org/playing-rules/",
+   "verified": false
+  },
+  {
+   "id": "F303",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
+   "source_id": "LL-RULEBOOK",
+   "division": "",
+   "age_min": 8,
+   "age_max": 16,
+   "topic": "force_play",
+   "key": "when_forced",
+   "value": "batter_becomes_runner_and_bases_behind_occupied",
+   "unit": "",
+   "rule_ref": "Rules 7.08(c), 7.08(e)",
+   "call_type": "rule",
+   "text": "A runner is forced to advance only when the batter becomes a runner and every base behind that runner is occupied. A forced runner can be put out by touching the next base with the ball; a runner who is not forced may stay on their base, and must be tagged to be put out when off it.",
+   "url": "https://www.littleleague.org/playing-rules/",
+   "verified": false
+  },
+  {
+   "id": "F304",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
+   "source_id": "LL-RULEBOOK",
+   "division": "",
+   "age_min": 8,
+   "age_max": 16,
+   "topic": "tag_up",
+   "key": "retouch_after_catch",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Rule 7.08(d)",
+   "call_type": "rule",
+   "text": "On a fly ball that is caught, a runner must be touching (tag up on) their base after the catch before advancing. A runner who left early can be put out if the defense tags the runner or the base before the runner gets back (an appeal).",
+   "url": "https://www.littleleague.org/playing-rules/",
+   "verified": false
+  },
+  {
    "id": "F072",
    "kind": "rulebook_fact",
    "sanction": "babe_ruth_league",
@@ -2139,6 +2211,60 @@
    "call_type": "rule",
    "text": "Babe Ruth League's guidance is to stop play and get to an enclosed building or hard-top car when lightning is seen or thunder is heard. Dugouts and bleachers aren't safe. Wait at least 30 minutes after the storm has passed before resuming.",
    "url": "https://www.baberuthleague.org/sitemedia/Lightning%20Policy.pdf",
+   "verified": false
+  },
+  {
+   "id": "F311",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-RULEBOOK",
+   "division": "",
+   "age_min": 13,
+   "age_max": 18,
+   "topic": "two_runners_same_base",
+   "key": "lead_runner_entitled",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Official Baseball Rules 5.06(a)(2)",
+   "call_type": "rule",
+   "text": "Two runners may not occupy the same base. If two runners are touching a base while the ball is live, the base belongs to the lead runner and the trailing runner is out when tagged, unless the lead runner was forced to advance; then the base belongs to the trailing runner and the forced lead runner is out when tagged or when the base they were forced to is touched with the ball.",
+   "url": "https://www.baberuthleague.org/documents/RulesBaseball.pdf",
+   "verified": false
+  },
+  {
+   "id": "F313",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-RULEBOOK",
+   "division": "",
+   "age_min": 13,
+   "age_max": 18,
+   "topic": "force_play",
+   "key": "when_forced",
+   "value": "batter_becomes_runner_and_bases_behind_occupied",
+   "unit": "",
+   "rule_ref": "Official Baseball Rules",
+   "call_type": "rule",
+   "text": "A runner is forced to advance only when the batter becomes a runner and every base behind that runner is occupied. A forced runner can be put out by touching the next base with the ball; a runner who is not forced may stay on their base.",
+   "url": "https://www.baberuthleague.org/documents/RulesBaseball.pdf",
+   "verified": false
+  },
+  {
+   "id": "F314",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-RULEBOOK",
+   "division": "",
+   "age_min": 13,
+   "age_max": 18,
+   "topic": "tag_up",
+   "key": "retouch_after_catch",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Official Baseball Rules",
+   "call_type": "rule",
+   "text": "On a caught fly ball, a runner must retouch (tag up on) their base after the catch before advancing. A runner who left early can be put out on appeal if the defense tags the runner or the base before the runner returns.",
+   "url": "https://www.baberuthleague.org/documents/RulesBaseball.pdf",
    "verified": false
   }
  ],
@@ -2297,6 +2423,11 @@
    "title": "Billy Goats GGUF coaching staff (youth coach, travel-ball parent and 4-year youth umpire)",
    "url": "https://github.com/seanrugg/diamondagentiq",
    "edition": "2026"
+  },
+  "LL-RULEBOOK": {
+   "title": "Little League Baseball Official Regulations, Playing Rules and Policies (rulebook; also in the Little League Rulebook app)",
+   "url": "https://www.littleleague.org/playing-rules/",
+   "edition": "current season"
   },
   "BRL-BAT": {
    "title": "Babe Ruth League Bat Rules",
@@ -2893,6 +3024,55 @@
     "learning"
    ],
    "verified": false
+  },
+  {
+   "id": "L012",
+   "kind": "lesson",
+   "title": "Know the situation before the pitch",
+   "principle": "Most baserunning mistakes happen before the ball is hit. Before every pitch, a runner should know how many outs there are, which bases are occupied, whether they are forced to run, and what they will do on a ground ball, a fly ball and a line drive.",
+   "life_lesson": "Thinking ahead turns panic into a plan. At school, at work and at home, the people who prepare before the moment make better decisions in it.",
+   "for": {
+    "player": "Before every pitch, check: how many outs, where are the runners, am I forced? Then decide: ground ball, go or hold; fly ball, tag up or go halfway; line drive, freeze. Then look at your base coach.",
+    "coach": "Make the pre-pitch check a habit out loud: show the outs with your fingers and ask runners 'what do you do on a ground ball?' A baserunning mistake is usually a teaching gap, not a lack of effort.",
+    "parent": "Baserunning is one of the hardest parts of the game to learn. After a mistake, ask 'how many outs were there?' instead of 'why did you run?' and let your player work it out.",
+    "umpire": "Know the outs and the force situation before every pitch too. It's what lets you get the call right when two runners end up on the same base."
+   },
+   "tags": [
+    "baserunning",
+    "situational",
+    "outs",
+    "force",
+    "tag_up",
+    "two_runners",
+    "awareness",
+    "learning",
+    "preparation"
+   ],
+   "verified": false
+  },
+  {
+   "id": "L013",
+   "kind": "lesson",
+   "title": "Eyes up: trust your base coach",
+   "principle": "A runner can't see the whole field, especially when the ball is behind them. The base coach can. Once the ball is in play, the runner's job is to run hard, find the coach early and follow the signal, even when instinct says otherwise.",
+   "life_lesson": "No one sees everything alone. Trusting a teammate who has the better view, and being someone others can trust, is how teams, families and workplaces get it right.",
+   "for": {
+    "player": "Run hard and find your coach before you reach the base, not after. Arms up means stop, a windmill means go, palms down means slide. Ball in front of you: your eyes help decide. Ball behind you: the coach decides.",
+    "coach": "Use a few big, simple signals, the same ones every time, and practise them in every baserunning drill. Get in position and signal early. If a runner misses a sign, coach it at practice, not in front of everyone.",
+    "parent": "Cheer the hustle and leave 'go' and 'stop' to the base coach. Shouting from the stands gives a runner two voices to follow and makes the decision harder.",
+    "umpire": "Base coaches may signal and shout, but they may not physically help a runner. Watch for a coach touching or holding a runner who is rounding a base."
+   },
+   "tags": [
+    "base_coach",
+    "signals",
+    "baserunning",
+    "communication",
+    "trust",
+    "teammates",
+    "situational",
+    "listening"
+   ],
+   "verified": false
   }
  ],
  "insights": [
@@ -3161,6 +3341,62 @@
    "why": "An uncertified bat can be removed from the game or penalized.",
    "try_this": "Before buying or before a tournament, find out which body governs it and look the bat up on that body's certified list.",
    "verified": false
+  },
+  {
+   "id": "C020",
+   "kind": "insight",
+   "topic": "situational_baserunning",
+   "sport": "baseball",
+   "age_min": 8,
+   "age_max": 18,
+   "audience": "player",
+   "situation": "Before each pitch as a runner",
+   "text": "Most baserunning outs come from not knowing the situation, not from being slow.",
+   "why": "When you've decided before the pitch, you react instead of think, and you don't freeze or run into an out.",
+   "try_this": "Every pitch: check the outs (look for your coach's fingers), know whether you're forced, and decide what you'll do on a ground ball, a fly ball and a line drive before the ball is hit.",
+   "verified": false
+  },
+  {
+   "id": "C021",
+   "kind": "insight",
+   "topic": "base_coach_signals",
+   "sport": "baseball",
+   "age_min": 8,
+   "age_max": 18,
+   "audience": "coach",
+   "situation": "Coaching first or third base",
+   "text": "Runners follow what they can see: a few big, consistent signals work better than words.",
+   "why": "Crowd noise and a runner's own breathing drown out voices; arms don't get lost.",
+   "try_this": "Pick three signals (both arms up = stop, windmill = go, palms down = slide) and use them in every baserunning drill so they're automatic by game day.",
+   "verified": false
+  },
+  {
+   "id": "C022",
+   "kind": "insight",
+   "topic": "baserunning_mistake",
+   "sport": "baseball",
+   "age_min": 6,
+   "age_max": 18,
+   "audience": "parent",
+   "situation": "After a baserunning mistake",
+   "text": "A baserunning mistake usually means the situation was confusing, not that the player wasn't trying.",
+   "why": "Shame makes players hesitate on the bases; questions help them learn to read the situation.",
+   "try_this": "On the ride home, ask two questions: how many outs were there, and what did the coach signal? Let your player work out the right play.",
+   "verified": false
+  },
+  {
+   "id": "C023",
+   "kind": "insight",
+   "topic": "situational_baserunning_drill",
+   "sport": "baseball",
+   "age_min": 8,
+   "age_max": 18,
+   "audience": "coach",
+   "situation": "Teaching situational baserunning at practice",
+   "text": "Baserunning sense is learned in game-like reps, not explained once.",
+   "why": "Players have to see ground balls, fly balls and line drives with runners on to recognize them in a game.",
+   "try_this": "Situation drill: put runners on base, call out the outs, and hit fungoes (ground ball, fly ball, line drive). Runners react while base coaches signal; after each rep, ask the runner why they ran or held.",
+   "verified": false
   }
  ],
  "situations": [
@@ -3172,6 +3408,13 @@
    "bases": "loaded",
    "outs": "2",
    "count": "two strikes",
+   "rule_fact_codes": [
+    "F034",
+    "F054",
+    "F148",
+    "F217",
+    "F021"
+   ],
    "offense": "The batter can run because there are two outs, even though first base is occupied. Everyone runs: every runner is forced to move up. Batter: drop the bat and sprint to first right away.",
    "defense": "Every base is a force. The simplest out is often for the catcher to pick up the ball and step on home plate, or throw to first. Don't rush into a wild throw: one clean force ends the inning.",
    "common_mistakes": "Batter walks back to the dugout thinking it's over; runners stop; catcher tags the batter late or throws wildly instead of taking the sure force at home.",
@@ -3189,6 +3432,13 @@
    "bases": "first",
    "outs": "1",
    "count": "two strikes",
+   "rule_fact_codes": [
+    "F034",
+    "F054",
+    "F148",
+    "F217",
+    "F021"
+   ],
    "offense": "With first base occupied and fewer than two outs, the batter is out and can't run, whether or not the catcher holds the pitch. The runner on first is NOT forced; he may try to advance at his own risk.",
    "defense": "The batter is already out. Don't throw to first; watch the runner. Keep the ball in front, call 'batter's out' loudly so the infield knows, and only throw if the runner is trying to advance.",
    "common_mistakes": "Defense throws to first for a batter who is already out and lets the runner take extra bases; batter runs when he can't and draws a throw that helps no one.",
@@ -3205,6 +3455,13 @@
    "bases": "third",
    "outs": "1",
    "count": "two strikes",
+   "rule_fact_codes": [
+    "F034",
+    "F054",
+    "F148",
+    "F217",
+    "F021"
+   ],
    "offense": "First base is open, so the batter can run: sprint to first the moment the ball gets away. The runner on third watches the catcher: if the catcher throws to first, that's often the chance to break for home.",
    "defense": "Tag the batter if he's close, or throw to first. Before throwing, check the runner on third; the corner infielders should call it out. A rushed throw can give away the winning run.",
    "common_mistakes": "Batter doesn't run because he thinks strike three ends it; runner on third doesn't read the throw; catcher throws to first without looking the runner back.",
@@ -3222,6 +3479,10 @@
    "bases": "loaded",
    "outs": "0",
    "count": "",
+   "rule_fact_codes": [
+    "F095",
+    "F206"
+   ],
    "offense": "One out, and the inning isn't over. A runner hit by a fair batted ball that no fielder has touched is out, and the ball is dead at that moment, even if it later rolls foul. Nothing after the dead ball counts. The batter is awarded first base and only forced runners move up one base, so with the bases loaded: the batter goes to first, the runner from first to second, the runner from second to third, and no run scores. Coaches: when you hear 'dead ball', stop calling for runners to go and let the umpires place them.",
    "defense": "Once the umpire calls dead ball, tags and throws don't count, however good they were: hold the ball and let the umpires place the runners. The key judgment is whether a fielder touched the ball before it hit the runner. If she did, the ball stays live and the runner isn't out unless she interfered on purpose, so the tags that followed would count.",
    "common_mistakes": "The umpire calls the runner out but doesn't kill the play loudly, so everyone keeps playing; a second umpire calls more outs on a ball that was already dead; coaches yell players into extra running and tagging; the crew changes a call because of the noise instead of getting together. Fix: 'Time! Dead ball!' with both arms up, a quick crew conference, then one calm explanation to each coach.",
@@ -3239,12 +3500,119 @@
    "bases": "none",
    "outs": "",
    "count": "",
+   "rule_fact_codes": [
+    "F015",
+    "F087",
+    "F199",
+    "F032"
+   ],
    "offense": "It's a fair ball, so the batter is a runner and the out at first stands. A ground ball that hasn't reached first or third base isn't foul just because it crossed the line: it's judged where it stops or where a fielder first touches it. This one rolled foul, came back, and was picked up in fair territory, so it was fair and in play. Umpires usually signal a fair ball by pointing toward fair territory without saying anything; only foul is called out loud. Batter: run on every ball you hit until you hear 'Foul!' or 'Time!'",
    "defense": "Pick the ball up and make the play: step on first or throw there. A slow roller near the line that's still rolling can be left alone; if it stops or you touch it in foul territory before it reaches the base, it's foul. Fielders, like batters, play until the umpire stops it.",
    "common_mistakes": "The batter stands at the plate because the ball crossed the line once; the fielder picks it up and freezes; the umpire's fair signal is late or small, so nobody sees it; coaches on both sides shout directions and the players try to learn the rule in the middle of the play. Fix: the plate umpire points fair clearly the moment the ball is touched in fair territory, and coaches teach 'run until you hear foul' at practice, not during the play.",
    "lesson_ids": [
     "L011",
     "L002"
+   ],
+   "verified": false
+  },
+  {
+   "id": "SIT006",
+   "kind": "situation",
+   "name": "Two runners on the same base",
+   "topic": "two_runners_same_base",
+   "bases": "two runners on one base",
+   "outs": "any",
+   "count": "",
+   "rule_fact_codes": [
+    "F301",
+    "F302",
+    "F311"
+   ],
+   "offense": "Both runners stay on the base until the umpire rules; never step off thinking you're out. The base belongs to the lead runner unless the lead runner was forced to advance; then it belongs to the trailing runner. The runner who isn't entitled to the base looks to the coach: go back to the base they came from if it's open and they can make it.",
+   "defense": "Tag both runners while they're on the base. The umpire calls out the one who wasn't entitled to it, so tagging both removes the guesswork. Then look for the next play.",
+   "common_mistakes": "A runner walks off the base thinking the play is over and gets tagged; the fielder tags only one runner, the wrong one; the trailing runner freezes between bases instead of checking the coach.",
+   "lesson_ids": [
+    "L012",
+    "L013"
+   ],
+   "verified": false
+  },
+  {
+   "id": "SIT007",
+   "kind": "situation",
+   "name": "Fly ball with fewer than two outs",
+   "topic": "fly_ball_baserunning",
+   "bases": "any",
+   "outs": "0 or 1",
+   "count": "",
+   "rule_fact_codes": [
+    "F304",
+    "F314"
+   ],
+   "offense": "On a deep fly ball, go back and tag up: leave only after the catch, on the coach's call. On a shallow fly, go halfway, or as far as you can and still get back, so you can advance if it drops or return if it's caught. Never run on contact with fewer than two outs on a ball in the air.",
+   "defense": "Catch it, then throw ahead of the lead runner to the base they're heading for, through the cut-off. If a runner left before the catch, appeal by throwing to that base before the runner gets back.",
+   "common_mistakes": "Running on contact with fewer than two outs and getting doubled off; leaving the base before the catch; tagging up on a shallow fly and getting thrown out.",
+   "lesson_ids": [
+    "L012",
+    "L013"
+   ],
+   "verified": false
+  },
+  {
+   "id": "SIT008",
+   "kind": "situation",
+   "name": "Two outs: run on contact",
+   "topic": "two_out_baserunning",
+   "bases": "any",
+   "outs": "2",
+   "count": "",
+   "rule_fact_codes": [
+    "F303",
+    "F313"
+   ],
+   "offense": "With two outs, every runner runs on any batted ball. If the ball is caught the inning is over anyway, so there's nothing to protect; if it drops or gets through, runs score. Run hard and find the base coach.",
+   "defense": "Take the sure out. With two outs, get the force at the closest base or the out at first; don't chase the lead runner.",
+   "common_mistakes": "Runners waiting on a fly ball with two outs; fielders trying for a harder play instead of the easy force that ends the inning.",
+   "lesson_ids": [
+    "L012"
+   ],
+   "verified": false
+  },
+  {
+   "id": "SIT009",
+   "kind": "situation",
+   "name": "Runner on second, ground ball, fewer than two outs",
+   "topic": "ground_ball_baserunning",
+   "bases": "second",
+   "outs": "0 or 1",
+   "count": "",
+   "rule_fact_codes": [
+    "F303",
+    "F313"
+   ],
+   "offense": "Ball hit in front of you (to the shortstop or third baseman): hold, unless you're forced. Ball hit behind you (to the right side): go to third. If first base is also occupied you're forced, so run. Line drive: freeze until it goes through.",
+   "defense": "Look the runner back before throwing to first. If the runner breaks for third on a ball hit in front of them, throw to third.",
+   "common_mistakes": "Running into an out on a ball hit to the left side; forgetting you're forced when first base is occupied; breaking on a line drive and getting doubled off.",
+   "lesson_ids": [
+    "L012"
+   ],
+   "verified": false
+  },
+  {
+   "id": "SIT010",
+   "kind": "situation",
+   "name": "Rounding a base: find the base coach",
+   "topic": "base_coach_signals",
+   "bases": "any",
+   "outs": "any",
+   "count": "",
+   "rule_fact_codes": [],
+   "offense": "Pick up the base coach before you reach the base. Round it hard only when the coach waves you on; stop and get back on a stop sign. When the ball is behind you, the coach makes the call; at third base the third-base coach decides whether you score.",
+   "defense": "Throw behind a runner who rounds too far, and hit the cut-off so trailing runners can't take an extra base.",
+   "common_mistakes": "Running with your head down and missing the stop sign; watching the ball instead of the coach when it's behind you; slowing down before the coach gives a sign.",
+   "lesson_ids": [
+    "L013",
+    "L012"
    ],
    "verified": false
   }
