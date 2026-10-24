@@ -118,8 +118,17 @@ export function composeOffline(kb, input, retrieved) {
 }
 
 /** Messages for an OpenAI-compatible chat model. The model may cite only ids given here. */
-export function buildPrompt(kb, input, retrieved) {
+export function buildPrompt(kb, input, retrieved, { compact = false } = {}) {
   const ctx = [];
+  const n = compact ? 3 : 99;
+  retrieved = {
+    ...retrieved,
+    house_rules: retrieved.house_rules.slice(0, n),
+    rule_facts: retrieved.rule_facts.slice(0, compact ? Math.max(0, 3 - retrieved.house_rules.length) : 99),
+    lessons: retrieved.lessons.slice(0, compact ? 1 : 99),
+    insights: retrieved.insights.slice(0, compact ? 1 : 99),
+    pending_house_rules: compact ? [] : retrieved.pending_house_rules,
+  };
   for (const h of retrieved.house_rules) ctx.push(`[${h.id}] SUNSHINE HOUSE RULE (${h.divisions.join('/')}, ${h.section}): ${h.text}`);
   for (const f of retrieved.rule_facts) ctx.push(`[${f.id}] ${(SANCTION_LABELS[f.sanction] || 'RULEBOOK').toUpperCase()} (ages ${f.age_min ?? '?'}-${f.age_max ?? '?'}, ${f.topic}${f.rule_ref ? ', ' + f.rule_ref : ''}): ${f.text}`);
   for (const l of retrieved.lessons) ctx.push(`[${l.id}] LESSON "${l.title}": ${l.principle} For a ${input.role}: ${l.for[input.role] || ''}`);
@@ -129,7 +138,7 @@ export function buildPrompt(kb, input, retrieved) {
   const div = retrieved.division;
   const system = `You are Sunshine DiamondAgentIQ, the learning companion for the ${kb.league.name} (${kb.league.ballpark.address}).
 League mission: ${kb.league.mission}
-${PHILOSOPHY}
+${compact ? 'Be encouraging. The umpire is the authority on the field. Safety first. Win and lose as a team.' : PHILOSOPHY}
 
 Rules for your answer:
 - Use ONLY the numbered context below. Sunshine house rules override the rulebook (Little League for 10U and 13U, Babe Ruth League for 18U). If the context doesn't answer the question, say so and suggest asking a coach or board member.
@@ -154,4 +163,48 @@ export function checkCitations(modelJson, retrieved) {
   const cited = (modelJson.cited_ids || []).filter((id) => allowed.has(id));
   const dropped = (modelJson.cited_ids || []).filter((id) => !allowed.has(id));
   return { cited, dropped };
+}
+
+/** Pull the JSON object out of a model reply (models sometimes wrap it in prose or code fences). */
+export function parseModelJson(text) {
+  const m = String(text || '').match(/\{[\s\S]*\}/);
+  if (!m) throw new Error('The AI did not return an answer in the expected format.');
+  const out = JSON.parse(m[0]);
+  if (!out.verdict || typeof out.verdict !== 'string') throw new Error('The AI answer was missing its main point.');
+  return out;
+}
+
+/**
+ * Combine a model's reply with the offline answer. The offline answer supplies
+ * the rules, sources and safety notes; the model only rewrites the wording.
+ * Sources are limited to what the model was given (checkCitations).
+ */
+export function mergeModelAnswer(kb, offline, out, retrieved, { mode, engine }) {
+  const { cited, dropped } = checkCitations(out, retrieved);
+  const callType = CALL_LABELS[out.call_type] ? out.call_type : offline.call_type;
+  const given = [...retrieved.house_rules, ...retrieved.rule_facts];
+  const rules = cited.length
+    ? [
+      ...offline.rules.filter((r) => cited.includes(r.id)),
+      ...given.filter((x) => cited.includes(x.id) && !offline.rules.some((r) => r.id === x.id)).map((x) => ({ text: x.text, ...citationOf(x, kb) })),
+      ...offline.rules.filter((r) => !cited.includes(r.id)), // keep the rest, after the cited ones
+    ]
+    : offline.rules;
+  return {
+    ...offline,
+    mode,
+    engine,
+    call_type: callType,
+    call_label: CALL_LABELS[callType],
+    verdict: String(out.verdict).slice(0, 1200),
+    for_role: out.for_role ? { label: offline.for_role?.label || 'For you', text: String(out.for_role).slice(0, 600) } : offline.for_role,
+    lesson: out.life_lesson ? { id: offline.lesson?.id || null, title: '', life_lesson: String(out.life_lesson).slice(0, 400) } : offline.lesson,
+    rules,
+    dropped_citations: dropped,
+  };
+}
+
+/** True when the question should be answered by code alone (pitch math never goes to a model). */
+export function codeOnly(offline) {
+  return !!offline.pitch_rest?.ok;
 }

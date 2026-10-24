@@ -1,8 +1,9 @@
-// Sunshine DiamondAgentIQ — phone-first app. Works fully offline from
-// data/kb.json; if a server is reachable (same origin, or ?api=https://…),
-// questions go to it for a model-written answer.
-import { retrieve } from './core/retrieve.js';
-import { composeOffline, citationOf, CALL_LABELS, SANCTION_LABELS } from './core/answer.js';
+// Sunshine DiamondAgentIQ — phone-first app. Always works offline from
+// data/kb.json. Answers can optionally be written by an AI model on the
+// phone, the user's own AI provider, or the league server (see ai/engines.js).
+import { citationOf, CALL_LABELS, SANCTION_LABELS } from './core/answer.js';
+import { answerQuestion, loadSettings, saveSettings, detectDevice, isDownloaded, pickBuild, startDeviceModel, TIERS } from './ai/engines.js';
+import { initAiPanel, openAiPanel } from './ai/panel.js';
 import { computeRest } from './core/pitchRest.js';
 import { DISCLAIMER } from './core/philosophy.js';
 
@@ -13,7 +14,7 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode */ } },
 };
 
-const state = { kb: null, role: store.get('role', 'parent'), division: store.get('division', '10U'), api: null };
+const state = { kb: null, role: store.get('role', 'parent'), division: store.get('division', '10U'), ai: loadSettings(), device: null };
 
 const EXAMPLES = {
   parent: ['My son struck out looking to end the game. How do I help him?', 'Can I tell the umpire he missed a call?', 'What bat should I buy for my 9 year old?', 'Can my kid wear cleats at Sunshine Ballpark?'],
@@ -36,27 +37,64 @@ async function boot() {
   renderLessons();
   renderLeague();
   $('#p-date').value = new Date().toISOString().slice(0, 10);
-  detectServer();
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    // When a new version of the app installs, reload once so the phone runs it.
+    const hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController) location.reload(); });
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+  await setupAi();
 }
 
-async function detectServer() {
-  const param = new URLSearchParams(location.search).get('api');
-  if (param) store.set('api', param);
-  const candidates = [store.get('api', ''), ''].filter((v, i, a) => a.indexOf(v) === i);
-  for (const base of candidates) {
-    try {
-      const r = await fetch(`${base}/api/health`, { signal: AbortSignal.timeout(2500) });
-      if (r.ok) {
-        const h = await r.json();
-        state.api = base;
-        $('#mode-pill').textContent = h.llm ? 'live' : 'server';
-        $('#mode-pill').classList.toggle('live', !!h.llm);
-        return;
-      }
-    } catch { /* offline or no server */ }
+// ---------- answer engine ----------
+async function setupAi() {
+  const param = new URLSearchParams(location.search).get('api'); // ?api=https://league-server links set the league server
+  if (param) { state.ai.server.url = param; state.ai.tier = 'server'; state.ai.chosen = true; }
+  state.device = await detectDevice();
+  initAiPanel({
+    getSettings: () => state.ai,
+    onSaved: (s) => { state.ai = s; renderModePill(); renderSetupCard(); },
+    device: state.device,
+  });
+  $('#mode-pill').addEventListener('click', () => openAiPanel());
+  document.querySelectorAll('[data-open-ai]').forEach((b) => b.addEventListener('click', () => openAiPanel(b.dataset.openAi || undefined)));
+  renderModePill();
+  renderSetupCard();
+  // Warm up the phone model in the background so the first question is quick.
+  if (state.ai.tier === 'device') {
+    const build = pickBuild(state.ai.device.model, state.device);
+    if (build && await isDownloaded(build.modelId)) startDeviceModel(build.modelId).catch(() => {});
   }
-  $('#mode-pill').textContent = 'offline';
+}
+
+function renderModePill() {
+  const pill = $('#mode-pill');
+  pill.textContent = TIERS[state.ai.tier]?.short || 'Offline';
+  pill.classList.toggle('live', state.ai.tier !== 'offline');
+}
+
+function renderSetupCard() {
+  const card = $('#setup-card');
+  if (state.ai.chosen) { card.hidden = true; return; }
+  card.hidden = false;
+  const canRun = state.device?.recommended === 'device';
+  card.innerHTML = `<h3>Set up answers on this phone</h3>
+    <p>${canRun
+      ? 'This phone can run a small AI model itself. Download it once (about 0.7 GB, Wi-Fi recommended) and answers stay private and work without internet.'
+      : esc(state.device?.reason || 'This phone works best with offline answers.')}</p>
+    <div class="row">
+      ${canRun ? '<button type="button" class="primary small-btn" data-pick="device">Get phone AI</button>' : ''}
+      <button type="button" class="ghost" data-pick="offline">${canRun ? 'Keep it simple (offline)' : 'Use offline answers'}</button>
+      <button type="button" class="ghost" data-pick="more">More options</button>
+    </div>`;
+  card.querySelectorAll('[data-pick]').forEach((b) => b.addEventListener('click', () => {
+    const pick = b.dataset.pick;
+    if (pick === 'offline') {
+      state.ai = { ...state.ai, tier: 'offline', chosen: true };
+      saveSettings(state.ai);
+      renderModePill(); renderSetupCard();
+    } else openAiPanel(pick === 'device' ? 'device' : undefined);
+  }));
 }
 
 // ---------- tabs ----------
@@ -91,7 +129,7 @@ function wireAsk() {
     const ageVal = parseInt($('#age').value, 10);
     const input = { question, role: state.role, division: Number.isFinite(ageVal) ? undefined : state.division, age: Number.isFinite(ageVal) ? ageVal : undefined };
     const btn = e.submitter || $('#ask-form .primary');
-    btn.disabled = true; btn.textContent = 'Thinking…';
+    btn.disabled = true; btn.textContent = state.ai.tier === 'offline' ? 'Looking it up…' : 'Thinking…';
     try {
       renderAnswer(await ask(input));
     } finally {
@@ -101,15 +139,7 @@ function wireAsk() {
 }
 
 async function ask(input) {
-  if (state.api !== null) {
-    try {
-      const r = await fetch(`${state.api}/api/ask`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input), signal: AbortSignal.timeout(45000),
-      });
-      if (r.ok) return await r.json();
-    } catch { /* fall through to offline */ }
-  }
-  return composeOffline(state.kb, input, retrieve(state.kb, input));
+  return answerQuestion(state.kb, input, state.ai, state.device);
 }
 
 function renderAnswer(a) {
@@ -118,10 +148,11 @@ function renderAnswer(a) {
   parts.push(`<div class="card verdict">
     <span class="stamp ${esc(ct)}">${esc(a.call_label || CALL_LABELS[ct])}</span>
     <p>${esc(a.verdict)}</p>
-    ${a.mode === 'llm' ? '<div class="cite">Written by the league assistant from the rules below.</div>' : ''}
+    ${a.engine ? `<div class="cite">Written by ${esc(a.engine)} from the rules below.</div>` : ''}
+    ${a.fallback_reason ? `<div class="cite">AI not available right now (${esc(a.fallback_reason)}), so this answer comes straight from the rules.</div>` : ''}
   </div>`);
   if (a.for_role?.text) parts.push(`<div class="card"><h3>${esc(a.for_role.label)}</h3><p>${esc(a.for_role.text)}</p></div>`);
-  if (a.lesson) parts.push(`<div class="card"><h3>Beyond the diamond: ${esc(a.lesson.title)}</h3><p>${esc(a.lesson.life_lesson)}</p></div>`);
+  if (a.lesson) parts.push(`<div class="card"><h3>Beyond the diamond${a.lesson.title ? `: ${esc(a.lesson.title)}` : ''}</h3><p>${esc(a.lesson.life_lesson)}</p></div>`);
   if (a.tip) parts.push(`<div class="card"><h3>Try this</h3><p>${esc(a.tip.try_this || a.tip.text)}</p></div>`);
   if (a.rules?.length) {
     parts.push(`<details class="card" ${ct === 'coaching' ? '' : 'open'}><summary>Where this comes from (${a.rules.length})</summary>${a.rules.map(ruleHtml).join('')}</details>`);

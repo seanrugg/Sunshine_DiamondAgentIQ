@@ -20,28 +20,45 @@ The league already pays for a website that handles registration and team formati
 
 Divisions: **10U** (ages 8-10, 46 ft mound / 60 ft bases), **13U** (11-13, 50 / 70), **18U** (14-18, Babe Ruth rules). Season June 1 to mid-August at Sunshine Ballpark, 1200 Wicklow Drive, Fredericksburg.
 
-## Two ways to run it
+## Four ways to answer
 
-The same app runs both ways; the header pill shows which (`offline`, `server`, or `live` when a model is answering).
+Every phone gets the same app. Tap the pill in the header (or the setup card on first launch) to choose how answers are written. All four start from the same Sunshine rules; AI only rewrites them in friendlier words, the rules it used are always shown, and pitch-count math never goes to AI.
 
-**1. Everything on the phone (no server, no internet after install).** The app is a static PWA. All rules and lessons ship in `app/data/kb.json`, and answers are composed on the phone from that data. Publish `app/` over HTTPS once (GitHub Pages workflow included), open it on the phone, *Add to Home Screen*, and it works in airplane mode.
+| Option | Best for | Cost | Needs internet? |
+|---|---|---|---|
+| **Offline** (default) | Every phone, especially older and low-cost ones | Free | No |
+| **AI on this phone** | Newer phones with WebGPU (recent iPhone Safari, Android Chrome) | Free | Only for the one-time download |
+| **My AI provider** | Anyone with a Google AI Studio, OpenRouter or other key, or Ollama on a laptop | The user's own plan | Yes |
+| **League server** | If the league hosts a model (`server/server.mjs`) | League pays | Yes |
 
-**2. Phone + VPS (model-written answers).** `server/server.mjs` serves the same app and adds `POST /api/ask`, which sends only the retrieved rules to any OpenAI-compatible model (Ollama on the VPS, or a hosted API). The model may cite only rules it was given; anything else is dropped. Pitch math never goes to the model. If the model fails, the server returns the offline answer.
+**AI on this phone.** The app checks the phone first (WebGPU, 16-bit GPU support, memory, free storage) and only offers models that fit:
+
+| Model | Download | Graphics memory |
+|---|---|---|
+| Llama 3.2 1B (recommended) | about 0.7 GB | about 0.9-1.1 GB |
+| Gemma 3 1B (smallest, needs 16-bit GPU support) | about 0.7 GB | about 0.7 GB |
+| Llama 3.2 3B (tablets and laptops) | about 1.8 GB | about 2.3-3.0 GB |
+
+It runs on [WebLLM](https://github.com/mlc-ai/web-llm) 0.2.86, vendored in `app/vendor/web-llm/` (no npm install, no CDN). The model files come from Hugging Face once and are stored in the browser with persistent storage requested; after that the model works in airplane mode and app updates don't re-download it. If the phone takes more than 90 seconds, the app falls back to the offline answer. Settings → delete removes the model.
+
+**My AI provider.** Presets for Google AI Studio, OpenRouter, Ollama and any OpenAI-compatible endpoint; *Load models* lists what the key can use (free OpenRouter models first) and *Test* checks the connection before saving. Both Google AI Studio and OpenRouter accept calls straight from the browser, so this works on GitHub Pages with no server. The key is stored only on that phone. Never put a league key in the app: anything shipped to Pages is public.
+
+**League server.** Leave the address blank when the app is served by the league server itself, or open a Pages copy once as `…/?api=https://league-server` to set it.
 
 ```
-phone ──► app (PWA, kb.json cached) ──► offline answer
-              │
-              └─(if reachable)─► VPS: server.mjs ─► retrieve ─► model ─► citation check ─► answer
+phone ─► rules lookup (code) ─► offline answer ──────────────────────────► shown
+                                   └─ optional rewrite by: phone model │ your provider │ league server
+                                      (only the retrieved rules are sent; citations checked; any failure ► offline answer)
 ```
 
 ## Quick start
 
-Node 22, no npm install needed (zero dependencies).
+Node 22, no npm install needed (zero npm dependencies; WebLLM is vendored).
 
 ```bash
 git clone https://github.com/seanrugg/Sunshine_DiamondAgentIQ && cd Sunshine_DiamondAgentIQ
 npm run build:data     # data/*.csv + league.json -> app/data/kb.json
-npm test               # 22 tests, no network
+npm test               # 35 tests, no network
 npm start              # http://localhost:8787  (offline answers)
 ```
 
@@ -101,7 +118,9 @@ Board clarifications to the house rules document (25 pitches at 18U, 13U warm-up
 app/                 the PWA (static; this folder is what Pages publishes)
   index.html  styles.css  manifest.webmanifest  sw.js
   js/app.js          UI
-  js/core/           shared by phone and server: retrieve, answer, pitchRest, philosophy
+  js/core/           shared by phone and server: retrieve, answer, pitchRest, philosophy, providers
+  js/ai/             answer options: engines.js (tiers, phone model), panel.js (settings UI), llm-worker.js
+  vendor/web-llm/    WebLLM runtime for the phone model (Apache-2.0)
   data/kb.json       generated by scripts/build-data.mjs
 server/server.mjs    optional API + static server (node:http, zero deps)
 scripts/build-data.mjs

@@ -11,7 +11,8 @@ import { readFileSync } from 'node:fs';
 import { extname, join, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { retrieve } from '../app/js/core/retrieve.js';
-import { composeOffline, buildPrompt, checkCitations, citationOf, CALL_LABELS } from '../app/js/core/answer.js';
+import { composeOffline, buildPrompt, parseModelJson, mergeModelAnswer, codeOnly } from '../app/js/core/answer.js';
+import { chatProvider } from '../app/js/core/providers.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'app');
 const PORT = Number(process.env.PORT || 8787);
@@ -57,47 +58,14 @@ function cleanInput(body) {
   return { question, role, age, division };
 }
 
-async function callModel(messages) {
-  const r = await fetch(`${LLM.baseUrl}/chat/completions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...(LLM.apiKey ? { Authorization: `Bearer ${LLM.apiKey}` } : {}) },
-    body: JSON.stringify({ model: LLM.model, messages, temperature: 0.2, response_format: { type: 'json_object' } }),
-    signal: AbortSignal.timeout(LLM.timeoutMs),
-  });
-  if (!r.ok) throw new Error(`model HTTP ${r.status}`);
-  const j = await r.json();
-  const text = j.choices?.[0]?.message?.content || '';
-  const m = text.match(/\{[\s\S]*\}/);
-  if (!m) throw new Error('model returned no JSON');
-  return JSON.parse(m[0]);
-}
-
 export async function answer(input) {
   const retrieved = retrieve(kb, input);
   const offline = composeOffline(kb, input, retrieved);
-  if (!LLM.baseUrl || offline.pitch_rest?.ok || offline.pitch_rest?.gap) return offline; // pitch math stays in code
+  if (!LLM.baseUrl || codeOnly(offline)) return offline; // pitch math stays in code
 
   try {
-    const out = await callModel(buildPrompt(kb, input, retrieved));
-    const { cited, dropped } = checkCitations(out, retrieved);
-    if (!out.verdict) throw new Error('model answer missing verdict');
-    const callType = CALL_LABELS[out.call_type] ? out.call_type : offline.call_type;
-    return {
-      ...offline,
-      mode: 'llm',
-      model: LLM.model,
-      call_type: callType,
-      call_label: CALL_LABELS[callType],
-      verdict: String(out.verdict),
-      for_role: out.for_role ? { label: offline.for_role?.label || 'For you', text: String(out.for_role) } : offline.for_role,
-      lesson: out.life_lesson && offline.lesson ? { ...offline.lesson, life_lesson: String(out.life_lesson) } : offline.lesson,
-      // Only show sources the model actually cited, from what it was given.
-      rules: cited.length ? offline.rules.filter((r) => cited.includes(r.id)).concat(
-        [...retrieved.house_rules, ...retrieved.rule_facts].filter((x) => cited.includes(x.id) && !offline.rules.some((r) => r.id === x.id))
-          .map((x) => ({ text: x.text, ...citationOf(x, kb) })),
-      ) : offline.rules,
-      dropped_citations: dropped,
-    };
+    const text = await chatProvider({ baseUrl: LLM.baseUrl, apiKey: LLM.apiKey, model: LLM.model }, buildPrompt(kb, input, retrieved), { timeoutMs: LLM.timeoutMs });
+    return mergeModelAnswer(kb, offline, parseModelJson(text), retrieved, { mode: 'server', engine: `League server · ${LLM.model}` });
   } catch (err) {
     return { ...offline, mode: 'offline', fallback_reason: String(err.message || err) };
   }

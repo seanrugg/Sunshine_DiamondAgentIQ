@@ -18,7 +18,7 @@
     <img src="icons/mark-192.png" alt="" class="mark" width="36" height="36">
     <div class="brand">
       <strong>Sunshine</strong> <span>DiamondAgentIQ</span>
-      <small id="mode-pill" class="pill">offline</small>
+      <button id="mode-pill" class="pill" type="button" aria-label="Answer settings">Offline</button>
     </div>
     <label class="div-select">
       <span class="sr">Division</span>
@@ -34,7 +34,8 @@
     <!-- ASK -->
     <section id="tab-ask" class="tab active" aria-labelledby="nav-ask">
       <h1>What happened on the field?</h1>
-      <p class="lede">Ask about a call, a rule or a tough moment. You'll get the Sunshine house rule first, the Little League rule behind it, and a lesson to take home.</p>
+      <p class="lede">Ask about a call, a rule or a tough moment. You'll get the Sunshine house rule first, the rulebook behind it, and a lesson to take home.</p>
+      <div id="setup-card" class="card setup" hidden></div>
 
       <div class="roles" role="radiogroup" aria-label="I am a">
         <button class="role on" data-role="parent">Parent</button>
@@ -104,6 +105,59 @@
     <button id="nav-learn" data-tab="learn"><span aria-hidden="true">★</span>Learn</button>
     <button id="nav-league" data-tab="league"><span aria-hidden="true">☀</span>League</button>
   </nav>
+
+  <dialog id="ai-panel" aria-labelledby="ai-title">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2 id="ai-title">How should answers work?</h2>
+        <button type="button" id="ai-close" class="ghost" aria-label="Close">✕</button>
+      </div>
+      <p class="small">Every option starts from the Sunshine rules. AI only explains them in friendlier words, and the rules it used are always shown.</p>
+
+      <label class="tier"><input type="radio" name="tier" value="offline">
+        <span><strong>Offline</strong> <em class="badge">Any phone</em><br>
+        <span class="small">No download, no account, no internet needed. Best for older or low-cost phones. Answers come straight from the league rules.</span></span></label>
+      <div class="tier-body" data-for="offline"></div>
+
+      <label class="tier"><input type="radio" name="tier" value="device">
+        <span><strong>AI on this phone</strong> <em class="badge">Free · private</em><br>
+        <span class="small">Download a small AI model once. It runs on the phone, works without internet, and nothing you ask leaves the phone.</span><br>
+        <span id="device-check" class="small"></span></span></label>
+      <div class="tier-body" data-for="device">
+        <label class="small">Model <select id="device-model"></select></label>
+        <p id="device-info" class="small"></p>
+        <button type="button" id="device-delete" class="ghost" hidden>Delete model from this phone</button>
+      </div>
+
+      <label class="tier"><input type="radio" name="tier" value="provider">
+        <span><strong>My AI provider</strong> <em class="badge">Your key</em><br>
+        <span class="small">Connect Google AI Studio, OpenRouter, Ollama or any OpenAI-compatible service with your own key.</span></span></label>
+      <div class="tier-body" data-for="provider">
+        <label class="small">Provider <select id="provider-preset"></select></label>
+        <p id="provider-hint" class="small"></p>
+        <label class="small" id="provider-url-row">Address <input id="provider-url" type="url" placeholder="https://…/v1" autocomplete="off"></label>
+        <label class="small" id="provider-key-row">API key <input id="provider-key" type="password" placeholder="Paste your key" autocomplete="off"></label>
+        <label class="small">Model <input id="provider-model" list="provider-models" placeholder="Load models or type a name" autocomplete="off"></label>
+        <datalist id="provider-models"></datalist>
+        <div class="row"><button type="button" id="provider-load" class="ghost">Load models</button><button type="button" id="provider-test" class="ghost">Test</button></div>
+        <p id="provider-status" class="status"></p>
+        <p class="small">Your key is saved only on this phone. Your questions go to the provider you picked, under their terms.</p>
+      </div>
+
+      <label class="tier"><input type="radio" name="tier" value="server">
+        <span><strong>League server</strong> <em class="badge">If the league runs one</em><br>
+        <span class="small">Answers come from an AI model the league hosts. Nothing to set up on your phone.</span></span></label>
+      <div class="tier-body" data-for="server">
+        <label class="small">Server address <input id="server-url" type="url" placeholder="https://… (leave blank if this app came from the server)" autocomplete="off"></label>
+        <div class="row"><button type="button" id="server-test" class="ghost">Test</button></div>
+        <p id="server-status" class="status"></p>
+      </div>
+
+      <progress id="device-progress" max="1" value="0" hidden></progress>
+      <p id="ai-status" class="status"></p>
+      <button type="button" id="ai-save" class="primary">Use offline</button>
+    </div>
+  </dialog>
 
   <script type="module" src="js/app.js"></script>
 </body>

@@ -10,7 +10,8 @@ Owner column is for the team whiteboard.
 | 2 | ~~Board clarifications~~ Done: see `data/league/board_clarifications.md`. | |
 | 3 | Deploy: provision the VPS, point DNS, `docker compose up -d --build`, confirm `https://<domain>/api/health`. | |
 | 4 | Deploy: turn on GitHub Pages (Actions) and install the app on two phones; test airplane mode. | |
-| 5 | Model: on the VPS, run Ollama with a small model, set `LLM_BASE_URL`, confirm the header pill says `live`. | |
+| 5 | Phones: on Pages, download the phone model on the newest phone (iPhone Safari and an Android Chrome if we have both), time a few answers, and pick the model for the demo. Try an older phone to show the Offline recommendation. | |
+| 5b | Provider: connect a Google AI Studio key on one phone (header pill → My AI provider → Load models → Test). | |
 | 6 | Demo script: 5 questions, one per role plus a pitch count (see `docs/demo-script.md`). | |
 
 ## Should have

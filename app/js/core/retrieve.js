@@ -102,6 +102,7 @@ export function retrieve(kb, { question, division, age, role, limit = 5 }) {
   const insights = rank(
     kb.insights.filter((i) => ageOverlap(i, div) && i.sport !== 'softball' && (!role || i.audience === 'all' || i.audience === role)),
     (i) => [i.topic, i.situation, i.text],
+    2,
   ).slice(0, 2);
   const situations = rank(kb.situations, (s) => [s.topic, s.name]).slice(0, 1);
 
