@@ -105,6 +105,12 @@ test('baserunning questions get the rule or the situation that fits, and the coa
   assert.equal(coach.teachable.lesson.id, 'L013');
 });
 
+test('"two runners on second" gets the Little League rule, not runner reads', () => {
+  const a = ask({ question: 'Two runners ended up on second base. Who is out?', role: 'parent', division: '10U' });
+  assert.match(a.verdict, /Two runners may not occupy the same base/);
+  assert.deepEqual(a.reads, []);
+});
+
 test('Challenger-division rules stay out of regular answers', () => {
   const a = ask({ question: 'What happens if two runners end up on third base?', role: 'coach', division: '13U' });
   assert.ok(a.rules.every((r) => !/Challenger/i.test(r.label)));

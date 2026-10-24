@@ -14,9 +14,13 @@ export function parseBaserunning(question) {
   else if (/\b(one|1)\s+outs?\b/.test(q)) outs = 1;
   else if (/\b(two|2)\s+outs?\b/.test(q)) outs = 2;
 
+  // "Two runners on second" asks for the rule (7.03), not a runner read.
+  const sameBase = /\b(two|2|both) runners\b|same base/.test(q);
+
   let runner = null;
-  const on = [...q.matchAll(/\b(first|1st|second|2nd|third|3rd)\b/g)].map((m) => BASE[m[1]]);
-  if (/bases loaded|loaded bases|bases are loaded/.test(q)) runner = 'third_loaded';
+  const on =[...q.matchAll(/\b(first|1st|second|2nd|third|3rd)\b/g)].map((m) => BASE[m[1]]);
+  if (sameBase) runner = null;
+  else if (/bases loaded|loaded bases|bases are loaded/.test(q)) runner = 'third_loaded';
   else if (/(first|1st)( base)? (is )?(open|empty)|(no one|nobody) (is )?on (first|1st)/.test(q) && /\b(second|2nd)\b/.test(q)) runner = 'second';
   else if (/(first|1st) and (second|2nd)|(second|2nd) and (first|1st)|runners? on (first|1st) and/.test(q)) runner = 'second_forced';
   else if (/runners? (is |was )?(on|at) (first|1st|second|2nd|third|3rd)|(on|at|from) (first|1st|second|2nd|third|3rd)( base)?\b/.test(q) && on.length) runner = on[0];
