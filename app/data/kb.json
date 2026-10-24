@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-24T14:44:16.499Z",
+ "built_at": "2026-10-24T14:59:30.254Z",
  "league": {
   "_note": "League facts from the league's public page (clubs.bluesombrero.com/sunshinebaseball, 2026-10-24) and the Sunshine house rules document. Anything marked TODO needs a board member to confirm.",
   "name": "Sunshine Baseball League",
@@ -55,7 +55,7 @@
     "age_max": 18,
     "base_sanction": "babe_ruth_league",
     "base_label": "Babe Ruth League",
-    "home_field": "JMHS stadium; cleats allowed at Walker-Grant Middle School Armstrong Field",
+    "home_field": "James Monroe High School baseball field at Gladys-West Elementary School, Fredericksburg, VA (formerly Walker-Grant Middle School Armstrong Field)",
     "field": "90-foot bases, 60 ft 6 in mound (Babe Ruth)"
    }
   ],
@@ -85,7 +85,7 @@
     ]
    },
    {
-    "site": "Walker Grant Middle School",
+    "site": "Gladys-West Elementary School (formerly Walker-Grant Middle School)",
     "fields": [
      "Main Field",
      "Auxiliary Field",
@@ -267,15 +267,15 @@
    ],
    "topic": "footwear",
    "section": "Equipment",
-   "keywords": "cleats spikes shoes footwear walker grant armstrong",
+   "keywords": "cleats spikes shoes footwear james monroe jmhs gladys west walker grant armstrong",
    "question": "",
-   "text": "Cleats and spikes are allowed during 18U games at Walker-Grant Middle School Armstrong Field.",
+   "text": "Cleats and spikes are allowed during 18U games at the James Monroe High School baseball field at Gladys-West Elementary School, Fredericksburg, VA (formerly called Walker-Grant Middle School Armstrong Field).",
    "overrides": null,
    "call_type": "rule",
    "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
    "status": "verified",
    "verified": true,
-   "note": ""
+   "note": "Field name updated by the board on 2026-10-24; the house rules document still uses the old name."
   },
   {
    "id": "H007",
@@ -452,13 +452,13 @@
    "section": "Pitching",
    "keywords": "pitch count pitches limit daily maximum rest days 105",
    "question": "",
-   "text": "18U pitch limit is 105 pitches. Rest: 76-105 pitches, 3 days; 51-75, 2 days; 26-50, 1 day. A pitcher with fewer than 25 pitches needs no rest day and can pitch the next day.",
+   "text": "18U pitch limit is 105 pitches. Rest: 76-105 pitches, 3 days; 51-75, 2 days; 26-50, 1 day. A pitcher with 25 or fewer pitches needs no rest day and can pitch the next day.",
    "overrides": "daily_max_pitches",
    "call_type": "rule",
    "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
    "status": "verified",
    "verified": true,
-   "note": "The source does not say which tier exactly 25 pitches falls in; the app treats 1-25 as no rest. Board: confirm."
+   "note": "Board clarification 2026-10-24: 25 pitches or fewer needs no rest."
   },
   {
    "id": "H017",
@@ -646,19 +646,20 @@
    "id": "H027",
    "kind": "house_rule",
    "divisions": [
-    "10U"
+    "10U",
+    "13U"
    ],
    "topic": "warmups",
    "section": "Pitching",
    "keywords": "warm up warmup pitches between innings pace",
    "question": "",
-   "text": "10U: 5 warm-up pitches (3 if the pitcher has already pitched more than 2 innings). Fewer if players take too long to get out of the dugout.",
+   "text": "10U and 13U: 5 warm-up pitches (3 if the pitcher has already pitched more than 2 innings). Fewer if players take too long to get out of the dugout.",
    "overrides": null,
    "call_type": "rule",
    "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
    "status": "verified",
    "verified": true,
-   "note": "The house rules list 10U warm-ups only; 13U is not stated."
+   "note": "Board clarification 2026-10-24: 13U uses the same warm-up rule as 10U and 18U."
   },
   {
    "id": "H028",

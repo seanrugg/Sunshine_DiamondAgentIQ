@@ -7,7 +7,7 @@ Owner column is for the team whiteboard.
 | # | Task | Owner |
 |---|---|---|
 | 1 | ~~Load the Sunshine house rules~~ Done: 39 rules in `data/league/house_rules.csv`, pitch tables in `data/league/pitch_rest.csv`. | |
-| 2 | Board: answer the open questions in README (25 pitches at 18U, 13U warm-ups, 18U home field) and update the matching rows. | |
+| 2 | ~~Board clarifications~~ Done: see `data/league/board_clarifications.md`. | |
 | 3 | Deploy: provision the VPS, point DNS, `docker compose up -d --build`, confirm `https://<domain>/api/health`. | |
 | 4 | Deploy: turn on GitHub Pages (Actions) and install the app on two phones; test airplane mode. | |
 | 5 | Model: on the VPS, run Ollama with a small model, set `LLM_BASE_URL`, confirm the header pill says `live`. | |

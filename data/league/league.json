@@ -53,7 +53,7 @@
       "age_max": 18,
       "base_sanction": "babe_ruth_league",
       "base_label": "Babe Ruth League",
-      "home_field": "JMHS stadium; cleats allowed at Walker-Grant Middle School Armstrong Field",
+      "home_field": "James Monroe High School baseball field at Gladys-West Elementary School, Fredericksburg, VA (formerly Walker-Grant Middle School Armstrong Field)",
       "field": "90-foot bases, 60 ft 6 in mound (Babe Ruth)"
     }
   ],
@@ -83,7 +83,7 @@
       ]
     },
     {
-      "site": "Walker Grant Middle School",
+      "site": "Gladys-West Elementary School (formerly Walker-Grant Middle School)",
       "fields": [
         "Main Field",
         "Auxiliary Field",

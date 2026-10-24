@@ -77,7 +77,7 @@ Settings → Pages → Source: **GitHub Actions**. Every push to `main` runs the
 
 | File | What | Who edits |
 |---|---|---|
-| `data/league/house_rules_source.txt` | The Sunshine house rules exactly as the league published them ([Google Doc](https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo)) | Board |
+| `data/league/house_rules_source.txt` | The Sunshine house rules exactly as the league published them; board clarifications are in `board_clarifications.md` ([Google Doc](https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo)) | Board |
 | `data/league/house_rules.csv` | The same rules split into 39 rows the app can search: division (`10U`, `13U`, `18U`, `10U;13U` or `all`), topic, section, search keywords, rule text, which rulebook fact it overrides, and whether it is a written rule or the umpire's judgment | Team, from the source above |
 | `data/league/pitch_rest.csv` | The house pitch-count tables: 10U 75/day, 13U 85/day, 18U 105/day, with rest-day tiers | Team, from the source above |
 | `data/league/league.json` | Mission, divisions (with their rulebook and field), fields, contact, get-involved roles | Board |
@@ -91,10 +91,9 @@ How answers use the data: Sunshine house rules always come first. A house rule t
 
 ### Open questions for the Sunshine Board
 
-- **18U pitch count at exactly 25 pitches:** the house rules say "fewer than 25" needs no rest and "26-50" needs one day. The app treats 25 as no rest.
-- **13U warm-up pitches:** the house rules give 10U and 18U only.
-- **18U home field:** the 18U heading says JMHS stadium; the cleats rule names Walker-Grant Middle School Armstrong Field.
 - Volunteer, umpire and sponsor sign-up steps and the league email.
+
+Board clarifications to the house rules document (25 pitches at 18U, 13U warm-ups, the 18U field's current name) are recorded in `data/league/board_clarifications.md`.
 
 ## Project layout
 

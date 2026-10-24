@@ -58,7 +58,7 @@ test('pitch rest: 18U uses the house table (105 limit, 3 days for 76-105)', () =
   assert.equal(r.division, '18U');
   assert.equal(r.daily_max, 105);
   assert.equal(r.rest_days, 3);
-  assert.equal(computeRest(kb, { age: 16, pitches: 24 }).rest_days, 0);
+  assert.equal(computeRest(kb, { age: 16, pitches: 25 }).rest_days, 0); // board: 25 or fewer, no rest
   assert.equal(computeRest(kb, { age: 16, pitches: 26 }).rest_days, 1);
 });
 
@@ -94,6 +94,8 @@ test('house rules answer house-rule questions, by division', () => {
   assert.equal(top(ask({ question: 'Can a runner steal home in 10U?', role: 'umpire' })), 'H023');
   assert.equal(top(ask({ question: 'Can players chew gum or eat sunflower seeds in the dugout?', role: 'parent', division: '10U' })), 'H007');
   assert.equal(top(ask({ question: 'How do I get a pool player?', role: 'coach', division: '13U' })), 'H039');
+  assert.equal(top(ask({ question: 'How many warm-up pitches?', role: 'umpire', division: '13U' })), 'H027');
+  assert.match(ask({ question: 'Can he wear cleats?', role: 'parent', division: '18U' }).verdict, /James Monroe/);
 });
 
 test('a house rule hides the rulebook facts it overrides', () => {

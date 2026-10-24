@@ -1,6 +1,6 @@
 // Offline cache. Bump VERSION whenever app files or data/kb.json change,
 // or installed phones keep the old copy.
-const VERSION = 'sunshine-v3';
+const VERSION = 'sunshine-v4';
 const ASSETS = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest', 'data/kb.json',
   'js/app.js', 'js/core/answer.js', 'js/core/pitchRest.js', 'js/core/philosophy.js', 'js/core/retrieve.js',
