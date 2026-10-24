@@ -1,15 +1,8 @@
 // Pitch-count rest math. Code does the arithmetic, never a model.
-// Uses the Little League baseball rest table in kb.pitch_rest, unless a
-// verified Sunshine house rule (topic pitch_count) says otherwise.
-
-/** Little League "league age" bands in the rest table: 6-8, 9-10, 11-12, 13-14, 15-16. */
-export function restBand(table, age) {
-  return table.filter((r) => age >= r.age_min && age <= r.age_max);
-}
-
-export function dailyMax(band) {
-  return band.length ? Math.max(...band.map((r) => r.pitches_max)) : null;
-}
+// Sunshine house rules set the limits for every division (H015 for 10U/13U,
+// H016 for 18U), from kb.house_pitch_rest. Little League's own chart
+// (kb.ll_pitch_rest) is kept only for reference.
+import { resolveDivision } from './retrieve.js';
 
 /** Add whole days to a YYYY-MM-DD date, returning YYYY-MM-DD (timezone-safe). */
 export function addDays(isoDate, days) {
@@ -19,50 +12,48 @@ export function addDays(isoDate, days) {
 }
 
 /**
- * @param {object} kb       knowledge base (needs pitch_rest, house_rules)
- * @param {object} input    { age, pitches, pitchedOn: 'YYYY-MM-DD' }
- * @returns {object} { ok, rest_days, eligible_on, daily_max, over_limit, band, house_rule, notes[] }
+ * @param {object} kb     knowledge base
+ * @param {object} input  { age?, division?, pitches, pitchedOn?: 'YYYY-MM-DD' }
+ *                        The division comes from `division`, or else from `age`.
  */
-export function computeRest(kb, { age, pitches, pitchedOn }) {
+export function computeRest(kb, { age, division, question, pitches, pitchedOn }) {
+  if (!Number.isFinite(pitches) || pitches < 0) {
+    return { ok: false, error: 'Enter the number of pitches thrown.' };
+  }
+  const div = resolveDivision(kb.league, { division, age, question });
+  if (!div) {
+    return { ok: false, error: 'Pick a division (10U, 13U or 18U) or enter an age from 8 to 18.' };
+  }
+  const table = kb.house_pitch_rest.filter((r) => r.division === div.id);
+  const max = table[0].daily_max;
+  const rule = kb.house_rules.find((h) => h.id === table[0].house_rule_id);
   const notes = [];
-  const houseRule = (kb.house_rules || []).find((h) => h.topic === 'pitch_count' && h.text);
-  if (houseRule) notes.push(`Sunshine house rule: ${houseRule.text}`);
 
-  if (!Number.isFinite(age) || !Number.isFinite(pitches) || pitches < 0) {
-    return { ok: false, error: 'Enter the pitcher\'s age and the number of pitches thrown.' };
-  }
-  const band = restBand(kb.pitch_rest, age);
-  if (!band.length) {
-    return {
-      ok: false,
-      gap: true,
-      error: `Little League's pitch-count chart doesn't cover age ${age} (it stops at 16). ` +
-        'Ask the Sunshine Board what limit 18U uses, and follow the safer choice until then.',
-      house_rule: houseRule || null,
-    };
-  }
-  const max = dailyMax(band);
-  if (pitches === 0) return { ok: true, rest_days: 0, eligible_on: pitchedOn || null, daily_max: max, band, notes, house_rule: houseRule || null };
-
-  const tier = band.find((r) => pitches >= r.pitches_min && pitches <= r.pitches_max);
+  const tier = table.find((r) => pitches >= r.pitches_min && pitches <= r.pitches_max);
   const over = pitches > max;
-  const rest = tier ? tier.rest_days : Math.max(...band.map((r) => r.rest_days));
-  const fact = (key) => (kb.ll_facts || []).find((f) => f.key === key && age >= (f.age_min ?? 0) && age <= (f.age_max ?? 99));
-  if (over) {
-    notes.push(`${pitches} is over the daily limit of ${max} for age ${age}.`);
-    const finish = fact('complete_batter_at_limit');
-    if (finish) notes.push(finish.text);
-  }
-  for (const key of ['three_consecutive_days', 'threshold_reached_mid_batter']) {
-    const f = fact(key);
-    if (f) notes.push(f.text);
+  const rest = pitches === 0 ? 0 : tier ? tier.rest_days : Math.max(...table.map((r) => r.rest_days));
+  if (over) notes.push(`${pitches} is over the Sunshine ${div.label} daily limit of ${max} pitches.`);
+  if (rule?.note) notes.push(rule.note);
+
+  // Rulebook notes that still apply under the house limits (Little League divisions only).
+  if (div.base_sanction === 'little_league') {
+    for (const key of over ? ['complete_batter_at_limit', 'three_consecutive_days'] : ['three_consecutive_days']) {
+      const f = kb.rule_facts.find((x) => x.sanction === 'little_league' && x.key === key);
+      if (f) notes.push(`${f.text} (Little League)`);
+    }
   }
 
-  // Little League: N rest days means N full calendar days off; eligible the day after.
+  // N rest days means N full calendar days off; eligible the day after.
   const eligible = pitchedOn ? addDays(pitchedOn, rest + 1) : null;
   return {
-    ok: true, rest_days: rest, eligible_on: eligible, daily_max: max, over_limit: over,
-    band: `${band[0].age_min}-${band[0].age_max}`, source_url: band[0].url, verified: band.every((b) => b.verified),
-    house_rule: houseRule || null, notes,
+    ok: true,
+    division: div.id,
+    rest_days: rest,
+    eligible_on: eligible,
+    daily_max: max,
+    over_limit: over,
+    house_rule: rule ? { id: rule.id, text: rule.text } : null,
+    source: `Sunshine house rule ${rule?.id ?? ''}`.trim(),
+    notes,
   };
 }

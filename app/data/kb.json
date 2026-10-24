@@ -1,7 +1,7 @@
 {
- "built_at": "2026-10-24T14:32:23.369Z",
+ "built_at": "2026-10-24T14:44:16.499Z",
  "league": {
-  "_note": "League facts taken from the league's public page (clubs.bluesombrero.com/sunshinebaseball) on 2026-10-24. Anything marked TODO needs a board member to confirm before the app shows it as fact.",
+  "_note": "League facts from the league's public page (clubs.bluesombrero.com/sunshinebaseball, 2026-10-24) and the Sunshine house rules document. Anything marked TODO needs a board member to confirm.",
   "name": "Sunshine Baseball League",
   "short_name": "Sunshine",
   "organization": "Sunshine Ballpark (non-profit Sunshine Board)",
@@ -24,10 +24,8 @@
   },
   "sport": "baseball",
   "rulebook": {
-   "base": "little_league",
-   "base_label": "Little League Baseball rules",
-   "house_rules_override": true,
-   "note": "Sunshine house rules come first. Where a house rule doesn't cover something, Little League rules apply."
+   "house_rules_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "note": "Sunshine house rules come first. Where they don't cover something, 10U and 13U follow Little League rules and 18U follows Babe Ruth League rules."
   },
   "divisions": [
    {
@@ -35,27 +33,30 @@
     "label": "10U",
     "age_min": 8,
     "age_max": 10,
-    "ll_age_band": "9-10",
-    "ll_division_hint": "Little League Minor / Major",
-    "open_question": "TODO board: which Little League division does 10U mirror (field size, leading off, stealing, dropped third strike)?"
+    "base_sanction": "little_league",
+    "base_label": "Little League",
+    "home_field": "Sunshine Ballpark (artificial turf)",
+    "field": "46-foot mound, 60-foot bases"
    },
    {
     "id": "13U",
     "label": "13U",
     "age_min": 11,
     "age_max": 13,
-    "ll_age_band": "11-12 and 13-14",
-    "ll_division_hint": "Little League Major / Intermediate (50/70)",
-    "open_question": "TODO board: base distance and mound distance for 13U, and whether leading off is allowed."
+    "base_sanction": "little_league",
+    "base_label": "Little League",
+    "home_field": "Sunshine Ballpark (artificial turf)",
+    "field": "50-foot mound, 70-foot bases"
    },
    {
     "id": "18U",
     "label": "18U",
     "age_min": 14,
     "age_max": 18,
-    "ll_age_band": "13-16",
-    "ll_division_hint": "Little League Junior / Senior",
-    "open_question": "TODO board: Little League pitch-count rules stop at age 16. What limit does Sunshine use for 17- and 18-year-olds?"
+    "base_sanction": "babe_ruth_league",
+    "base_label": "Babe Ruth League",
+    "home_field": "JMHS stadium; cleats allowed at Walker-Grant Middle School Armstrong Field",
+    "field": "90-foot bases, 60 ft 6 in mound (Babe Ruth)"
    }
   ],
   "audiences": [
@@ -68,7 +69,8 @@
    "phone": "540-207-1202",
    "website": "https://clubs.bluesombrero.com/sunshinebaseball",
    "email": "TODO: copy the league email from the website (it is obfuscated on the page)",
-   "registration": "Registration and team formation happen on the league website."
+   "registration": "Registration and team formation happen on the league website.",
+   "gamechanger_pool_players": "sunshinegamechanger@gmail.com"
   },
   "partners": [
    "Fredericksburg Nationals (details to be announced)"
@@ -167,308 +169,721 @@
   {
    "id": "H001",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "game_length",
-   "question": "How many innings is a regulation game? Is there a time limit (no new inning after X minutes)?",
-   "text": "",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "rulebook",
+   "section": "Rulebook",
+   "keywords": "little league rules base which rules apply",
+   "question": "",
+   "text": "For 10U and 13U, Little League game rules (available in the Little League app) apply, except where these house rules say otherwise.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Game length",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
-   "note": "Fill rule_text from the Sunshine house rules document"
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
   },
   {
    "id": "H002",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "run_rule",
-   "question": "Is there a run rule (e.g. 10 after 4 innings)? Is there a per-inning run cap?",
-   "text": "",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "rulebook",
+   "section": "Rulebook",
+   "keywords": "babe ruth rules base which rules apply",
+   "question": "",
+   "text": "For 18U, Babe Ruth League baseball rules (baberuthleague.org/documents/RulesBaseball.pdf) apply, except where these house rules say otherwise.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Run rule",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H003",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "pitch_count",
-   "question": "Does Sunshine use Little League pitch counts and rest days as written or a stricter limit?",
-   "text": "",
-   "overrides": "daily_max_pitches",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "bats",
+   "section": "Equipment",
+   "keywords": "bat bats usa usabat wood legal allowed buy",
+   "question": "",
+   "text": "All 10U and 13U bats must be USA Bats (USABat) or wood bats.",
+   "overrides": "bat_standard",
    "call_type": "rule",
-   "section": "Pitching",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
-   "note": "Little League has no chart for ages 17-18; say what 18U uses"
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
   },
   {
    "id": "H004",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "pitching_innings",
-   "question": "Any innings-per-game or innings-per-week limit for pitchers?",
-   "text": "",
-   "overrides": null,
+   "divisions": [
+    "18U"
+   ],
+   "topic": "bats",
+   "section": "Equipment",
+   "keywords": "bat bats bbcor drop usa usabat wood legal allowed buy 14u",
+   "question": "",
+   "text": "All 18U bats must be BBCOR drop-3 or wood. Players age 14 may also use a USA (USABat) drop-5 bat.",
+   "overrides": "bat_standard",
    "call_type": "rule",
-   "section": "Pitching",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H005",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "batting_order",
-   "question": "Continuous batting order (everyone bats)? Or nine batters?",
-   "text": "",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "footwear",
+   "section": "Equipment",
+   "keywords": "cleats spikes shoes sneakers turf footwear metal",
+   "question": "",
+   "text": "No cleats or spikes are allowed on the artificial turf at Sunshine Ballpark. Sneakers or turf shoes only.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Lineup",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H006",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "playing_time",
-   "question": "Minimum playing time or defensive innings per player?",
-   "text": "",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "footwear",
+   "section": "Equipment",
+   "keywords": "cleats spikes shoes footwear walker grant armstrong",
+   "question": "",
+   "text": "Cleats and spikes are allowed during 18U games at Walker-Grant Middle School Armstrong Field.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Playing time",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H007",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "free_substitution",
-   "question": "Free defensive substitution? Re-entry rules?",
-   "text": "",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "turf_care",
+   "section": "Ballpark",
+   "keywords": "gum bubble sunflower seeds gatorade drinks dugout turf food snacks",
+   "question": "",
+   "text": "No bubble gum or sunflower seeds on the field or in the dugout at Sunshine Ballpark, because gum and seeds are hard to remove from artificial turf. Only clear Gatorade in the dugouts: Gatorade dye damages the turf.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Lineup",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H008",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "courtesy_runner",
-   "question": "Courtesy runners for pitcher and catcher? Anyone else?",
-   "text": "",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "home_dugout",
+   "section": "Ballpark",
+   "keywords": "dugout home visitor third base side which",
+   "question": "",
+   "text": "The third base dugout is the home dugout. Always.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Courtesy runners",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H009",
    "kind": "house_rule",
-   "division": "10U",
-   "topic": "baserunning",
-   "question": "10U: leading off and stealing allowed? Stealing home? Dropped third strike in effect?",
-   "text": "",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "home_dugout",
+   "section": "Ballpark",
+   "keywords": "dugout home visitor first base side which",
+   "question": "",
+   "text": "The first base dugout is the home dugout. Always.",
    "overrides": null,
    "call_type": "rule",
-   "section": "10U baserunning",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H010",
    "kind": "house_rule",
-   "division": "10U",
-   "topic": "coach_pitch",
-   "question": "10U: does a coach or machine pitch at any point (e.g. after ball four)?",
-   "text": "",
+   "divisions": [
+    "all"
+   ],
+   "topic": "late_player",
+   "section": "Lineup",
+   "keywords": "late arrive arrives arrival absent missing lineup bottom out",
+   "question": "",
+   "text": "A player who arrives late is added to the bottom of the lineup, but not until they arrive. If a player is in the lineup and has not shown up, it is an out the first time that spot comes up, and the player is removed from the lineup. If the player then arrives, they are added to the bottom of the lineup on arrival.",
    "overrides": null,
    "call_type": "rule",
-   "section": "10U pitching",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H011",
    "kind": "house_rule",
-   "division": "13U",
-   "topic": "field_size",
-   "question": "13U: base distance and pitching distance (60/46 or 70/50)?",
-   "text": "",
-   "overrides": null,
+   "divisions": [
+    "all"
+   ],
+   "topic": "batting_order",
+   "section": "Lineup",
+   "keywords": "lineup batting order continuous everyone bats bench dugout change",
+   "question": "",
+   "text": "Every player present in the dugout must be in the batting lineup, and the batting order may not change.",
+   "overrides": "batting_order",
    "call_type": "rule",
-   "section": "13U field",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H012",
    "kind": "house_rule",
-   "division": "18U",
-   "topic": "field_size",
-   "question": "18U: 90-foot bases and a 60 ft 6 in mound?",
-   "text": "",
+   "divisions": [
+    "all"
+   ],
+   "topic": "playing_time",
+   "section": "Lineup",
+   "keywords": "defense playing time innings substitution sub free minimum bench field",
+   "question": "",
+   "text": "Players may move in and out on defense freely. Every player must play at least two innings on defense; they do not have to be consecutive innings.",
    "overrides": null,
    "call_type": "rule",
-   "section": "18U field",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H013",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "bats",
-   "question": "Which bat standards are allowed in each division (USA Baseball / BBCOR)?",
-   "text": "",
+   "divisions": [
+    "all"
+   ],
+   "topic": "injury_ejection",
+   "section": "Lineup",
+   "keywords": "injured injury hurt leave early ejected ejection removed out penalty",
+   "question": "",
+   "text": "A player who is injured or must leave a game early is removed from the lineup with no penalty. If a player is ejected, an automatic out is called each time their spot in the lineup comes up.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Equipment",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H014",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "equipment",
-   "question": "Required equipment: helmets with face guards, catcher's gear, cups, metal cleats?",
-   "text": "",
+   "divisions": [
+    "all"
+   ],
+   "topic": "minimum_players",
+   "section": "Game",
+   "keywords": "eight 8 players seven 7 forfeit minimum start short",
+   "question": "",
+   "text": "Games may start with eight players. If a team drops to seven players during the game, it is a forfeit.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Equipment",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H015",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "weather",
-   "question": "Lightning and weather policy (how long to wait after thunder or lightning)?",
-   "text": "",
-   "overrides": null,
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "pitch_count",
+   "section": "Pitching",
+   "keywords": "pitch count pitches limit daily maximum rest days",
+   "question": "",
+   "text": "Pitch counts: 10U may throw 75 pitches a day; 13U may throw 85 pitches a day. Rest for 10U and 13U: 1-20 pitches, 0 days; 21-35, 1 day; 36-50, 2 days; 51-65, 3 days; 66 or more, 4 days.",
+   "overrides": "daily_max_pitches",
    "call_type": "rule",
-   "section": "Safety",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H016",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "sportsmanship",
-   "question": "Code of conduct for players, coaches and parents. Who handles a complaint?",
-   "text": "",
-   "overrides": null,
+   "divisions": [
+    "18U"
+   ],
+   "topic": "pitch_count",
+   "section": "Pitching",
+   "keywords": "pitch count pitches limit daily maximum rest days 105",
+   "question": "",
+   "text": "18U pitch limit is 105 pitches. Rest: 76-105 pitches, 3 days; 51-75, 2 days; 26-50, 1 day. A pitcher with fewer than 25 pitches needs no rest day and can pitch the next day.",
+   "overrides": "daily_max_pitches",
    "call_type": "rule",
-   "section": "Conduct",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
-   "note": ""
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": "The source does not say which tier exactly 25 pitches falls in; the app treats 1-25 as no rest. Board: confirm."
   },
   {
    "id": "H017",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "umpires",
-   "question": "Who umpires each division (adult umpires? youth umpires?) and how do disputes get handled?",
-   "text": "",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "game_length",
+   "section": "Game",
+   "keywords": "innings length long time limit six 6 hour",
+   "question": "",
+   "text": "10U and 13U games are six innings. No new inning begins after 1 hour 45 minutes. The last inning will be called at the top of the inning no earlier than 1 hour 30 minutes of game play.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Umpires",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H018",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "protests",
-   "question": "Are protests allowed? How and to whom?",
-   "text": "",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "game_length",
+   "section": "Game",
+   "keywords": "innings length long time limit seven 7 hours playoffs",
+   "question": "",
+   "text": "18U games are seven innings. No new inning begins after 2 hours 15 minutes; in the playoffs the limit is 2 hours 30 minutes.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Protests",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   },
   {
    "id": "H019",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "mercy_and_inclusion",
-   "question": "How does the league include players with physical or developmental challenges (buddy system / Challenger-style play)?",
-   "text": "",
+   "divisions": [
+    "10U"
+   ],
+   "topic": "field_size",
+   "section": "Field",
+   "keywords": "mound distance bases feet field size 46 60",
+   "question": "",
+   "text": "10U field: 46-foot mound, 60-foot bases.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Inclusion",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
-   "note": "Ties directly to the league mission"
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
   },
   {
    "id": "H020",
    "kind": "house_rule",
-   "division": "all",
-   "topic": "rainouts",
-   "question": "How are rainouts and makeup games announced and scheduled?",
-   "text": "",
+   "divisions": [
+    "13U"
+   ],
+   "topic": "field_size",
+   "section": "Field",
+   "keywords": "mound distance bases feet field size 50 70",
+   "question": "",
+   "text": "13U field: 50-foot mound, 70-foot bases.",
    "overrides": null,
    "call_type": "rule",
-   "section": "Scheduling",
-   "source_doc": "",
-   "status": "placeholder",
-   "verified": false,
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H021",
+   "kind": "house_rule",
+   "divisions": [
+    "10U"
+   ],
+   "topic": "dropped_third_strike",
+   "section": "Baserunning",
+   "keywords": "dropped uncaught third strike 3rd run first advance",
+   "question": "",
+   "text": "10U: the batter cannot advance on a dropped third strike.",
+   "overrides": "uncaught_third_strike",
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H022",
+   "kind": "house_rule",
+   "divisions": [
+    "13U"
+   ],
+   "topic": "dropped_third_strike",
+   "section": "Baserunning",
+   "keywords": "dropped uncaught third strike 3rd run first advance outs occupied",
+   "question": "",
+   "text": "13U: on a dropped third strike the batter can run to first with fewer than 2 outs only if first base is unoccupied. With 2 outs, the batter can run to first whether or not first base is occupied.",
+   "overrides": "uncaught_third_strike",
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H023",
+   "kind": "house_rule",
+   "divisions": [
+    "10U"
+   ],
+   "topic": "baserunning",
+   "section": "Baserunning",
+   "keywords": "steal stealing lead leading off home wild pitch passed ball advance bag",
+   "question": "",
+   "text": "10U: no leading off; when the pitcher is on the mound the runner must be on the bag. Stealing is allowed at every base except from third to home. No stealing home, and no advancing on a wild pitch, a passed ball, an error on the catcher's routine throw back to the pitcher, or the pitcher dropping the ball on the mound. If the pitcher or catcher tries to put out the runner on third (or any other runner), the runner on third may try to score. Why: a more competitive game, no easy runs, faster pace, and games won by earned runs rather than errors by a young, inexperienced age group.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H024",
+   "kind": "house_rule",
+   "divisions": [
+    "13U"
+   ],
+   "topic": "baserunning",
+   "section": "Baserunning",
+   "keywords": "steal stealing lead leading off home wild pitch passed ball advance bag",
+   "question": "",
+   "text": "13U: no leading off; when the pitcher is on the mound the runner must stay on the bag until the ball reaches the plate. Stealing second, third or home, and advancing on wild pitches and passed balls, is allowed after the pitch reaches home plate.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H025",
+   "kind": "house_rule",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "sliding",
+   "section": "Baserunning",
+   "keywords": "slide sliding headfirst head first dive pickoff",
+   "question": "",
+   "text": "10U and 13U: no head-first sliding, except diving back to a base on a pick-off play.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H026",
+   "kind": "house_rule",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "sliding",
+   "section": "Baserunning",
+   "keywords": "slide sliding headfirst head first contact collision malicious ejection home plate",
+   "question": "",
+   "text": "18U: runners may slide head-first into any base. Runners must slide and avoid contact with fielders at the bases and at home plate. Malicious contact is the umpire's judgment and results in immediate ejection.",
+   "overrides": null,
+   "call_type": "judgment_and_rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H027",
+   "kind": "house_rule",
+   "divisions": [
+    "10U"
+   ],
+   "topic": "warmups",
+   "section": "Pitching",
+   "keywords": "warm up warmup pitches between innings pace",
+   "question": "",
+   "text": "10U: 5 warm-up pitches (3 if the pitcher has already pitched more than 2 innings). Fewer if players take too long to get out of the dugout.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": "The house rules list 10U warm-ups only; 13U is not stated."
+  },
+  {
+   "id": "H028",
+   "kind": "house_rule",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "warmups",
+   "section": "Pitching",
+   "keywords": "warm up warmup pitches between innings pace",
+   "question": "",
+   "text": "18U: 5 warm-up pitches (3 if the pitcher has already pitched more than 2 innings). The umpire may reduce warm-up pitches to keep the pace of play.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H029",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "run_cap",
+   "section": "Game",
+   "keywords": "five 5 run rule runs inning cap limit last inning unlimited",
+   "question": "",
+   "text": "Five-run rule: each inning ends when a team has scored five runs, except the last inning. Both teams are unlimited in the last inning.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H030",
+   "kind": "house_rule",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "mercy_rule",
+   "section": "Game",
+   "keywords": "mercy run rule 10 ten runs ahead after innings",
+   "question": "",
+   "text": "Mercy rule for 10U and 13U: 10 runs after 4 innings, or after 3.5 innings if the home team is winning.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H031",
+   "kind": "house_rule",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "mercy_rule",
+   "section": "Game",
+   "keywords": "mercy run rule 10 ten runs ahead after innings",
+   "question": "",
+   "text": "Mercy rule for 18U: 10 runs after 5 innings, or after 4.5 innings if the home team is ahead.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H032",
+   "kind": "house_rule",
+   "divisions": [
+    "10U",
+    "13U"
+   ],
+   "topic": "strike_zone",
+   "section": "Umpires",
+   "keywords": "strike zone strikes balls height small short tall umpire",
+   "question": "",
+   "text": "10U and 13U strike zone: adjusted reasonably for the player's age and height, at the umpire's discretion.",
+   "overrides": null,
+   "call_type": "judgment",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H033",
+   "kind": "house_rule",
+   "divisions": [
+    "18U"
+   ],
+   "topic": "strike_zone",
+   "section": "Umpires",
+   "keywords": "strike zone strikes balls letters knees umpire",
+   "question": "",
+   "text": "18U strike zone: from the letters to the knees and over the plate. Pitchers at 18U should be able to throw strikes.",
+   "overrides": null,
+   "call_type": "judgment",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H034",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "sportsmanship",
+   "section": "Sportsmanship",
+   "keywords": "taunt taunting trash talk remarks sportsmanship ejection ejected suspension warning arguing argue",
+   "question": "",
+   "text": "Sportsmanship is paramount in the Sunshine Baseball League. No taunting and no remarks directed personally at players on the other team. After one warning, players or coaches who taunt or argue with umpires will be ejected. Any ejection of a player or coach includes a suspension for the next game, which can be appealed to the league executive board.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H035",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "umpire_discussion",
+   "section": "Umpires",
+   "keywords": "umpire call question discuss approach argue dispute coach manager between innings",
+   "question": "",
+   "text": "If a call or rule is in question, the head coach or manager may ask the umpire if they may approach; discussing between innings is strongly recommended. The head umpire decides whether a play or call needs to be discussed during an inning. Only head coaches or managers may discuss calls with umpires.",
+   "overrides": null,
+   "call_type": "judgment_and_rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H036",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "conduct",
+   "section": "Sportsmanship",
+   "keywords": "coaches umpires example kids friendly approachable goals safe life lesson",
+   "question": "",
+   "text": "All coaches and umpires should be approachable, friendly and nice: we are setting an example for the kids, and that comes first. Coaches, parents and umpires all share the same goals: a safe game and life-lesson learning for the children playing baseball.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H037",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "fan_conduct",
+   "section": "Sportsmanship",
+   "keywords": "parents fans yell yelling booing polite behavior leave ban removed stands",
+   "question": "",
+   "text": "Parents and fans must be polite and show good sportsmanship. Coaches should calm fans down, never stir them up; doing so is cause for ejection, suspension and possible expulsion from the league. Parents and fans who do not behave may be asked to leave the ballpark, and repeated problems can lead to season-long or permanent bans.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H038",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "parent_coaching",
+   "section": "Sportsmanship",
+   "keywords": "parents coach coaching sidelines dugout volunteer instructions yelling",
+   "question": "",
+   "text": "Parents do not coach from the sidelines during games. Only players and approved coaches are allowed in the dugouts during games. Parents who want to coach should volunteer as coaches, not undermine the volunteers who do.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
+   "note": ""
+  },
+  {
+   "id": "H039",
+   "kind": "house_rule",
+   "divisions": [
+    "all"
+   ],
+   "topic": "pool_players",
+   "section": "Pool players",
+   "keywords": "pool player players short shorthanded fill borrow extra gamechanger request",
+   "question": "",
+   "text": "Teams without enough players for a regular-season game can request pool players by emailing sunshinegamechanger@gmail.com. Pool players bat at the bottom of the lineup, may not pitch or catch, wear their own team jersey and hat, and are entered in GameChanger as pool player 1, pool player 2, and so on.",
+   "overrides": null,
+   "call_type": "rule",
+   "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+   "status": "verified",
+   "verified": true,
    "note": ""
   }
  ],
- "ll_facts": [
+ "rule_facts": [
   {
    "id": "F001",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -485,7 +900,8 @@
   },
   {
    "id": "F002",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 9,
@@ -502,7 +918,8 @@
   },
   {
    "id": "F003",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 11,
@@ -519,7 +936,8 @@
   },
   {
    "id": "F004",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 13,
@@ -536,7 +954,8 @@
   },
   {
    "id": "F005",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -553,7 +972,8 @@
   },
   {
    "id": "F006",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -570,7 +990,8 @@
   },
   {
    "id": "F007",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -587,7 +1008,8 @@
   },
   {
    "id": "F008",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -604,7 +1026,8 @@
   },
   {
    "id": "F009",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 6,
@@ -621,7 +1044,8 @@
   },
   {
    "id": "F010",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PITCH",
    "division": "",
    "age_min": 15,
@@ -638,7 +1062,8 @@
   },
   {
    "id": "F014",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PROTEST",
    "division": "regular season",
    "age_min": null,
@@ -655,7 +1080,8 @@
   },
   {
    "id": "F015",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-PROTEST",
    "division": "regular season",
    "age_min": null,
@@ -672,7 +1098,8 @@
   },
   {
    "id": "F016",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-RULEDIFF",
    "division": "regular season",
    "age_min": null,
@@ -689,7 +1116,8 @@
   },
   {
    "id": "F017",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-RULEDIFF",
    "division": "regular season",
    "age_min": null,
@@ -706,7 +1134,8 @@
   },
   {
    "id": "F018",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-RULEDIFF",
    "division": "tournament",
    "age_min": null,
@@ -723,7 +1152,8 @@
   },
   {
    "id": "F019",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-RULEDIFF",
    "division": "",
    "age_min": null,
@@ -740,7 +1170,8 @@
   },
   {
    "id": "F020",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-2026",
    "division": "",
    "age_min": null,
@@ -757,7 +1188,8 @@
   },
   {
    "id": "F021",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-2026",
    "division": "",
    "age_min": null,
@@ -774,7 +1206,8 @@
   },
   {
    "id": "F022",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-2026",
    "division": "",
    "age_min": null,
@@ -791,7 +1224,8 @@
   },
   {
    "id": "F023",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-OBSTR",
    "division": "",
    "age_min": null,
@@ -808,7 +1242,8 @@
   },
   {
    "id": "F066",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-BAT",
    "division": "Tee Ball through Majors",
    "age_min": null,
@@ -825,7 +1260,8 @@
   },
   {
    "id": "F067",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-BAT",
    "division": "Intermediate/Junior",
    "age_min": null,
@@ -842,7 +1278,8 @@
   },
   {
    "id": "F068",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-BAT",
    "division": "Senior",
    "age_min": null,
@@ -859,7 +1296,8 @@
   },
   {
    "id": "F070",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-BAT",
    "division": "",
    "age_min": null,
@@ -876,7 +1314,8 @@
   },
   {
    "id": "F119",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-AGE-BB-2026",
    "division": "",
    "age_min": null,
@@ -893,7 +1332,8 @@
   },
   {
    "id": "F121",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-AGE-CH-2026",
    "division": "Challenger",
    "age_min": null,
@@ -910,7 +1350,8 @@
   },
   {
    "id": "F122",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-AGE-BB-2027",
    "division": "",
    "age_min": null,
@@ -927,7 +1368,8 @@
   },
   {
    "id": "F135",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHANGES-2026",
    "division": "",
    "age_min": null,
@@ -944,7 +1386,8 @@
   },
   {
    "id": "F136",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHANGES-2026",
    "division": "Intermediate/Junior/Senior",
    "age_min": 11,
@@ -961,7 +1404,8 @@
   },
   {
    "id": "F137",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHANGES-2026",
    "division": "",
    "age_min": null,
@@ -978,7 +1422,8 @@
   },
   {
    "id": "F157",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHALLENGER-BUDDY",
    "division": "Challenger",
    "age_min": null,
@@ -995,7 +1440,8 @@
   },
   {
    "id": "F158",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHALLENGER-BUDDY",
    "division": "Challenger",
    "age_min": null,
@@ -1012,7 +1458,8 @@
   },
   {
    "id": "F159",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHALLENGER-BUDDY",
    "division": "Challenger",
    "age_min": null,
@@ -1029,7 +1476,8 @@
   },
   {
    "id": "F160",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-CHALLENGER-BUDDY",
    "division": "Challenger",
    "age_min": null,
@@ -1046,7 +1494,8 @@
   },
   {
    "id": "F161",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-ll-baseball-field-layout",
    "division": "Tee Ball/Minor/Major",
    "age_min": 4,
@@ -1063,7 +1512,8 @@
   },
   {
    "id": "F162",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-pitching-mound-ll-baseball",
    "division": "Minor/Major",
    "age_min": 7,
@@ -1080,7 +1530,8 @@
   },
   {
    "id": "F163",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-field-layout-intermediate-baseball",
    "division": "Intermediate (50/70)",
    "age_min": 11,
@@ -1097,7 +1548,8 @@
   },
   {
    "id": "F164",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-jr-sl-baseball-field-layout",
    "division": "Junior/Senior",
    "age_min": 12,
@@ -1114,7 +1566,8 @@
   },
   {
    "id": "F165",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-field-layout-challenger",
    "division": "Challenger",
    "age_min": null,
@@ -1131,7 +1584,8 @@
   },
   {
    "id": "F166",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-F-field-layout-sl-challenger",
    "division": "Senior League Challenger",
    "age_min": null,
@@ -1148,7 +1602,8 @@
   },
   {
    "id": "F171",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-parent-code-conduct",
    "division": "",
    "age_min": null,
@@ -1165,7 +1620,8 @@
   },
   {
    "id": "F172",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-parent-code-conduct",
    "division": "",
    "age_min": null,
@@ -1182,7 +1638,8 @@
   },
   {
    "id": "F173",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-parent-code-conduct",
    "division": "",
    "age_min": null,
@@ -1199,7 +1656,8 @@
   },
   {
    "id": "F174",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-parent-code-conduct",
    "division": "",
    "age_min": null,
@@ -1216,7 +1674,8 @@
   },
   {
    "id": "F175",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-parent-code-conduct",
    "division": "",
    "age_min": null,
@@ -1233,7 +1692,8 @@
   },
   {
    "id": "F176",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-league-resource-guide",
    "division": "",
    "age_min": null,
@@ -1250,7 +1710,8 @@
   },
   {
    "id": "F177",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-league-resource-guide",
    "division": "regular season",
    "age_min": null,
@@ -1267,7 +1728,8 @@
   },
   {
    "id": "F178",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-regulation-va-12-year-old-waiver",
    "division": "Minor",
    "age_min": 12,
@@ -1284,7 +1746,8 @@
   },
   {
    "id": "F179",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-residency-school-attendance-eligibility-requirements",
    "division": "",
    "age_min": null,
@@ -1301,7 +1764,8 @@
   },
   {
    "id": "F180",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-residency-school-attendance-eligibility-requirements",
    "division": "",
    "age_min": null,
@@ -1318,7 +1782,8 @@
   },
   {
    "id": "F181",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-regulation-iid",
    "division": "",
    "age_min": null,
@@ -1335,7 +1800,8 @@
   },
   {
    "id": "F182",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-pitching-eligibility-tracking-form",
    "division": "",
    "age_min": null,
@@ -1352,7 +1818,8 @@
   },
   {
    "id": "F183",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-5070-field-conversion",
    "division": "Intermediate (50/70)",
    "age_min": 11,
@@ -1369,7 +1836,8 @@
   },
   {
    "id": "F184",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-tournament-player-verification",
    "division": "tournament",
    "age_min": null,
@@ -1386,7 +1854,8 @@
   },
   {
    "id": "F185",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-tournament-player-verification",
    "division": "tournament",
    "age_min": null,
@@ -1403,7 +1872,8 @@
   },
   {
    "id": "F186",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-tournament-affidavit-supplemental",
    "division": "tournament",
    "age_min": null,
@@ -1420,7 +1890,8 @@
   },
   {
    "id": "F187",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-bat-decertification-marucci-cat5",
    "division": "Junior/Senior/Big League",
    "age_min": 12,
@@ -1437,7 +1908,8 @@
   },
   {
    "id": "F188",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-helmet-manufacturer-letter",
    "division": "",
    "age_min": null,
@@ -1454,7 +1926,8 @@
   },
   {
    "id": "F189",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1471,7 +1944,8 @@
   },
   {
    "id": "F190",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1488,7 +1962,8 @@
   },
   {
    "id": "F191",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1505,7 +1980,8 @@
   },
   {
    "id": "F192",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1522,7 +1998,8 @@
   },
   {
    "id": "F193",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1539,7 +2016,8 @@
   },
   {
    "id": "F194",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-coach-pitch-12-week-program",
    "division": "Minor coach pitch",
    "age_min": 6,
@@ -1556,7 +2034,8 @@
   },
   {
    "id": "F197",
-   "kind": "ll_fact",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
    "source_id": "LL-D-tee-ball-parents-guide",
    "division": "",
    "age_min": null,
@@ -1569,6 +2048,96 @@
    "call_type": "rule",
    "text": "Little League says no child may be turned away from playing for financial reasons. Leagues have options to keep it affordable.",
    "url": "https://www.littleleague.org/downloads/tee-ball-parents-guide/",
+   "verified": false
+  },
+  {
+   "id": "F072",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-BAT",
+   "division": "13-16",
+   "age_min": 13,
+   "age_max": 16,
+   "topic": "equipment",
+   "key": "bat_standard",
+   "value": "USABat or BBCOR .50",
+   "unit": "",
+   "rule_ref": "Rule 1.10",
+   "call_type": "rule",
+   "text": "Babe Ruth Baseball 13-16 allows USABat or BBCOR .50 bats with a barrel of at most 2-5/8 inches.",
+   "url": "https://www.baberuthleague.org/bat-rules",
+   "verified": false
+  },
+  {
+   "id": "F073",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-BAT",
+   "division": "16-18",
+   "age_min": 16,
+   "age_max": 18,
+   "topic": "equipment",
+   "key": "bat_standard",
+   "value": "BBCOR .50",
+   "unit": "",
+   "rule_ref": "Rule 1.10",
+   "call_type": "rule",
+   "text": "Babe Ruth Baseball 16-18 requires BBCOR .50 bats; one-piece wood is allowed in every division.",
+   "url": "https://www.baberuthleague.org/bat-rules",
+   "verified": false
+  },
+  {
+   "id": "F079",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-2026",
+   "division": "",
+   "age_min": null,
+   "age_max": null,
+   "topic": "game",
+   "key": "extra_inning_tiebreaker_2026",
+   "value": "runner on second",
+   "unit": "",
+   "rule_ref": "Rules 11.05, 4.10b",
+   "call_type": "rule",
+   "text": "New for 2026 in Babe Ruth and Cal Ripken: each extra inning starts with the previous inning's last batter on second base.",
+   "url": "https://www.baberuthleague.org/latest-rule-changes/2026-baseball-rule-changes",
+   "verified": false
+  },
+  {
+   "id": "F116",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-FACILITY",
+   "division": "13-18",
+   "age_min": 13,
+   "age_max": 18,
+   "topic": "field",
+   "key": "pitching_distance",
+   "value": "60.5",
+   "unit": "feet",
+   "rule_ref": "Facility Guide",
+   "call_type": "rule",
+   "text": "Babe Ruth Baseball (13-18) uses 90-foot bases and 60 feet 6 inches to the pitcher's plate.",
+   "url": "https://www.baberuthleague.org/sitemedia/Babe%20Ruth%20Facility%20Guide%20TC2.pdf",
+   "verified": false
+  },
+  {
+   "id": "F118",
+   "kind": "rulebook_fact",
+   "sanction": "babe_ruth_league",
+   "source_id": "BRL-LIGHTNING",
+   "division": "",
+   "age_min": null,
+   "age_max": null,
+   "topic": "safety",
+   "key": "lightning_wait",
+   "value": "30",
+   "unit": "minutes",
+   "rule_ref": "Lightning Policy",
+   "call_type": "rule",
+   "text": "Babe Ruth League's guidance is to stop play and get to an enclosed building or hard-top car when lightning is seen or thunder is heard. Dugouts and bleachers aren't safe. Wait at least 30 minutes after the storm has passed before resuming.",
+   "url": "https://www.baberuthleague.org/sitemedia/Lightning%20Policy.pdf",
    "verified": false
   }
  ],
@@ -1727,9 +2296,148 @@
    "title": "Billy Goats GGUF coaching staff (youth coach, travel-ball parent and 4-year youth umpire)",
    "url": "https://github.com/seanrugg/diamondagentiq",
    "edition": "2026"
+  },
+  "BRL-BAT": {
+   "title": "Babe Ruth League Bat Rules",
+   "url": "https://www.baberuthleague.org/bat-rules",
+   "edition": "retrieved 2026-10-22"
+  },
+  "BRL-2026": {
+   "title": "Babe Ruth League 2026 Baseball Rule Changes",
+   "url": "https://www.baberuthleague.org/latest-rule-changes/2026-baseball-rule-changes",
+   "edition": "2026 season"
+  },
+  "BRL-FACILITY": {
+   "title": "Babe Ruth League Facility Guide",
+   "url": "https://www.baberuthleague.org/sitemedia/Babe%20Ruth%20Facility%20Guide%20TC2.pdf",
+   "edition": "undated, retrieved 2026-10-22"
+  },
+  "BRL-LIGHTNING": {
+   "title": "Babe Ruth League Guide to Emergency Weather and Lightning Safety",
+   "url": "https://www.baberuthleague.org/sitemedia/Lightning%20Policy.pdf",
+   "edition": "undated, retrieved 2026-10-22"
+  },
+  "BRL-RULEBOOK": {
+   "title": "Babe Ruth League Baseball Rules",
+   "url": "https://www.baberuthleague.org/documents/RulesBaseball.pdf",
+   "edition": "as linked in the Sunshine house rules"
   }
  },
- "pitch_rest": [
+ "house_pitch_rest": [
+  {
+   "division": "10U",
+   "pitches_min": 1,
+   "pitches_max": 20,
+   "rest_days": 0,
+   "daily_max": 75,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "10U",
+   "pitches_min": 21,
+   "pitches_max": 35,
+   "rest_days": 1,
+   "daily_max": 75,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "10U",
+   "pitches_min": 36,
+   "pitches_max": 50,
+   "rest_days": 2,
+   "daily_max": 75,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "10U",
+   "pitches_min": 51,
+   "pitches_max": 65,
+   "rest_days": 3,
+   "daily_max": 75,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "10U",
+   "pitches_min": 66,
+   "pitches_max": 75,
+   "rest_days": 4,
+   "daily_max": 75,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "13U",
+   "pitches_min": 1,
+   "pitches_max": 20,
+   "rest_days": 0,
+   "daily_max": 85,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "13U",
+   "pitches_min": 21,
+   "pitches_max": 35,
+   "rest_days": 1,
+   "daily_max": 85,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "13U",
+   "pitches_min": 36,
+   "pitches_max": 50,
+   "rest_days": 2,
+   "daily_max": 85,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "13U",
+   "pitches_min": 51,
+   "pitches_max": 65,
+   "rest_days": 3,
+   "daily_max": 85,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "13U",
+   "pitches_min": 66,
+   "pitches_max": 85,
+   "rest_days": 4,
+   "daily_max": 85,
+   "house_rule_id": "H015"
+  },
+  {
+   "division": "18U",
+   "pitches_min": 1,
+   "pitches_max": 25,
+   "rest_days": 0,
+   "daily_max": 105,
+   "house_rule_id": "H016"
+  },
+  {
+   "division": "18U",
+   "pitches_min": 26,
+   "pitches_max": 50,
+   "rest_days": 1,
+   "daily_max": 105,
+   "house_rule_id": "H016"
+  },
+  {
+   "division": "18U",
+   "pitches_min": 51,
+   "pitches_max": 75,
+   "rest_days": 2,
+   "daily_max": 105,
+   "house_rule_id": "H016"
+  },
+  {
+   "division": "18U",
+   "pitches_min": 76,
+   "pitches_max": 105,
+   "rest_days": 3,
+   "daily_max": 105,
+   "house_rule_id": "H016"
+  }
+ ],
+ "ll_pitch_rest": [
   {
    "age_min": 6,
    "age_max": 8,

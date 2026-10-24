@@ -5,8 +5,9 @@ Read README.md first. This is a one-day hackathon build: keep it simple.
 ## Hard rules
 - **Zero npm dependencies.** Node 22 built-ins only (node:http, node:test, fetch). The app is plain HTML/CSS/ES modules, no bundler, no framework.
 - **`app/js/core/` must run in both the browser and Node.** No `fs`, no `process`, no DOM in core files.
-- **Never invent rules.** House rules come only from the board (data/league/house_rules.csv). A blank `rule_text` means "not entered yet".
-- **Pitch math stays in code** (`core/pitchRest.js`). Never let the model compute rest days.
+- **Never invent rules.** House rules come only from the league's document (`data/league/house_rules_source.txt`, split into `house_rules.csv`). A blank `rule_text` means "not entered yet".
+- **10U and 13U use Little League rules; 18U uses Babe Ruth League rules.** Never answer an 18U question from Little League facts.
+- **Pitch math stays in code** (`core/pitchRest.js`, from `data/league/pitch_rest.csv`). Never let the model compute rest days.
 - **The umpire is the authority on the field.** Judgment calls are never "wrong" in an answer.
 - Data files in `data/` are the source of truth. `app/data/kb.json` is generated: run `npm run build:data`, never edit it by hand.
 - When you change any file in `app/`, bump `VERSION` in `app/sw.js`.

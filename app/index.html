@@ -58,20 +58,21 @@
     <!-- RULES -->
     <section id="tab-rules" class="tab" aria-labelledby="nav-rules">
       <h1>Rules for <span class="div-label"></span></h1>
-      <p class="lede">Sunshine house rules come first. Where a house rule doesn't cover something, Little League rules apply.</p>
-      <input id="rule-search" type="search" placeholder="Search rules: bats, courtesy runner, protest…">
+      <p class="lede">Sunshine house rules come first. Where they don't cover something, <span class="book-label">Little League</span> rules apply.</p>
+      <input id="rule-search" type="search" placeholder="Search rules: bats, cleats, mercy, stealing…">
       <h2>Sunshine house rules</h2>
       <div id="house-rules"></div>
-      <h2>Little League rules</h2>
+      <p class="small" id="house-doc"></p>
+      <h2><span class="book-label">Little League</span> rules</h2>
       <div id="ll-rules"></div>
     </section>
 
     <!-- PITCH COUNT -->
     <section id="tab-pitch" class="tab" aria-labelledby="nav-pitch">
       <h1>Pitch count &amp; rest</h1>
-      <p class="lede">The app does the math in code, from the Little League pitch-count chart.</p>
+      <p class="lede">From the Sunshine house rules. Leave age blank to use the division picked at the top.</p>
       <form id="pitch-form" class="grid">
-        <label>Pitcher's age <input id="p-age" type="number" min="8" max="18" inputmode="numeric" required></label>
+        <label>Pitcher's age <input id="p-age" type="number" min="8" max="18" inputmode="numeric" placeholder="optional"></label>
         <label>Pitches thrown <input id="p-pitches" type="number" min="0" max="200" inputmode="numeric" required></label>
         <label class="wide">Date pitched <input id="p-date" type="date" required></label>
         <button type="submit" class="primary wide">Calculate</button>

@@ -1,5 +1,5 @@
 {
-  "_note": "League facts taken from the league's public page (clubs.bluesombrero.com/sunshinebaseball) on 2026-10-24. Anything marked TODO needs a board member to confirm before the app shows it as fact.",
+  "_note": "League facts from the league's public page (clubs.bluesombrero.com/sunshinebaseball, 2026-10-24) and the Sunshine house rules document. Anything marked TODO needs a board member to confirm.",
   "name": "Sunshine Baseball League",
   "short_name": "Sunshine",
   "organization": "Sunshine Ballpark (non-profit Sunshine Board)",
@@ -9,15 +9,21 @@
   "ballpark": {
     "name": "Sunshine Ballpark",
     "address": "1200 Wicklow Drive, Fredericksburg, VA",
-    "features": ["turf fields", "playground", "P.A. announcers", "scoreboard"]
+    "features": [
+      "turf fields",
+      "playground",
+      "P.A. announcers",
+      "scoreboard"
+    ]
   },
-  "season": { "start": "June 1", "end": "mid-August" },
+  "season": {
+    "start": "June 1",
+    "end": "mid-August"
+  },
   "sport": "baseball",
   "rulebook": {
-    "base": "little_league",
-    "base_label": "Little League Baseball rules",
-    "house_rules_override": true,
-    "note": "Sunshine house rules come first. Where a house rule doesn't cover something, Little League rules apply."
+    "house_rules_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
+    "note": "Sunshine house rules come first. Where they don't cover something, 10U and 13U follow Little League rules and 18U follows Babe Ruth League rules."
   },
   "divisions": [
     {
@@ -25,53 +31,135 @@
       "label": "10U",
       "age_min": 8,
       "age_max": 10,
-      "ll_age_band": "9-10",
-      "ll_division_hint": "Little League Minor / Major",
-      "open_question": "TODO board: which Little League division does 10U mirror (field size, leading off, stealing, dropped third strike)?"
+      "base_sanction": "little_league",
+      "base_label": "Little League",
+      "home_field": "Sunshine Ballpark (artificial turf)",
+      "field": "46-foot mound, 60-foot bases"
     },
     {
       "id": "13U",
       "label": "13U",
       "age_min": 11,
       "age_max": 13,
-      "ll_age_band": "11-12 and 13-14",
-      "ll_division_hint": "Little League Major / Intermediate (50/70)",
-      "open_question": "TODO board: base distance and mound distance for 13U, and whether leading off is allowed."
+      "base_sanction": "little_league",
+      "base_label": "Little League",
+      "home_field": "Sunshine Ballpark (artificial turf)",
+      "field": "50-foot mound, 70-foot bases"
     },
     {
       "id": "18U",
       "label": "18U",
       "age_min": 14,
       "age_max": 18,
-      "ll_age_band": "13-16",
-      "ll_division_hint": "Little League Junior / Senior",
-      "open_question": "TODO board: Little League pitch-count rules stop at age 16. What limit does Sunshine use for 17- and 18-year-olds?"
+      "base_sanction": "babe_ruth_league",
+      "base_label": "Babe Ruth League",
+      "home_field": "JMHS stadium; cleats allowed at Walker-Grant Middle School Armstrong Field",
+      "field": "90-foot bases, 60 ft 6 in mound (Babe Ruth)"
     }
   ],
-  "audiences": ["parent", "coach", "player", "umpire"],
+  "audiences": [
+    "parent",
+    "coach",
+    "player",
+    "umpire"
+  ],
   "contact": {
     "phone": "540-207-1202",
     "website": "https://clubs.bluesombrero.com/sunshinebaseball",
     "email": "TODO: copy the league email from the website (it is obfuscated on the page)",
-    "registration": "Registration and team formation happen on the league website."
+    "registration": "Registration and team formation happen on the league website.",
+    "gamechanger_pool_players": "sunshinegamechanger@gmail.com"
   },
-  "partners": ["Fredericksburg Nationals (details to be announced)"],
+  "partners": [
+    "Fredericksburg Nationals (details to be announced)"
+  ],
   "fields": [
-    { "site": "Sunshine Ballpark", "fields": ["Ability Field", "Grass Field", "Griffith Field"] },
-    { "site": "Walker Grant Middle School", "fields": ["Main Field", "Auxiliary Field", "Right Field Batting Cage"] },
-    { "site": "Snowden Park", "fields": ["Snowden Field"] },
-    { "site": "Saint Clair Brooks Park", "fields": ["Field 1 (90-foot)", "Field 2 (small field)"] },
-    { "site": "Patriot Park", "fields": ["Field 1"] },
-    { "site": "Virginia Credit Union Stadium", "fields": ["Frednats Field"] },
-    { "site": "Harrison Road Convenience Center Park", "fields": ["The Dump Baseball Diamond"] },
-    { "site": "Freedom Middle School", "fields": ["Field 1", "FMS Baseball Field"] },
-    { "site": "Fauquier High School", "fields": ["Fireman's Field"] }
+    {
+      "site": "Sunshine Ballpark",
+      "fields": [
+        "Ability Field",
+        "Grass Field",
+        "Griffith Field"
+      ]
+    },
+    {
+      "site": "Walker Grant Middle School",
+      "fields": [
+        "Main Field",
+        "Auxiliary Field",
+        "Right Field Batting Cage"
+      ]
+    },
+    {
+      "site": "Snowden Park",
+      "fields": [
+        "Snowden Field"
+      ]
+    },
+    {
+      "site": "Saint Clair Brooks Park",
+      "fields": [
+        "Field 1 (90-foot)",
+        "Field 2 (small field)"
+      ]
+    },
+    {
+      "site": "Patriot Park",
+      "fields": [
+        "Field 1"
+      ]
+    },
+    {
+      "site": "Virginia Credit Union Stadium",
+      "fields": [
+        "Frednats Field"
+      ]
+    },
+    {
+      "site": "Harrison Road Convenience Center Park",
+      "fields": [
+        "The Dump Baseball Diamond"
+      ]
+    },
+    {
+      "site": "Freedom Middle School",
+      "fields": [
+        "Field 1",
+        "FMS Baseball Field"
+      ]
+    },
+    {
+      "site": "Fauquier High School",
+      "fields": [
+        "Fireman's Field"
+      ]
+    }
   ],
   "get_involved": [
-    { "role": "Coach", "what": "Lead a team: practices, lineups, playing time and sportsmanship.", "next_step": "TODO board: how to volunteer and what checks/training are required." },
-    { "role": "Umpire", "what": "Call games and help players learn the rules.", "next_step": "TODO board: umpire sign-up, training and pay or volunteer status." },
-    { "role": "Scorekeeper / P.A.", "what": "Keep the book, run the scoreboard or announce.", "next_step": "TODO board: who to contact." },
-    { "role": "Ballpark volunteer", "what": "Help \"protect and enjoy\" the ballpark: field prep, concessions, clean-up days.", "next_step": "TODO board: volunteer days and contact." },
-    { "role": "Sponsor", "what": "Support the league and its mission.", "next_step": "TODO board: sponsorship levels and contact." }
+    {
+      "role": "Coach",
+      "what": "Lead a team: practices, lineups, playing time and sportsmanship.",
+      "next_step": "TODO board: how to volunteer and what checks/training are required."
+    },
+    {
+      "role": "Umpire",
+      "what": "Call games and help players learn the rules.",
+      "next_step": "TODO board: umpire sign-up, training and pay or volunteer status."
+    },
+    {
+      "role": "Scorekeeper / P.A.",
+      "what": "Keep the book, run the scoreboard or announce.",
+      "next_step": "TODO board: who to contact."
+    },
+    {
+      "role": "Ballpark volunteer",
+      "what": "Help \"protect and enjoy\" the ballpark: field prep, concessions, clean-up days.",
+      "next_step": "TODO board: volunteer days and contact."
+    },
+    {
+      "role": "Sponsor",
+      "what": "Support the league and its mission.",
+      "next_step": "TODO board: sponsorship levels and contact."
+    }
   ]
 }

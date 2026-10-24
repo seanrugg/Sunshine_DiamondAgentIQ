@@ -71,7 +71,7 @@ button { font: inherit; cursor: pointer; }
   border: 1px dashed var(--line); background: transparent; color: var(--muted); font-size: .85rem; }
 
 /* cards */
-.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin: 12px 0; }
+.card { overflow-wrap: anywhere; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin: 12px 0; }
 .card h3 { margin: 0 0 6px; font-size: 1rem; }
 .verdict { border-left: 6px solid var(--red); }
 .stamp { display: inline-block; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;

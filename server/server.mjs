@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { extname, join, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { retrieve } from '../app/js/core/retrieve.js';
-import { composeOffline, buildPrompt, checkCitations, CALL_LABELS } from '../app/js/core/answer.js';
+import { composeOffline, buildPrompt, checkCitations, citationOf, CALL_LABELS } from '../app/js/core/answer.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'app');
 const PORT = Number(process.env.PORT || 8787);
@@ -93,8 +93,8 @@ export async function answer(input) {
       lesson: out.life_lesson && offline.lesson ? { ...offline.lesson, life_lesson: String(out.life_lesson) } : offline.lesson,
       // Only show sources the model actually cited, from what it was given.
       rules: cited.length ? offline.rules.filter((r) => cited.includes(r.id)).concat(
-        [...retrieved.house_rules, ...retrieved.ll_facts].filter((x) => cited.includes(x.id) && !offline.rules.some((r) => r.id === x.id))
-          .map((x) => ({ id: x.id, text: x.text, label: x.kind === 'house_rule' ? `Sunshine house rule · ${x.section}` : (kb.sources[x.source_id]?.title || 'Little League'), url: x.url || null, verified: x.verified })),
+        [...retrieved.house_rules, ...retrieved.rule_facts].filter((x) => cited.includes(x.id) && !offline.rules.some((r) => r.id === x.id))
+          .map((x) => ({ text: x.text, ...citationOf(x, kb) })),
       ) : offline.rules,
       dropped_citations: dropped,
     };

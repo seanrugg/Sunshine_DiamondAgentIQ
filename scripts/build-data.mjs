@@ -42,13 +42,14 @@ export function buildKb() {
   const houseRules = csv('data/league/house_rules.csv').map((r) => ({
     id: r.house_rule_id,
     kind: 'house_rule',
-    division: r.division || 'all',
+    divisions: (r.division || 'all').split(';').map((d) => d.trim()).filter(Boolean),
     topic: r.topic,
-    question: r.question,
+    section: r.section,
+    keywords: r.keywords || '',
+    question: r.question || '',
     text: r.rule_text,
     overrides: r.overrides_fact_key || null,
     call_type: r.call_type || 'rule',
-    section: r.section,
     source_doc: r.source_doc,
     status: r.status || 'placeholder',
     verified: r.status === 'verified',
@@ -56,12 +57,14 @@ export function buildKb() {
   }));
 
   const sources = Object.fromEntries(
-    csv('data/little_league/rule_sources.csv').map((s) => [s.source_id, { title: s.title, url: s.url, edition: s.edition }]),
+    [...csv('data/little_league/rule_sources.csv'), ...csv('data/babe_ruth/rule_sources.csv')]
+      .map((s) => [s.source_id, { title: s.title, url: s.url, edition: s.edition }]),
   );
 
-  const facts = csv('data/little_league/rules_facts.csv').map((r) => ({
+  const facts = [...csv('data/little_league/rules_facts.csv'), ...csv('data/babe_ruth/rules_facts.csv')].map((r) => ({
     id: r.fact_id,
-    kind: 'll_fact',
+    kind: 'rulebook_fact',
+    sanction: r.sanction,
     source_id: r.source_id,
     division: r.division,
     age_min: num(r.age_min),
@@ -75,6 +78,11 @@ export function buildKb() {
     text: r.summary,
     url: r.source_url,
     verified: bool(r.verified),
+  }));
+
+  const housePitchRest = csv('data/league/pitch_rest.csv').map((r) => ({
+    division: r.division, pitches_min: num(r.pitches_min), pitches_max: num(r.pitches_max),
+    rest_days: num(r.rest_days), daily_max: num(r.daily_max), house_rule_id: r.house_rule_id,
   }));
 
   const pitchRest = csv('data/little_league/pitch_rest.csv').map((r) => ({
@@ -106,7 +114,7 @@ export function buildKb() {
 
   return {
     built_at: new Date().toISOString(),
-    league, house_rules: houseRules, ll_facts: facts, sources, pitch_rest: pitchRest,
+    league, house_rules: houseRules, rule_facts: facts, sources, house_pitch_rest: housePitchRest, ll_pitch_rest: pitchRest,
     lessons, insights, situations, stories,
   };
 }
@@ -117,6 +125,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(kb, null, 1));
   const entered = kb.house_rules.filter((h) => h.text).length;
-  console.log(`kb.json: ${kb.ll_facts.length} Little League facts, ${kb.pitch_rest.length} pitch-rest rows, ` +
+  console.log(`kb.json: ${kb.rule_facts.length} rulebook facts, ${kb.house_pitch_rest.length} house pitch-rest rows, ` +
     `${entered}/${kb.house_rules.length} house rules entered, ${kb.lessons.length} lessons, ${kb.insights.length} tips`);
 }

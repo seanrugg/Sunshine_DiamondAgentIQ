@@ -6,8 +6,8 @@ Owner column is for the team whiteboard.
 ## Must have for the demo
 | # | Task | Owner |
 |---|---|---|
-| 1 | Board: fill `rule_text` for H001-H008 in `data/league/house_rules.csv` (set `status=draft`), then `npm run build:data`. | |
-| 2 | Board: answer the 18U pitch-count question (H003). If Sunshine sets a limit, add rows for ages 17-18 to `data/little_league/pitch_rest.csv` with `source_id=SUNSHINE` and a test in `test/core.test.mjs`. | |
+| 1 | ~~Load the Sunshine house rules~~ Done: 39 rules in `data/league/house_rules.csv`, pitch tables in `data/league/pitch_rest.csv`. | |
+| 2 | Board: answer the open questions in README (25 pitches at 18U, 13U warm-ups, 18U home field) and update the matching rows. | |
 | 3 | Deploy: provision the VPS, point DNS, `docker compose up -d --build`, confirm `https://<domain>/api/health`. | |
 | 4 | Deploy: turn on GitHub Pages (Actions) and install the app on two phones; test airplane mode. | |
 | 5 | Model: on the VPS, run Ollama with a small model, set `LLM_BASE_URL`, confirm the header pill says `live`. | |
@@ -16,8 +16,8 @@ Owner column is for the team whiteboard.
 ## Should have
 | # | Task | Owner |
 |---|---|---|
-| 7 | Retrieval: for bat questions, rank the fact whose `division` matches the player's age first (`core/retrieve.js`), with a test. | |
-| 8 | UI: show the selected division's Little League division hint under the Rules heading (`app/js/app.js`, `renderRules`). | |
+| 7 | Retrieval: add a test question for each of the 39 house rules in `test/core.test.mjs` and fix any that don't come back first (add `keywords` in the CSV, not code). | |
+| 8 | Data: add more Babe Ruth League rule summaries for 18U to `data/babe_ruth/rules_facts.csv` from the rulebook PDF the house rules link to. | |
 | 9 | UI: add an "Ask about this rule" button on each rule card that fills the Ask box. | |
 | 10 | Data: add Sunshine-specific lessons (inclusion, "protect and enjoy" the ballpark) to `data/coaching/lessons.csv`. | |
 | 11 | League tab: replace TODO volunteer / umpire / sponsor steps in `data/league/league.json` with board answers. | |
