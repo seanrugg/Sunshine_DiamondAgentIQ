@@ -2,12 +2,12 @@
 // or installed phones keep the old copy.
 // The phone AI model is cached separately by WebLLM (caches named "webllm/..."):
 // this worker never deletes those, so app updates don't force a re-download.
-const VERSION = 'sunshine-v6';
+const VERSION = 'sunshine-v7';
 const ASSETS = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest', 'data/kb.json',
   'js/app.js', 'js/core/answer.js', 'js/core/pitchRest.js', 'js/core/philosophy.js', 'js/core/retrieve.js', 'js/core/providers.js',
   'js/ai/engines.js', 'js/ai/panel.js', 'js/ai/llm-worker.js',
-  'icons/mark-192.png', 'icons/mark-512.png', 'icons/favicon-64.png', 'icons/apple-touch-icon.png',
+  'icons/mark-192.png', 'icons/mark-512.png', 'icons/favicon-64.png', 'icons/apple-touch-icon.png', 'icons/brand-hero.jpg',
 ];
 // Large, only needed for the phone model: cached the first time it's used.
 const LAZY = 'sunshine-lazy-v1';
