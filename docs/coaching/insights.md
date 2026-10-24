@@ -1,0 +1,269 @@
+<!-- Copied from seanrugg/diamondagentiq docs/coaching (generated there from data/coaching/*.csv). The Sunshine app reads data/coaching/*.csv; change the CSVs in DiamondAgentIQ and copy both over. -->
+
+# Coaching insights
+
+Practical tips by topic, with the ages and audience they're for.
+
+## bat care
+
+### C018: Taking care of a bat
+
+Ages 6-18 · for all · both · source `JB-GUIDE`
+
+Don't roll or shave a bat: it can void the warranty and make the bat illegal. Composite bats need a short break-in at partial power (follow the maker's instructions), and shouldn't be used in cold weather (below about 60 degrees F) or with heavy yellow cage balls. Turn the bat a quarter turn after each swing so wear spreads around the barrel.
+
+**Why:** An altered or damaged bat can be removed from play, and replacing one is expensive.
+
+**Try this:** Mark the label side and rotate a quarter turn each swing in batting practice; keep composite bats out of cold-weather games and cage machines.
+
+Draft, not yet reviewed.
+
+## bat fit now
+
+### C017: Buying a bigger bat to grow into
+
+Ages 5-14 · for parent · both · source `JB-YOUTH-SELECT`
+
+Don't buy a bat to grow into. A bat that's too long or too heavy hurts swing mechanics now, and those habits stick. Fit the bat to the player today: height and weight give a starting length, then watch how it swings.
+
+**Why:** Bat speed and control drive good contact; an oversized bat costs both.
+
+**Try this:** Use the maker's size chart for a starting length, then have the player try a teammate's bat one size up and one size down and compare the swings.
+
+Draft, not yet reviewed.
+
+## bat weight check
+
+### C012: Choosing a bat or wondering if it's too heavy
+
+Ages 6-18 · for all · both · source `DIQ-SME`
+
+Quick check: hold the bat by the handle with one arm straight out to the side for about 20-30 seconds. If the barrel drops or the arm shakes, the bat is probably too heavy.
+
+**Why:** A bat that's too heavy slows the swing and makes it hard to adjust to pitches, which leads to late swings and pulled-off contact.
+
+**Try this:** Try the hold test and a few dry swings; if the player drops the barrel or is late, go lighter (a bigger drop) or shorter.
+
+Draft, not yet reviewed.
+
+## confidence mindset
+
+### C008: A player gets down on themselves
+
+Ages 8-18 · for player · both · source `DIQ-SME`
+
+Focus on what you control: being ready, your approach, effort and how you respond. Hits and wins depend partly on luck; a good at-bat can still be an out.
+
+**Why:** Measuring yourself by things you control builds confidence that lasts through slumps.
+
+**Try this:** After each at-bat, grade one controllable (Was I ready? Did I swing at my pitch?) instead of the result.
+
+Draft, not yet reviewed.
+
+## drop weight
+
+### C016: Reading a bat's size or comparing bats
+
+Ages 4-18 · for all · both · source `JB-GUIDE`
+
+A bat's drop is its length minus its weight in ounces: a 30-inch bat at -10 weighs 20 ounces. The bigger the drop number, the lighter the bat. Typical ranges: tee ball about -10.5 to -14, coach pitch -9 to -12, fastpitch -8 to -13; high school and college baseball use -3 BBCOR bats.
+
+**Why:** Matching the drop to the player's age and strength keeps the bat light enough to swing with control, and some leagues limit the drop.
+
+**Try this:** Read the length and drop printed on the bat (for example 29-inch, -10), work out the weight, then check that the league's bat rule allows it before buying.
+
+Draft, not yet reviewed.
+
+## equipment bat
+
+### C013: Choosing a bat
+
+Ages 4-18 · for all · both · source `DIQ-SME`
+
+Start with what's legal in the player's league (for example USABat, BBCOR or USSSA marks, or the softball certification), then fit length and weight to the player. Control and bat speed matter more than size.
+
+**Why:** An illegal bat can be removed or penalized; an oversized bat hurts development.
+
+**Try this:** Check the league's bat rule, use a sizing chart for length, then do the weight check before buying.
+
+Draft, not yet reviewed.
+
+## failure recovery
+
+### C005: A strikeout or mistake that ends a game
+
+Ages 6-18 · for all · both · source `DIQ-SME`
+
+A strikeout, even one that ends the game, is one at-bat of information. Talk about the process (were you ready, where did you stand, did you protect with two strikes?), not the result.
+
+**Why:** Players who learn from a tough at-bat instead of fearing the next one get better faster and enjoy the game longer.
+
+**Try this:** Pick one thing to work on (for example, plate coverage or the two-strike approach), practise it this week, and let the rest go.
+
+Draft, not yet reviewed.
+
+## multi sport
+
+### C011: Questions about year-round baseball or softball
+
+Ages 4-16 · for parent · both · source `USAB-ADM-DOC`
+
+Playing other sports helps young players develop and stay healthy; USA Baseball recommends no single-sport specialization before age 12.
+
+**Why:** Different movements build athleticism and reduce overuse.
+
+**Try this:** Keep at least one other sport in the year, and take months off from throwing.
+
+Draft, not yet reviewed.
+
+## parent support
+
+### C006: Right after a tough game
+
+Ages 6-18 · for parent · both · source `DIQ-SME`
+
+On the ride home, let your child speak first. 'I love watching you play' and praise for effort and approach help more than a breakdown of what went wrong.
+
+**Why:** Kids hear critique from a parent differently right after a loss; support keeps the door open for learning later.
+
+**Try this:** Wait until they bring it up or until a calm time the next day. Leave technique to the coach unless your child asks you.
+
+Draft, not yet reviewed.
+
+### C007: A parent wants to help with mechanics or playing time
+
+Ages 6-18 · for parent · both · source `LL-D-parent-code-conduct`
+
+Raise concerns with the coach at a time the coach sets, not right after a game, and don't coach from the stands during play.
+
+**Why:** It keeps one voice coaching the player during games and keeps adult conflict away from the kids.
+
+**Try this:** Ask the coach for a short conversation later in the week, with your player there, and come with a question rather than a complaint.
+
+Draft, not yet reviewed.
+
+## pitch workload
+
+### C014: Pitcher fatigue or a heavy week of games
+
+Ages 7-18 · for all · baseball · source `PS-9-12`
+
+Follow pitch counts and rest days, don't pitch on three days in a row, avoid catching on non-pitching days, and take time off from throwing each year.
+
+**Why:** Overuse is the main source of youth arm injuries.
+
+**Try this:** Track pitches every outing and plan the rotation before a tournament weekend.
+
+Draft, not yet reviewed.
+
+## plate coverage
+
+### C001: Hitter strikes out on pitches away / outside
+
+Ages 8-14 · for all · both · source `DIQ-SME`
+
+Many youth pitchers miss away from the batter on purpose, because they don't want to hit anyone. Moving closer to the plate (crowding it) brings those outside pitches into reach.
+
+**Why:** If you stand too far off the plate, the outer edge, where most youth pitches end up, is out of your reach.
+
+**Try this:** Before the at-bat, set your feet so the end of the bat covers the far edge of the plate. If the pitcher keeps missing away, inch closer.
+
+Draft, not yet reviewed.
+
+## practice balance
+
+### C010: Planning a season or a week
+
+Ages 4-18 · for coach · both · source `USAB-ADM-DOC`
+
+Players improve with reps: up to age 12, aim for about three-quarters practice or deliberate play to one-quarter games; from 12 to 18 roughly two-thirds to one-third.
+
+**Why:** Games give few touches per player; practice gives many.
+
+**Try this:** Plan more short, active practices with stations rather than adding more games.
+
+Draft, not yet reviewed.
+
+## run it out
+
+### C015: Batter hits a ball near the line, or isn't sure it's fair
+
+Ages any-any · for player · both · source `DIQ-SME`
+
+Run hard to first on every ball you hit until you hear 'Foul!' or 'Time!' Fair or foul is the umpire's call, not the batter's.
+
+**Why:** A ground ball near the line can roll foul and come back fair. A batter who stops to judge it gives away an out that running would have saved.
+
+**Try this:** In practice, roll balls down the lines that go foul and come back fair. The batter runs every one; the fielder makes the play; a coach plays umpire and signals fair or calls foul.
+
+Draft, not yet reviewed.
+
+## softball bat certification
+
+### C019: Choosing a softball bat for a league or tournament
+
+Ages 6-18 · for all · softball · source `JB-SB-GOV`
+
+Softball has several governing bodies (for example USA Softball, USSSA, NSA, ISA and WBSC), and each certifies bats separately. A bat that's legal in one league may not be legal in another.
+
+**Why:** An uncertified bat can be removed from the game or penalized.
+
+**Try this:** Before buying or before a tournament, find out which body governs it and look the bat up on that body's certified list.
+
+Draft, not yet reviewed.
+
+## strike zone
+
+### C002: Hitter takes close pitches for strikes
+
+Ages 8-14 · for all · both · source `DIQ-SME`
+
+In youth games the zone is often called generously, roughly chins to shins and line to line, because pitchers are still developing control and umpires keep the game moving. Treat it as a hit zone: if it's close, be ready to swing.
+
+**Why:** Waiting for a perfect pitch at this level usually means watching strike three.
+
+**Try this:** In practice, call anything chins-to-shins a 'swing pitch' and react to it. Note how the umpire is calling it in the first inning and adjust.
+
+Draft, not yet reviewed.
+
+## two strike approach
+
+### C003: Two strikes in the count
+
+Ages 9-18 · for player · both · source `DIQ-SME`
+
+With two strikes, protect the zone: widen what you'll swing at, shorten the swing, choke up slightly, and try to put the ball in play or foul off tough pitches.
+
+**Why:** A ball in play can become a hit or an error; a called third strike can't.
+
+**Try this:** Two-strike rounds in batting practice: start every rep at 0-2, choke up, shorter swing, battle the outer half off a tee or soft toss.
+
+Draft, not yet reviewed.
+
+## umpire communication
+
+### C004: Pregame, or when unsure how the zone is being called
+
+Ages 8-18 · for coach · both · source `DIQ-SME`
+
+Before the game, a coach can politely ask the plate umpire how they're calling the zone (for example, how wide or how low). Players can also learn a lot by watching the first innings.
+
+**Why:** Knowing the zone tells hitters where to stand and what to swing at, and it builds a respectful relationship with the crew.
+
+**Try this:** At the plate meeting, ask once, briefly and respectfully, then adjust. Never argue balls and strikes during play: they're judgment calls and can't be protested.
+
+Draft, not yet reviewed.
+
+## umpire respect
+
+### C009: Frustration with a call
+
+Ages 6-18 · for all · both · source `LL-D-league-resource-guide`
+
+Umpires make judgment calls, and youth umpires are often volunteers. Adjusting to the zone you're given is a skill; arguing it never changes it.
+
+**Why:** Players copy how adults treat officials, and respect keeps the game running and the crew wanting to come back.
+
+**Try this:** Model a calm reaction. If a rule (not a judgment) seems misapplied, the head coach can ask calmly at a stoppage.
+
+Draft, not yet reviewed.

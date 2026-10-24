@@ -94,22 +94,23 @@ export function buildKb() {
   const lessons = csv('data/coaching/lessons.csv').map((r) => ({
     id: r.lesson_id, kind: 'lesson', title: r.title, principle: r.principle, life_lesson: r.life_lesson,
     for: { player: r.for_player, coach: r.for_coach, parent: r.for_parent, umpire: r.for_umpire },
-    tags: r.tags.split(';').filter(Boolean),
+    tags: r.tags.split(';').filter(Boolean), verified: bool(r.verified),
   }));
 
   const insights = csv('data/coaching/insights.csv').map((r) => ({
     id: r.insight_id, kind: 'insight', topic: r.topic, sport: r.sport, age_min: num(r.age_min), age_max: num(r.age_max),
-    audience: r.audience, situation: r.situation, text: r.insight, why: r.why, try_this: r.try_this,
+    audience: r.audience, situation: r.situation, text: r.insight, why: r.why, try_this: r.try_this, verified: bool(r.verified),
   }));
 
   const situations = csv('data/coaching/situations.csv').map((r) => ({
     id: r.situation_id, kind: 'situation', name: r.name, topic: r.topic, bases: r.bases, outs: r.outs, count: r.count,
     offense: r.offense, defense: r.defense, common_mistakes: r.common_mistakes,
-    lesson_ids: r.lesson_ids.split(';').filter(Boolean),
+    lesson_ids: r.lesson_ids.split(';').filter(Boolean), verified: bool(r.verified),
   }));
 
   const stories = csv('data/coaching/stories.csv').map((r) => ({
     id: r.story_id, kind: 'story', title: r.title, text: r.story, lesson_ids: r.lesson_ids.split(';').filter(Boolean),
+    situation_ids: r.situation_ids.split(';').filter(Boolean), verified: bool(r.verified),
   }));
 
   return {

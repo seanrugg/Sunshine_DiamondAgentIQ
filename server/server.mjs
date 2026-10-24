@@ -64,7 +64,7 @@ export async function answer(input) {
   if (!LLM.baseUrl || codeOnly(offline)) return offline; // pitch math stays in code
 
   try {
-    const text = await chatProvider({ baseUrl: LLM.baseUrl, apiKey: LLM.apiKey, model: LLM.model }, buildPrompt(kb, input, retrieved), { timeoutMs: LLM.timeoutMs });
+    const text = await chatProvider({ baseUrl: LLM.baseUrl, apiKey: LLM.apiKey, model: LLM.model }, buildPrompt(kb, input, retrieved, { teach: offline.teachable }), { timeoutMs: LLM.timeoutMs });
     return mergeModelAnswer(kb, offline, parseModelJson(text), retrieved, { mode: 'server', engine: `League server · ${LLM.model}` });
   } catch (err) {
     return { ...offline, mode: 'offline', fallback_reason: String(err.message || err) };

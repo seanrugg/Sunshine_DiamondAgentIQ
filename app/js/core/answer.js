@@ -1,9 +1,10 @@
 // Turns retrieved knowledge into an answer. Offline mode uses composeOffline
 // (no model). Server mode sends buildPrompt() to a model and checks its reply
 // with checkCitations(), falling back to composeOffline on any failure.
-import { PHILOSOPHY, DISCLAIMER } from './philosophy.js';
+import { PHILOSOPHY, PHILOSOPHY_SHORT, DISCLAIMER } from './philosophy.js';
 import { computeRest } from './pitchRest.js';
 import { STRONG_MATCH } from './retrieve.js';
+import { buildTeachable } from './teachable.js';
 
 const JUDGMENT_WORDS = ['strike zone', 'balls and strikes', 'missed a call', 'missed the call', 'zone', 'safe', 'called', 'bad call', 'the call', 'tagged', 'balk', 'fair', 'foul', 'obstruction', 'interference', 'umpire', 'ump'];
 const RULE_WORDS = ['how many', 'allowed', 'rule', 'limit', 'legal', 'eligible', 'pitches', 'rest', 'bat', 'bats', 'innings', 'courtesy', 'cleats', 'dugout', 'mercy', 'forfeit', 'lineup', 'steal', 'slide', 'warm-up', 'warmup', 'gum', 'seeds'];
@@ -85,8 +86,9 @@ export function composeOffline(kb, input, retrieved) {
       if (item && !rules.some((r) => r.id === id)) rules.push(item);
     }
   }
-  const lesson = retrieved.lessons[0] || null;
-  const tip = retrieved.insights[0] || null;
+  // The teachable moment: every answer carries one, built from the team's coaching material.
+  const teach = buildTeachable(kb, input, { callType, rules, division: div });
+  const tip = teach.next_step ? { text: teach.next_step } : null;
 
   const pitch = pitchQuestion(kb, input);
   let verdict;
@@ -95,16 +97,14 @@ export function composeOffline(kb, input, retrieved) {
       `${pitch.over_limit ? `, and ${pitch.pitches} is over the ${pitch.division} daily limit of ${pitch.daily_max}` : ''}. Use the Pitch Count tab to get the exact date they can pitch again.`;
     const rule = kb.house_rules.find((h) => h.id === pitch.house_rule?.id);
     if (rule && !rules.some((r) => r.id === rule.id)) rules.unshift(rule);
-  } else if (callType === 'coaching' && (lesson || tip)) {
-    verdict = tip ? `${tip.text} ${tip.try_this}` : lesson.principle;
+  } else if (callType === 'coaching') {
+    verdict = teach.moment;
   } else if (callType === 'judgment') {
     verdict = "This sounds like the umpire's judgment: calls like balls and strikes or safe and out belong to the umpire. In Sunshine, only a head coach or manager may discuss a call with the umpire, preferably between innings, and taunting or arguing with umpires leads to ejection after one warning. The best move is to adjust to the call and learn from the moment.";
   } else if (retrieved.primary === 'house') {
     verdict = `Sunshine's house rule covers this: ${rules[0].text}`;
   } else if (retrieved.primary === 'rulebook') {
     verdict = `Sunshine's house rules don't cover this directly, so the ${book} rules apply${div ? ` for ${div.label}` : ''}: ${rules[0].text}`;
-  } else if (callType === 'coaching') {
-    verdict = 'This is a coaching moment more than a rules question. Here is a way to think about it.';
   } else {
     verdict = `Neither the Sunshine house rules nor the ${book} rules in this app answer that directly. ` +
       `Where the house rules are silent, the full ${book} rulebook applies${book === 'Little League' ? ' (it\'s in the Little League app)' : ''}, so check it or ask your coach or a board member.` +
@@ -119,19 +119,23 @@ export function composeOffline(kb, input, retrieved) {
     verdict,
     rules: rules.map((r) => ({ id: r.id, text: r.text, ...citationOf(r, kb) })),
     pending_house_rules: retrieved.pending_house_rules.map((h) => ({ id: h.id, question: h.question })),
-    for_role: lesson ? { label: ROLE_OPENERS[role], text: lesson.for[role] } : null,
-    lesson: lesson ? { id: lesson.id, title: lesson.title, life_lesson: lesson.life_lesson } : null,
-    tip: tip && !verdict.includes(tip.text) ? { id: tip.id, text: tip.text, try_this: tip.try_this } : null,
-    situation: retrieved.situations[0] ? { name: retrieved.situations[0].name, offense: retrieved.situations[0].offense, defense: retrieved.situations[0].defense } : null,
+    teachable: teach,
+    for_role: teach.perspectives.find((p) => p.you) ? { label: ROLE_OPENERS[role], text: teach.perspectives.find((p) => p.you).text } : null,
+    lesson: teach.lesson ? { id: teach.lesson.id, title: teach.lesson.title, life_lesson: teach.lesson.life_lesson } : null,
+    tip,
+    situation: teach.situation,
     pitch_rest: pitch,
-    draft_notice: draft ? `The ${book} summaries here are written by our team from the linked sources and haven't been checked by the league yet. Sunshine house rules are from the league's house rules document.` : null,
+    draft_notice: [
+      draft ? `The ${book} summaries here are written by our team from the linked sources and haven't been checked by the league yet. Sunshine house rules are from the league's house rules document.` : '',
+      teach.draft ? "The coaching guidance comes from our team's coaching notes, which haven't been formally reviewed yet." : '',
+    ].filter(Boolean).join(' ') || null,
     disclaimer: DISCLAIMER,
     division: retrieved.division?.id || null,
   };
 }
 
 /** Messages for an OpenAI-compatible chat model. The model may cite only ids given here. */
-export function buildPrompt(kb, input, retrieved, { compact = false } = {}) {
+export function buildPrompt(kb, input, retrieved, { compact = false, teach = null } = {}) {
   const ctx = [];
   const n = compact ? 3 : 99;
   retrieved = {
@@ -145,14 +149,19 @@ export function buildPrompt(kb, input, retrieved, { compact = false } = {}) {
   for (const h of retrieved.house_rules) ctx.push(`[${h.id}] SUNSHINE HOUSE RULE (${h.divisions.join('/')}, ${h.section}): ${h.text}`);
   for (const h of (retrieved.related_house_rules || []).filter((x) => x.score >= STRONG_MATCH).slice(0, compact ? 0 : 2)) ctx.push(`[${h.id}] SUNSHINE HOUSE RULE, MAY NOT APPLY (${h.divisions.join('/')}, ${h.section}): ${h.text}`);
   for (const f of retrieved.rule_facts) ctx.push(`[${f.id}] ${(SANCTION_LABELS[f.sanction] || 'RULEBOOK').toUpperCase()} (ages ${f.age_min ?? '?'}-${f.age_max ?? '?'}, ${f.topic}${f.rule_ref ? ', ' + f.rule_ref : ''}): ${f.text}`);
-  for (const l of retrieved.lessons) ctx.push(`[${l.id}] LESSON "${l.title}": ${l.principle} For a ${input.role}: ${l.for[input.role] || ''}`);
+  if (teach?.lesson) {
+    const l = kb.lessons.find((x) => x.id === teach.lesson.id);
+    ctx.push(`[${l.id}] TEACHABLE MOMENT LESSON "${l.title}": ${l.principle} Beyond the diamond: ${l.life_lesson} For a ${input.role}: ${l.for[input.role] || ''}`);
+  } else if (teach?.principle) ctx.push(`[PHILOSOPHY] ${teach.principle.text}`);
+  if (teach?.situation && !compact) ctx.push(`[${teach.situation.id}] GAME SITUATION "${teach.situation.name}": Offense: ${teach.situation.offense} Defense: ${teach.situation.defense}`);
+  if (!teach) for (const l of retrieved.lessons) ctx.push(`[${l.id}] LESSON "${l.title}": ${l.principle} For a ${input.role}: ${l.for[input.role] || ''}`);
   for (const i of retrieved.insights) ctx.push(`[${i.id}] TIP (${i.topic}): ${i.text} Try this: ${i.try_this}`);
   for (const h of retrieved.pending_house_rules) ctx.push(`[${h.id}] HOUSE RULE NOT ENTERED YET: ${h.question}`);
 
   const div = retrieved.division;
   const system = `You are Sunshine DiamondAgentIQ, the learning companion for the ${kb.league.name} (${kb.league.ballpark.address}).
 League mission: ${kb.league.mission}
-${compact ? 'Be encouraging. The umpire is the authority on the field. Safety first. Win and lose as a team.' : PHILOSOPHY}
+${compact ? PHILOSOPHY_SHORT : PHILOSOPHY}
 
 Rules for your answer:
 - Use ONLY the numbered context below. Sunshine house rules override the rulebook (Little League for 10U and 13U, Babe Ruth League for 18U). If the context doesn't answer the question, say so and suggest asking a coach or board member.
@@ -162,7 +171,8 @@ Rules for your answer:
 - Speak to a ${input.role}${div ? ` in the ${div.label} division (ages ${div.age_min}-${div.age_max})` : ''}. Plain words, warm, short.
 - Never do pitch-count arithmetic yourself; point to the Pitch Count tab.
 - No medical advice. Never blame a child, a coach or an umpire.
-Return JSON only: {"call_type":"rule|judgment|judgment_and_rule|coaching","verdict":"2-3 sentences","for_role":"1-2 sentences for the ${input.role}","life_lesson":"1 sentence","cited_ids":["ids you used"]}`;
+- The teachable moment is the most important part: turn this stressful or confusing moment into something the ${input.role} can learn from, using the TEACHABLE MOMENT LESSON. Calm, encouraging, no blame.
+Return JSON only: {"call_type":"rule|judgment|judgment_and_rule|coaching","verdict":"2-3 sentences","teachable_moment":"1-2 sentences","life_lesson":"1 sentence","cited_ids":["ids you used"]}`;
 
   return [
     { role: 'system', content: system },
@@ -212,8 +222,8 @@ export function mergeModelAnswer(kb, offline, out, retrieved, { mode, engine }) 
     call_type: callType,
     call_label: CALL_LABELS[callType],
     verdict: String(out.verdict).slice(0, 1200),
-    for_role: out.for_role ? { label: offline.for_role?.label || 'For you', text: String(out.for_role).slice(0, 600) } : offline.for_role,
-    lesson: out.life_lesson ? { id: offline.lesson?.id || null, title: '', life_lesson: String(out.life_lesson).slice(0, 400) } : offline.lesson,
+    ai_moment: out.teachable_moment ? String(out.teachable_moment).slice(0, 600) : null,
+    // The lesson, situation and per-role guidance stay exactly as the team wrote them.
     rules,
     dropped_citations: dropped,
   };

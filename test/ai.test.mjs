@@ -62,13 +62,14 @@ test('parseModelJson finds JSON wrapped in prose or code fences', () => {
 
 test('mergeModelAnswer keeps the rules, drops made-up citations, and labels the engine', () => {
   const given = retrieved.house_rules[0].id;
-  const out = { call_type: 'rule', verdict: 'Sneakers only on the turf.', for_role: 'Pack turf shoes.', cited_ids: [given, 'H999'] };
+  const out = { call_type: 'rule', verdict: 'Sneakers only on the turf.', teachable_moment: 'Pack turf shoes.', cited_ids: [given, 'H999'] };
   const a = mergeModelAnswer(kb, offline, out, retrieved, { mode: 'device', engine: 'Llama 3.2 1B on this phone' });
   assert.equal(a.verdict, 'Sneakers only on the turf.');
   assert.equal(a.rules[0].id, given);
   assert.deepEqual(a.dropped_citations, ['H999']);
   assert.equal(a.engine, 'Llama 3.2 1B on this phone');
-  assert.equal(a.for_role.text, 'Pack turf shoes.');
+  assert.equal(a.ai_moment, 'Pack turf shoes.');
+  assert.deepEqual(a.teachable, offline.teachable); // the team's coaching material is never rewritten
 });
 
 test('an unknown call type from the model falls back to the offline one', () => {

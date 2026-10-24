@@ -216,7 +216,7 @@ export async function answerQuestion(kb, input, settings, info) {
       return await askServer(settings.server.url, input);
     }
     // Phones get a shorter prompt: less to read means a faster answer.
-    const messages = buildPrompt(kb, input, retrieved, { compact: tier === 'device' });
+    const messages = buildPrompt(kb, input, retrieved, { compact: tier === 'device', teach: offline.teachable });
     let text, engineLabel;
     if (tier === 'device') {
       const build = pickBuild(settings.device.model, info);

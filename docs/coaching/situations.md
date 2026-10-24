@@ -1,0 +1,101 @@
+<!-- Copied from seanrugg/diamondagentiq docs/coaching (generated there from data/coaching/*.csv). The Sunshine app reads data/coaching/*.csv; change the CSVs in DiamondAgentIQ and copy both over. -->
+
+# Situations
+
+How the offense and defense should react in specific game states. A situation applies only where its rule is in effect; the linked rule facts say where.
+
+<a id="sit001"></a>
+## SIT001: Dropped third strike, bases loaded, 2 outs
+
+bases: loaded · outs: 2 · count: two strikes
+
+**Offense:** The batter can run because there are two outs, even though first base is occupied. Everyone runs: every runner is forced to move up. Batter: drop the bat and sprint to first right away.
+
+**Defense:** Every base is a force. The simplest out is often for the catcher to pick up the ball and step on home plate, or throw to first. Don't rush into a wild throw: one clean force ends the inning.
+
+**Common mistakes:** Batter walks back to the dugout thinking it's over; runners stop; catcher tags the batter late or throws wildly instead of taking the sure force at home.
+
+**Where the rule applies:**
+- F034 (usssa): In USSSA fastpitch, the batter may run on an uncaught third strike when first base is open or there are two outs. Coach-pitch travel ball is the exception.
+- F054 (usssa, 7U-8U kid pitch): In USSSA 7U-8U kid pitch, the batter is automatically out on a dropped third strike.
+- F148 (little_league, Majors/Junior/Senior): The dropped-third-strike rule applies in Little League Majors, Junior and Senior softball.
+- F217 (nsa, 8U coach pitch): In NSA 8U, an inning ends after 3 outs or 5 runs. Runners may leave on the release but can't steal home unless played on. There's no bunting, no dropped third strike, and no hit-by-pitch award until a second hit in the same at-bat.
+- F021 (little_league): New for 2026: with a double first base on an uncaught third strike, both the fielder and the runner may use either part of the base.
+
+Lessons: [Big moments aren't scripted](lessons.md#l005), [Everyone makes mistakes: forgive others, own yours](lessons.md#l002). Draft, not yet reviewed.
+
+<a id="sit002"></a>
+## SIT002: Dropped third strike, runner on first, 1 out
+
+bases: first · outs: 1 · count: two strikes
+
+**Offense:** With first base occupied and fewer than two outs, the batter is out and can't run, whether or not the catcher holds the pitch. The runner on first is NOT forced; he may try to advance at his own risk.
+
+**Defense:** The batter is already out. Don't throw to first; watch the runner. Keep the ball in front, call 'batter's out' loudly so the infield knows, and only throw if the runner is trying to advance.
+
+**Common mistakes:** Defense throws to first for a batter who is already out and lets the runner take extra bases; batter runs when he can't and draws a throw that helps no one.
+
+**Where the rule applies:**
+- F034 (usssa): In USSSA fastpitch, the batter may run on an uncaught third strike when first base is open or there are two outs. Coach-pitch travel ball is the exception.
+- F054 (usssa, 7U-8U kid pitch): In USSSA 7U-8U kid pitch, the batter is automatically out on a dropped third strike.
+- F148 (little_league, Majors/Junior/Senior): The dropped-third-strike rule applies in Little League Majors, Junior and Senior softball.
+- F217 (nsa, 8U coach pitch): In NSA 8U, an inning ends after 3 outs or 5 runs. Runners may leave on the release but can't steal home unless played on. There's no bunting, no dropped third strike, and no hit-by-pitch award until a second hit in the same at-bat.
+- F021 (little_league): New for 2026: with a double first base on an uncaught third strike, both the fielder and the runner may use either part of the base.
+
+Lessons: [Everyone makes mistakes: forgive others, own yours](lessons.md#l002). Draft, not yet reviewed.
+
+<a id="sit003"></a>
+## SIT003: Dropped third strike, runner on third, 1 out
+
+bases: third · outs: 1 · count: two strikes
+
+**Offense:** First base is open, so the batter can run: sprint to first the moment the ball gets away. The runner on third watches the catcher: if the catcher throws to first, that's often the chance to break for home.
+
+**Defense:** Tag the batter if he's close, or throw to first. Before throwing, check the runner on third; the corner infielders should call it out. A rushed throw can give away the winning run.
+
+**Common mistakes:** Batter doesn't run because he thinks strike three ends it; runner on third doesn't read the throw; catcher throws to first without looking the runner back.
+
+**Where the rule applies:**
+- F034 (usssa): In USSSA fastpitch, the batter may run on an uncaught third strike when first base is open or there are two outs. Coach-pitch travel ball is the exception.
+- F054 (usssa, 7U-8U kid pitch): In USSSA 7U-8U kid pitch, the batter is automatically out on a dropped third strike.
+- F148 (little_league, Majors/Junior/Senior): The dropped-third-strike rule applies in Little League Majors, Junior and Senior softball.
+- F217 (nsa, 8U coach pitch): In NSA 8U, an inning ends after 3 outs or 5 runs. Runners may leave on the release but can't steal home unless played on. There's no bunting, no dropped third strike, and no hit-by-pitch award until a second hit in the same at-bat.
+- F021 (little_league): New for 2026: with a double first base on an uncaught third strike, both the fielder and the runner may use either part of the base.
+
+Lessons: [Big moments aren't scripted](lessons.md#l005), [Believe in your players before they believe in themselves](lessons.md#l003). Draft, not yet reviewed.
+
+<a id="sit004"></a>
+## SIT004: Runner hit by a fair batted ball, bases loaded, no outs
+
+bases: loaded · outs: 0
+
+**Offense:** One out, and the inning isn't over. A runner hit by a fair batted ball that no fielder has touched is out, and the ball is dead at that moment, even if it later rolls foul. Nothing after the dead ball counts. The batter is awarded first base and only forced runners move up one base, so with the bases loaded: the batter goes to first, the runner from first to second, the runner from second to third, and no run scores. Coaches: when you hear 'dead ball', stop calling for runners to go and let the umpires place them.
+
+**Defense:** Once the umpire calls dead ball, tags and throws don't count, however good they were: hold the ball and let the umpires place the runners. The key judgment is whether a fielder touched the ball before it hit the runner. If she did, the ball stays live and the runner isn't out unless she interfered on purpose, so the tags that followed would count.
+
+**Common mistakes:** The umpire calls the runner out but doesn't kill the play loudly, so everyone keeps playing; a second umpire calls more outs on a ball that was already dead; coaches yell players into extra running and tagging; the crew changes a call because of the noise instead of getting together. Fix: 'Time! Dead ball!' with both arms up, a quick crew conference, then one calm explanation to each coach.
+
+**Where the rule applies:**
+- F095 (usa_softball): In USA Softball, the call on whether interference or obstruction happened is the umpire's judgment and can't be protested.
+- F206 (nsa): In NSA fast pitch, the call on whether interference happened is the umpire's judgment and can't be protested.
+
+Lessons: [Control the moment](lessons.md#l010), [Everyone makes mistakes: forgive others, own yours](lessons.md#l002). Draft, not yet reviewed.
+
+<a id="sit005"></a>
+## SIT005: Slow roller rolls foul, then back fair before first base
+
+bases: none
+
+**Offense:** It's a fair ball, so the batter is a runner and the out at first stands. A ground ball that hasn't reached first or third base isn't foul just because it crossed the line: it's judged where it stops or where a fielder first touches it. This one rolled foul, came back, and was picked up in fair territory, so it was fair and in play. Umpires usually signal a fair ball by pointing toward fair territory without saying anything; only foul is called out loud. Batter: run on every ball you hit until you hear 'Foul!' or 'Time!'
+
+**Defense:** Pick the ball up and make the play: step on first or throw there. A slow roller near the line that's still rolling can be left alone; if it stops or you touch it in foul territory before it reaches the base, it's foul. Fielders, like batters, play until the umpire stops it.
+
+**Common mistakes:** The batter stands at the plate because the ball crossed the line once; the fielder picks it up and freezes; the umpire's fair signal is late or small, so nobody sees it; coaches on both sides shout directions and the players try to learn the rule in the middle of the play. Fix: the plate umpire points fair clearly the moment the ball is touched in fair territory, and coaches teach 'run until you hear foul' at practice, not during the play.
+
+**Where the rule applies:**
+- F015 (little_league, regular season): Calls that rest on the umpire's judgment, such as balls and strikes or safe and out, are not protestable in Little League.
+- F087 (usa_softball): In USA Softball, the call on fair or foul is the umpire's judgment and can't be protested.
+- F199 (nsa): In NSA fast pitch, the call on fair or foul is the umpire's judgment and can't be protested.
+- F032 (usssa): In USSSA fastpitch, judgment calls such as fair or foul, ball or strike, and safe or out are final. A coach may ask for the correct ruling only when a call seems to conflict with a rule.
+
+Lessons: [Play until you hear 'foul'](lessons.md#l011), [Everyone makes mistakes: forgive others, own yours](lessons.md#l002). Draft, not yet reviewed.
