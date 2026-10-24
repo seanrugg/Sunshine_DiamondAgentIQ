@@ -1,0 +1,33 @@
+# VPS demo: app + HTTPS (Caddy). Add the ollama profile for a local model:
+#   DOMAIN=sunshine.example.com docker compose up -d
+#   DOMAIN=sunshine.example.com docker compose --profile ollama up -d
+#   docker compose exec ollama ollama pull llama3.2:3b
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: [{ path: .env, required: false }]
+    environment:
+      PORT: 8787
+    expose: ["8787"]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./deploy/caddy_data:/data
+    depends_on: [app]
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    restart: unless-stopped
+    volumes: [ollama:/root/.ollama]
+    expose: ["11434"]
+
+volumes:
+  ollama:

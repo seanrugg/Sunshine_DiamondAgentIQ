@@ -1,0 +1,6 @@
+# HTTPS is required for "Add to Home Screen" and offline mode on phones.
+# Point a DNS A record at the VPS, then set DOMAIN when you start compose.
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy app:8787
+}

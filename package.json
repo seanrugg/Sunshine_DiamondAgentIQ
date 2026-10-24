@@ -1,0 +1,14 @@
+{
+  "name": "sunshine-diamondagentiq",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sunshine Baseball League's learning companion: house rules, Little League rules, pitch counts and life lessons, on any phone.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "start": "node --env-file-if-exists=.env server/server.mjs",
+    "dev": "npm run build:data && npm start",
+    "test": "node --test test/*.test.mjs"
+  }
+}

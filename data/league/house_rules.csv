@@ -1,0 +1,21 @@
+house_rule_id,division,topic,question,rule_text,overrides_fact_key,call_type,section,source_doc,status,verified_by,note
+H001,all,game_length,How many innings is a regulation game? Is there a time limit (no new inning after X minutes)?,,,rule,Game length,,placeholder,,Fill rule_text from the Sunshine house rules document
+H002,all,run_rule,Is there a run rule (e.g. 10 after 4 innings)? Is there a per-inning run cap?,,,rule,Run rule,,placeholder,,
+H003,all,pitch_count,Does Sunshine use Little League pitch counts and rest days as written or a stricter limit?,,daily_max_pitches,rule,Pitching,,placeholder,,Little League has no chart for ages 17-18; say what 18U uses
+H004,all,pitching_innings,Any innings-per-game or innings-per-week limit for pitchers?,,,rule,Pitching,,placeholder,,
+H005,all,batting_order,Continuous batting order (everyone bats)? Or nine batters?,,,rule,Lineup,,placeholder,,
+H006,all,playing_time,Minimum playing time or defensive innings per player?,,,rule,Playing time,,placeholder,,
+H007,all,free_substitution,Free defensive substitution? Re-entry rules?,,,rule,Lineup,,placeholder,,
+H008,all,courtesy_runner,Courtesy runners for pitcher and catcher? Anyone else?,,,rule,Courtesy runners,,placeholder,,
+H009,10U,baserunning,10U: leading off and stealing allowed? Stealing home? Dropped third strike in effect?,,,rule,10U baserunning,,placeholder,,
+H010,10U,coach_pitch,10U: does a coach or machine pitch at any point (e.g. after ball four)?,,,rule,10U pitching,,placeholder,,
+H011,13U,field_size,13U: base distance and pitching distance (60/46 or 70/50)?,,,rule,13U field,,placeholder,,
+H012,18U,field_size,18U: 90-foot bases and a 60 ft 6 in mound?,,,rule,18U field,,placeholder,,
+H013,all,bats,Which bat standards are allowed in each division (USA Baseball / BBCOR)?,,,rule,Equipment,,placeholder,,
+H014,all,equipment,"Required equipment: helmets with face guards, catcher's gear, cups, metal cleats?",,,rule,Equipment,,placeholder,,
+H015,all,weather,Lightning and weather policy (how long to wait after thunder or lightning)?,,,rule,Safety,,placeholder,,
+H016,all,sportsmanship,"Code of conduct for players, coaches and parents. Who handles a complaint?",,,rule,Conduct,,placeholder,,
+H017,all,umpires,Who umpires each division (adult umpires? youth umpires?) and how do disputes get handled?,,,rule,Umpires,,placeholder,,
+H018,all,protests,Are protests allowed? How and to whom?,,,rule,Protests,,placeholder,,
+H019,all,mercy_and_inclusion,How does the league include players with physical or developmental challenges (buddy system / Challenger-style play)?,,,rule,Inclusion,,placeholder,,Ties directly to the league mission
+H020,all,rainouts,How are rainouts and makeup games announced and scheduled?,,,rule,Scheduling,,placeholder,,
