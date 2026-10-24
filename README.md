@@ -22,16 +22,14 @@ Divisions: **10U** (ages 8-10, 46 ft mound / 60 ft bases), **13U** (11-13, 50 / 
 
 ## The teachable moment
 
-This is what sets DiamondAgentIQ apart: every answer turns a stressful, confusing moment into something a player, parent and coach can each learn from. Under the verdict, each answer shows:
+This is what sets DiamondAgentIQ apart: stressful, confusing moments become something a player, parent and coach can each learn from. The rule is **only what applies**:
 
-- **The moment, reframed**: a judgment call, a rule, or a coaching moment, and what the player controls.
-- **The lesson** that fits it, from the team's 11 life lessons, with **what it means for you** (your role first) and for the other roles: players, parents, coaches and umpires.
-- **One thing to try this week**, from the coaching tips, and why it works.
-- **Beyond the diamond**: how the lesson carries into school, work and home.
-- **Who to talk to, how and when**, following Sunshine's conduct rules (only head coaches discuss calls, preferably between innings; parents support on the ride home).
-- When it applies: the **game situation** (offense, defense, common mistakes), an **improvement plan** for player, team and home, and the coach's **story from the dugout**.
+- **The governing rule first**: the Sunshine house rule when one covers the question; otherwise the Little League rule (10U, 13U) or Babe Ruth / Official Baseball Rules (18U), labeled as the league's fallback.
+- **Coaching and judgment moments** ("he struck out to end the game", "can I tell the umpire he missed a call?") get the full teachable moment: the moment reframed, the fitting lesson with what it means for you first and for the other roles, one thing to try this week, beyond the diamond, and who to talk to (following Sunshine's conduct rules).
+- **Baserunning** gets the exact runner read for the situation asked about (where the runner is, the outs, and the kind of batted ball), from `data/coaching/baserunning_reads.csv`, or the game situation (two runners on a base, tagging up, base coach signals) with the rule behind it.
+- **Plain rule questions** (cleats, innings, pool players) get the rule and nothing else.
 
-A plain rule question (cleats, gum on the turf) teaches from the matching point of the coaching philosophy or the Sunshine Ballpark welcome instead of forcing an unrelated lesson. All of it comes from the team's coaching material in `data/coaching/` (readable versions in `docs/coaching/`) and the philosophy in `app/js/core/philosophy.js`, copied word for word from DiamondAgentIQ. AI options may reword the moment sentence; they never rewrite the team's lessons or per-role guidance. The Learn tab is the whole coaching library: philosophy, lessons, game situations, stories and tips.
+Coaching content comes from the team's material in `data/coaching/` (readable copies in `docs/coaching/`, baserunning in `docs/coaching/baserunning.md`) and the philosophy in `app/js/core/philosophy.js`. AI options may reword the moment sentence; they never rewrite the team's lessons or per-role guidance. The Learn tab is the whole coaching library.
 
 ## Four ways to answer
 

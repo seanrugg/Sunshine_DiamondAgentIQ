@@ -116,7 +116,7 @@ test('coaching questions get a lesson or tip', () => {
   const r = retrieve(kb, input);
   assert.equal(classifyCall(input.question, r), 'coaching');
   const a = composeOffline(kb, input, r);
-  assert.ok(a.lesson || a.tip);
+  assert.ok(a.teachable.lesson && a.teachable.next_step);
 });
 
 test('game length differs by division', () => {

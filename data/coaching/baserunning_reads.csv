@@ -1,0 +1,36 @@
+read_id,runner,outs,ball,read,source_id
+R01,first,0-1,popup,"Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",SRC-BR-SITUATIONS
+R02,first,0-1,line_drive,"Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",SRC-BR-SITUATIONS
+R03,first,0-1,ground_left,You're forced. Run hard to second.,SRC-BR-SITUATIONS
+R04,first,0-1,ground_right,You're forced. Run hard to second.,SRC-BR-SITUATIONS
+R05,first,0-1,deep_fly,"Take three or four steps and watch: go if it drops, get back to first if it's caught.",SRC-BR-SITUATIONS
+R06,first,0-1,deep_foul_fly,"Go back to first and watch the catch; tag up and advance only if it's safe, otherwise stay.",SRC-BR-SITUATIONS
+R07,second,0-1,popup,"Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",SRC-BR-SITUATIONS
+R08,second,0-1,line_drive,"Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",SRC-BR-SITUATIONS
+R09,second,0-1,ground_left,The ball is in front of you. Watch it and go to third only if it's safe; otherwise stay at second.,SRC-BR-SITUATIONS
+R10,second,0-1,ground_right,The ball is behind you. Run hard to third.,SRC-BR-SITUATIONS
+R11,second,0-1,deep_fly_right,"Watch from a few steps off, then tag up and run hard to third after the catch: it's a long throw from right field.",SRC-BR-SITUATIONS
+R12,second,0-1,deep_fly_left,"Watch from a few steps off; tag up and go only if it's safe, otherwise stay at second.",SRC-BR-SITUATIONS
+R13,second,0-1,deep_foul_fly_right,"Go back to second, wait for the catch, then tag up and run hard to third.",SRC-BR-SITUATIONS
+R14,second,0-1,deep_foul_fly_left,Go back to second and watch; advance only if it's safe.,SRC-BR-SITUATIONS
+R15,third,0-1,popup,"Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",SRC-BR-SITUATIONS
+R16,third,0-1,line_drive,"Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",SRC-BR-SITUATIONS
+R17,third,0-1,ground_left,The ball is in front of you. Watch it and go home only if it's safe; otherwise stay at third.,SRC-BR-SITUATIONS
+R18,third,0-1,ground_right,Run hard home.,SRC-BR-SITUATIONS
+R19,third,0-1,deep_fly,"Tag up, and run hard home after the catch.",SRC-BR-SITUATIONS
+R20,third,0-1,deep_foul_fly,"Go back to third, wait for the catch, then tag up and run hard home.",SRC-BR-SITUATIONS
+R21,second_forced,0-1,popup,"Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",SRC-BR-SITUATIONS
+R22,second_forced,0-1,line_drive,"Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",SRC-BR-SITUATIONS
+R23,second_forced,0-1,ground_left,You're forced. Run hard to third.,SRC-BR-SITUATIONS
+R24,second_forced,0-1,ground_right,You're forced. Run hard to third.,SRC-BR-SITUATIONS
+R25,second_forced,0-1,deep_fly_right,"Watch from a few steps off, then tag up and run hard to third after the catch.",SRC-BR-SITUATIONS
+R26,second_forced,0-1,deep_fly_left,Watch from a few steps off and stay at second.,SRC-BR-SITUATIONS
+R27,second_forced,0-1,deep_foul_fly_right,"Go back to second, wait for the catch, then tag up and run hard to third.",SRC-BR-SITUATIONS
+R28,second_forced,0-1,deep_foul_fly_left,"Go back to second, watch the catch and stay.",SRC-BR-SITUATIONS
+R29,third_loaded,0-1,popup,"Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",SRC-BR-SITUATIONS
+R30,third_loaded,0-1,line_drive,"Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",SRC-BR-SITUATIONS
+R31,third_loaded,0-1,ground_left,You're forced. Run hard home.,SRC-BR-SITUATIONS
+R32,third_loaded,0-1,ground_right,You're forced. Run hard home.,SRC-BR-SITUATIONS
+R33,third_loaded,0-1,deep_fly,"Tag up, and run hard home after the catch.",SRC-BR-SITUATIONS
+R34,third_loaded,0-1,deep_foul_fly,"Go back to third, wait for the catch, then tag up and run hard home.",SRC-BR-SITUATIONS
+R35,any,2,any,"Run hard to the next base on every batted ball. If it's caught, the inning is over anyway.",SRC-BR-SITUATIONS

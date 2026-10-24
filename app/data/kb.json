@@ -1,5 +1,287 @@
 {
- "built_at": "2026-10-24T17:47:50.752Z",
+ "built_at": "2026-10-24T18:04:10.663Z",
+ "reads": [
+  {
+   "id": "R01",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "popup",
+   "read": "Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R02",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "line_drive",
+   "read": "Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R03",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "ground_left",
+   "read": "You're forced. Run hard to second.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R04",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "ground_right",
+   "read": "You're forced. Run hard to second.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R05",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "deep_fly",
+   "read": "Take three or four steps and watch: go if it drops, get back to first if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R06",
+   "runner": "first",
+   "outs": "0-1",
+   "ball": "deep_foul_fly",
+   "read": "Go back to first and watch the catch; tag up and advance only if it's safe, otherwise stay.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R07",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "popup",
+   "read": "Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R08",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "line_drive",
+   "read": "Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R09",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "ground_left",
+   "read": "The ball is in front of you. Watch it and go to third only if it's safe; otherwise stay at second.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R10",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "ground_right",
+   "read": "The ball is behind you. Run hard to third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R11",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "deep_fly_right",
+   "read": "Watch from a few steps off, then tag up and run hard to third after the catch: it's a long throw from right field.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R12",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "deep_fly_left",
+   "read": "Watch from a few steps off; tag up and go only if it's safe, otherwise stay at second.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R13",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "deep_foul_fly_right",
+   "read": "Go back to second, wait for the catch, then tag up and run hard to third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R14",
+   "runner": "second",
+   "outs": "0-1",
+   "ball": "deep_foul_fly_left",
+   "read": "Go back to second and watch; advance only if it's safe.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R15",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "popup",
+   "read": "Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R16",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "line_drive",
+   "read": "Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R17",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "ground_left",
+   "read": "The ball is in front of you. Watch it and go home only if it's safe; otherwise stay at third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R18",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "ground_right",
+   "read": "Run hard home.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R19",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "deep_fly",
+   "read": "Tag up, and run hard home after the catch.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R20",
+   "runner": "third",
+   "outs": "0-1",
+   "ball": "deep_foul_fly",
+   "read": "Go back to third, wait for the catch, then tag up and run hard home.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R21",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "popup",
+   "read": "Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R22",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "line_drive",
+   "read": "Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R23",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "ground_left",
+   "read": "You're forced. Run hard to third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R24",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "ground_right",
+   "read": "You're forced. Run hard to third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R25",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "deep_fly_right",
+   "read": "Watch from a few steps off, then tag up and run hard to third after the catch.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R26",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "deep_fly_left",
+   "read": "Watch from a few steps off and stay at second.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R27",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "deep_foul_fly_right",
+   "read": "Go back to second, wait for the catch, then tag up and run hard to third.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R28",
+   "runner": "second_forced",
+   "outs": "0-1",
+   "ball": "deep_foul_fly_left",
+   "read": "Go back to second, watch the catch and stay.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R29",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "popup",
+   "read": "Take three or four steps off the base and watch the ball: go if it drops, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R30",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "line_drive",
+   "read": "Take three or four steps and freeze until you see it: go if it gets through, get back if it's caught.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R31",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "ground_left",
+   "read": "You're forced. Run hard home.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R32",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "ground_right",
+   "read": "You're forced. Run hard home.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R33",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "deep_fly",
+   "read": "Tag up, and run hard home after the catch.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R34",
+   "runner": "third_loaded",
+   "outs": "0-1",
+   "ball": "deep_foul_fly",
+   "read": "Go back to third, wait for the catch, then tag up and run hard home.",
+   "source_id": "SRC-BR-SITUATIONS"
+  },
+  {
+   "id": "R35",
+   "runner": "any",
+   "outs": "2",
+   "ball": "any",
+   "read": "Run hard to the next base on every batted ball. If it's caught, the inning is over anyway.",
+   "source_id": "SRC-BR-SITUATIONS"
+  }
+ ],
  "league": {
   "_note": "League facts from the league's public page (clubs.bluesombrero.com/sunshinebaseball, 2026-10-24) and the Sunshine house rules document. Anything marked TODO needs a board member to confirm.",
   "name": "Sunshine Baseball League",
@@ -580,7 +862,7 @@
    "keywords": "steal stealing lead leading off home wild pitch passed ball advance bag",
    "question": "",
    "text": "10U: no leading off; when the pitcher is on the mound the runner must be on the bag. Stealing is allowed at every base except from third to home. No stealing home, and no advancing on a wild pitch, a passed ball, an error on the catcher's routine throw back to the pitcher, or the pitcher dropping the ball on the mound. If the pitcher or catcher tries to put out the runner on third (or any other runner), the runner on third may try to score. Why: a more competitive game, no easy runs, faster pace, and games won by earned runs rather than errors by a young, inexperienced age group.",
-   "overrides": null,
+   "overrides": "lead_off_and_steal_any_time",
    "call_type": "rule",
    "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
    "status": "verified",
@@ -598,7 +880,7 @@
    "keywords": "steal stealing lead leading off home wild pitch passed ball advance bag",
    "question": "",
    "text": "13U: no leading off; when the pitcher is on the mound the runner must stay on the bag until the ball reaches the plate. Stealing second, third or home, and advancing on wild pitches and passed balls, is allowed after the pitch reaches home plate.",
-   "overrides": null,
+   "overrides": "lead_off_and_steal_any_time",
    "call_type": "rule",
    "source_doc": "https://docs.google.com/document/d/1E8swMukyyqRpu9ARidIRSdz_ffPzK-Fx76xJpE69Aqo",
    "status": "verified",
@@ -2124,6 +2406,24 @@
    "verified": false
   },
   {
+   "id": "F305",
+   "kind": "rulebook_fact",
+   "sanction": "little_league",
+   "source_id": "LL-DIVISIONS",
+   "division": "Intermediate (50/70)",
+   "age_min": 11,
+   "age_max": 13,
+   "topic": "leading_off",
+   "key": "lead_off_and_steal_any_time",
+   "value": "true",
+   "unit": "",
+   "rule_ref": "Divisions page",
+   "call_type": "rule",
+   "text": "Little League Intermediate (50/70) baseball, for ages 11-13 on 70-foot base paths with a 50-foot mound, follows many Junior League rules: runners may lead off and may try to steal at any time.",
+   "url": "https://www.littleleague.org/play-little-league/baseball/divisions/",
+   "verified": false
+  },
+  {
    "id": "F072",
    "kind": "rulebook_fact",
    "sanction": "babe_ruth_league",
@@ -2428,6 +2728,26 @@
    "title": "Little League Baseball Official Regulations, Playing Rules and Policies (rulebook; also in the Little League Rulebook app)",
    "url": "https://www.littleleague.org/playing-rules/",
    "edition": "current season"
+  },
+  "LL-DIVISIONS": {
+   "title": "Little League Baseball Divisions",
+   "url": "https://www.littleleague.org/play-little-league/baseball/divisions/",
+   "edition": "retrieved 2026-10-24"
+  },
+  "SRC-BR-SITUATIONS": {
+   "title": "Base Running Situations to Practice (runner reads by base, outs and batted ball)",
+   "url": "https://cdn1.sportngin.com/attachments/document/0113/6133/Base_running_Situations_to_Practice.pdf",
+   "edition": "retrieved 2026-10-24"
+  },
+  "SRC-ABCA-2023": {
+   "title": "ABCA Inside Pitch: Coach's Corner, Better Baserunning (Nov/Dec 2023)",
+   "url": "https://www.abca.org/magazine/magazine/2023-6-November-December/Coaches_Corner_Better_Baserunning.aspx",
+   "edition": "2023"
+  },
+  "SRC-AU-DRILLS": {
+   "title": "Athletes Untapped: Base Running Drills for Speed and Game IQ",
+   "url": "https://athletesuntapped.com/blog/baseball-base-running-drills-for-speed-and-game-iq/",
+   "edition": "retrieved 2026-10-24"
   },
   "BRL-BAT": {
    "title": "Babe Ruth League Bat Rules",
@@ -3351,9 +3671,9 @@
    "age_max": 18,
    "audience": "player",
    "situation": "Before each pitch as a runner",
-   "text": "Most baserunning outs come from not knowing the situation, not from being slow.",
-   "why": "When you've decided before the pitch, you react instead of think, and you don't freeze or run into an out.",
-   "try_this": "Every pitch: check the outs (look for your coach's fingers), know whether you're forced, and decide what you'll do on a ground ball, a fly ball and a line drive before the ball is hit.",
+   "text": "Baserunning success comes from preparation, not instinct: know the outs, the runners and what you'll do on each kind of hit before the pitch.",
+   "why": "Hesitating on contact and watching the ball are the most common baserunning mistakes; a decision made before the pitch removes the hesitation.",
+   "try_this": "Every pitch: check the outs, know whether you're forced, and decide what you'll do on a ground ball, a fly ball and a line drive before the ball is hit.",
    "verified": false
   },
   {
@@ -3365,9 +3685,9 @@
    "age_max": 18,
    "audience": "coach",
    "situation": "Coaching first or third base",
-   "text": "Runners follow what they can see: a few big, consistent signals work better than words.",
-   "why": "Crowd noise and a runner's own breathing drown out voices; arms don't get lost.",
-   "try_this": "Pick three signals (both arms up = stop, windmill = go, palms down = slide) and use them in every baserunning drill so they're automatic by game day.",
+   "text": "Signs are easiest to follow when they're simple and layered on one skill at a time, for example a red light / green light system.",
+   "why": "Runners follow what they can see; a simple, consistent system works under crowd noise.",
+   "try_this": "Start with red light (stop) and green light (go). Add a lead sign and a steal sign only after runners follow the first two every time in practice.",
    "verified": false
   },
   {
@@ -3393,9 +3713,9 @@
    "age_max": 18,
    "audience": "coach",
    "situation": "Teaching situational baserunning at practice",
-   "text": "Baserunning sense is learned in game-like reps, not explained once.",
-   "why": "Players have to see ground balls, fly balls and line drives with runners on to recognize them in a game.",
-   "try_this": "Situation drill: put runners on base, call out the outs, and hit fungoes (ground ball, fly ball, line drive). Runners react while base coaches signal; after each rep, ask the runner why they ran or held.",
+   "text": "Baserunning sense is built in realistic reps: runners have to see balls in play to learn the reads.",
+   "why": "Read-and-react work with live balls teaches runners to decide from where the ball is hit and where the fielders are.",
+   "try_this": "Start practice with baserunning. Put runners on base, call the outs, and hit ground balls, fly balls and line drives; runners react while base coaches signal, then say why they ran or held.",
    "verified": false
   }
  ],
@@ -3528,9 +3848,9 @@
     "F302",
     "F311"
    ],
-   "offense": "Both runners stay on the base until the umpire rules; never step off thinking you're out. The base belongs to the lead runner unless the lead runner was forced to advance; then it belongs to the trailing runner. The runner who isn't entitled to the base looks to the coach: go back to the base they came from if it's open and they can make it.",
-   "defense": "Tag both runners while they're on the base. The umpire calls out the one who wasn't entitled to it, so tagging both removes the guesswork. Then look for the next play.",
-   "common_mistakes": "A runner walks off the base thinking the play is over and gets tagged; the fielder tags only one runner, the wrong one; the trailing runner freezes between bases instead of checking the coach.",
+   "offense": "Both runners stay on the base until the umpire rules; don't step off thinking you're out. The base belongs to the lead runner unless that runner was forced to advance; then it belongs to the trailing runner.",
+   "defense": "Tag both runners while they're on the base. The umpire calls out the runner who isn't entitled to it.",
+   "common_mistakes": "A runner steps off the base thinking the play is over and gets tagged; the fielder tags only one runner, the wrong one.",
    "lesson_ids": [
     "L012",
     "L013"
@@ -3549,52 +3869,12 @@
     "F304",
     "F314"
    ],
-   "offense": "On a deep fly ball, go back and tag up: leave only after the catch, on the coach's call. On a shallow fly, go halfway, or as far as you can and still get back, so you can advance if it drops or return if it's caught. Never run on contact with fewer than two outs on a ball in the air.",
-   "defense": "Catch it, then throw ahead of the lead runner to the base they're heading for, through the cut-off. If a runner left before the catch, appeal by throwing to that base before the runner gets back.",
-   "common_mistakes": "Running on contact with fewer than two outs and getting doubled off; leaving the base before the catch; tagging up on a shallow fly and getting thrown out.",
+   "offense": "Fewer than two outs: on a pop-up, line drive or deep fly, take three or four steps off the base and watch. Go if it drops; get back if it's caught. Runners on third (and on second on a deep fly to right) tag up and run hard after the catch.",
+   "defense": "Catch it, then throw ahead of the lead runner through the cut-off. If a runner left before the catch, throw to that base before the runner gets back.",
+   "common_mistakes": "Running on contact with fewer than two outs and getting doubled off; leaving the base before the catch.",
    "lesson_ids": [
     "L012",
     "L013"
-   ],
-   "verified": false
-  },
-  {
-   "id": "SIT008",
-   "kind": "situation",
-   "name": "Two outs: run on contact",
-   "topic": "two_out_baserunning",
-   "bases": "any",
-   "outs": "2",
-   "count": "",
-   "rule_fact_codes": [
-    "F303",
-    "F313"
-   ],
-   "offense": "With two outs, every runner runs on any batted ball. If the ball is caught the inning is over anyway, so there's nothing to protect; if it drops or gets through, runs score. Run hard and find the base coach.",
-   "defense": "Take the sure out. With two outs, get the force at the closest base or the out at first; don't chase the lead runner.",
-   "common_mistakes": "Runners waiting on a fly ball with two outs; fielders trying for a harder play instead of the easy force that ends the inning.",
-   "lesson_ids": [
-    "L012"
-   ],
-   "verified": false
-  },
-  {
-   "id": "SIT009",
-   "kind": "situation",
-   "name": "Runner on second, ground ball, fewer than two outs",
-   "topic": "ground_ball_baserunning",
-   "bases": "second",
-   "outs": "0 or 1",
-   "count": "",
-   "rule_fact_codes": [
-    "F303",
-    "F313"
-   ],
-   "offense": "Ball hit in front of you (to the shortstop or third baseman): hold, unless you're forced. Ball hit behind you (to the right side): go to third. If first base is also occupied you're forced, so run. Line drive: freeze until it goes through.",
-   "defense": "Look the runner back before throwing to first. If the runner breaks for third on a ball hit in front of them, throw to third.",
-   "common_mistakes": "Running into an out on a ball hit to the left side; forgetting you're forced when first base is occupied; breaking on a line drive and getting doubled off.",
-   "lesson_ids": [
-    "L012"
    ],
    "verified": false
   },
@@ -3607,9 +3887,9 @@
    "outs": "any",
    "count": "",
    "rule_fact_codes": [],
-   "offense": "Pick up the base coach before you reach the base. Round it hard only when the coach waves you on; stop and get back on a stop sign. When the ball is behind you, the coach makes the call; at third base the third-base coach decides whether you score.",
+   "offense": "Find your base coach before you reach the base. Many teams keep it simple: a red light (stop) or a green light (go). With a runner on third, the third-base coach's sign comes first.",
    "defense": "Throw behind a runner who rounds too far, and hit the cut-off so trailing runners can't take an extra base.",
-   "common_mistakes": "Running with your head down and missing the stop sign; watching the ball instead of the coach when it's behind you; slowing down before the coach gives a sign.",
+   "common_mistakes": "Running with your head down and missing the stop sign; watching the ball instead of the coach when it's behind you.",
    "lesson_ids": [
     "L013",
     "L012"

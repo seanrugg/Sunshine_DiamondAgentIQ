@@ -157,7 +157,7 @@ function renderAnswer(a, input = {}) {
     ${a.engine ? `<div class="cite">Written by ${esc(a.engine)} from the rules below.</div>` : ''}
     ${a.fallback_reason ? `<div class="cite">AI not available right now (${esc(a.fallback_reason)}), so this answer comes straight from the rules.</div>` : ''}
   </div>`);
-  if (a.teachable) parts.push(teachableHtml(a.teachable, a.ai_moment));
+  if (a.teachable) parts.push(teachableHtml(a.teachable, a.ai_moment, a.reads));
   if (a.rules?.length) {
     parts.push(`<details class="card" ${ct === 'coaching' ? '' : 'open'}><summary>Where this comes from (${a.rules.length})</summary>${a.rules.map(ruleHtml).join('')}</details>`);
   }
@@ -225,29 +225,32 @@ function wirePitch() {
 // ---------- learn ----------
 const ROLE_NAMES = { player: 'Player', parent: 'Parent', coach: 'Coach', umpire: 'Umpire' };
 
-/** The teachable moment: the heart of every answer. */
-function teachableHtml(t, aiMoment) {
+/** The teachable moment. Only the parts that apply to this question are shown. */
+function teachableHtml(t, aiMoment, reads = []) {
   const you = t.perspectives.find((p) => p.you);
   const others = t.perspectives.filter((p) => !p.you);
   const plan = [['Player', t.plan.player], ['Team', t.plan.team], ['At home', t.plan.home]]
     .filter(([, v], i, arr) => v && arr.findIndex(([, w]) => w === v) === i); // drop empty and repeated steps
-  return `<section class="card teach" aria-label="Teachable moment">
-    <div class="teach-head"><span class="bulb" aria-hidden="true">💡</span><h3>Teachable moment</h3></div>
-    <p class="moment">${esc(aiMoment || t.moment)}</p>
-    ${t.lesson ? `<div class="lesson-name">${esc(t.lesson.title)}</div><p>${esc(t.lesson.principle)}</p>` : ''}
-    ${t.principle ? `<div class="lesson-name">${esc(t.principle.source)}</div><p>${esc(t.principle.text)}</p>` : ''}
-    ${you ? `<div class="persp you"><strong>For you, the ${esc(you.label.toLowerCase())}</strong><p>${esc(you.text)}</p></div>` : ''}
-    ${others.length ? `<details class="persp-more"><summary>What it means for ${others.map((p) => esc({ player: 'players', parent: 'parents', coach: 'coaches', umpire: 'umpires' }[p.role])).join(', ').replace(/, ([^,]*)$/, ' and $1')}</summary>
-      ${others.map((p) => `<div class="persp"><strong>${esc(p.label)}</strong><p>${esc(p.text)}</p></div>`).join('')}</details>` : ''}
-    ${t.next_step ? `<div class="next"><strong>One thing to try this week</strong><p>${esc(t.next_step)}</p>${t.why ? `<p class="small">Why: ${esc(t.why)}</p>` : ''}</div>` : ''}
-    ${t.lesson ? `<div class="beyond"><strong>Beyond the diamond</strong><p>${esc(t.lesson.life_lesson)}</p></div>` : ''}
-  </section>
-  <div class="card"><h3>Who to talk to</h3><p><strong>${esc(t.channel.who)}.</strong> ${esc(t.channel.how)}</p></div>
-  ${t.situation ? `<details class="card" open><summary>The game situation: ${esc(t.situation.name)}</summary>
-    <p><strong>Offense:</strong> ${esc(t.situation.offense)}</p><p><strong>Defense:</strong> ${esc(t.situation.defense)}</p>
-    ${t.situation.common_mistakes ? `<p><strong>Common mistakes:</strong> ${esc(t.situation.common_mistakes)}</p>` : ''}</details>` : ''}
-  ${plan.length > 1 ? `<details class="card"><summary>Improvement plan</summary>${plan.map(([k, v]) => `<p><strong>${k}:</strong> ${esc(v)}</p>`).join('')}</details>` : ''}
-  ${t.story ? `<details class="card story"><summary>From the dugout: ${esc(t.story.title)}</summary><p>${esc(t.story.text)}</p></details>` : ''}`;
+  const moment = aiMoment || t.moment;
+  const body = [
+    moment ? `<p class="moment">${esc(moment)}</p>` : '',
+    reads.length ? `<div class="reads">${reads.map((r) => `<div class="read"><strong>${esc(r.label)}</strong><p>${esc(r.read)}</p></div>`).join('')}</div>` : '',
+    t.situation ? `<div class="sit"><div class="lesson-name">${esc(t.situation.name)}</div>
+      <p><strong>Runners:</strong> ${esc(t.situation.offense)}</p><p><strong>Defense:</strong> ${esc(t.situation.defense)}</p>
+      ${t.situation.common_mistakes ? `<p><strong>Common mistakes:</strong> ${esc(t.situation.common_mistakes)}</p>` : ''}</div>` : '',
+    t.lesson ? `<div class="lesson-name">${esc(t.lesson.title)}</div>${t.lesson.principle ? `<p>${esc(t.lesson.principle)}</p>` : ''}` : '',
+    you ? `<div class="persp you"><strong>For you, the ${esc(you.label.toLowerCase())}</strong><p>${esc(you.text)}</p></div>` : '',
+    others.length ? `<details class="persp-more"><summary>What it means for ${others.map((p) => esc({ player: 'players', parent: 'parents', coach: 'coaches', umpire: 'umpires' }[p.role])).join(', ').replace(/, ([^,]*)$/, ' and $1')}</summary>
+      ${others.map((p) => `<div class="persp"><strong>${esc(p.label)}</strong><p>${esc(p.text)}</p></div>`).join('')}</details>` : '',
+    t.next_step ? `<div class="next"><strong>One thing to try this week</strong><p>${esc(t.next_step)}</p>${t.why ? `<p class="small">Why: ${esc(t.why)}</p>` : ''}</div>` : '',
+    t.beyond ? `<div class="beyond"><strong>Beyond the diamond</strong><p>${esc(t.beyond)}</p></div>` : '',
+  ].filter(Boolean).join('');
+  return [
+    body ? `<section class="card teach" aria-label="Teachable moment"><div class="teach-head"><span class="bulb" aria-hidden="true">💡</span><h3>Teachable moment</h3></div>${body}</section>` : '',
+    t.channel ? `<div class="card"><h3>Who to talk to</h3><p><strong>${esc(t.channel.who)}.</strong> ${esc(t.channel.how)}</p></div>` : '',
+    plan.length > 1 ? `<details class="card"><summary>Improvement plan</summary>${plan.map(([k, v]) => `<p><strong>${k}:</strong> ${esc(v)}</p>`).join('')}</details>` : '',
+    t.story ? `<details class="card story"><summary>From the dugout: ${esc(t.story.title)}</summary><p>${esc(t.story.text)}</p></details>` : '',
+  ].join('');
 }
 
 // ---------- learn: the coaching library ----------

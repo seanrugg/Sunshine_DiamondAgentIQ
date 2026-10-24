@@ -125,8 +125,11 @@ export function retrieve(kb, { question, division, age, role, limit = 5 }) {
   const tokens = tokenize(question);
   // A question word that maps straight to an item's topic is the strongest signal.
   // Each result carries its relevance `score` (a copy; the knowledge base isn't changed).
+  // A phrase that names a topic outright ("same base", "tag up") outranks loose word matches.
+  const low = String(question || '').toLowerCase();
+  const phraseTopics = new Set(PHRASES.filter(([re]) => re.test(low)).flatMap(([, t]) => t));
   const rank = (items, fieldsOf, min = 1) => items
-    .map((it) => ({ it, s: score(tokens, ...fieldsOf(it)) + (tokens.includes(it.topic) && !GENERIC.has(it.topic) ? 4 : 0) }))
+    .map((it) => ({ it, s: score(tokens, ...fieldsOf(it)) + (tokens.includes(it.topic) && !GENERIC.has(it.topic) ? 4 : 0) + (phraseTopics.has(it.topic) ? 6 : 0) }))
     .filter((x) => x.s >= min)
     .sort((a, b) => b.s - a.s)
     .slice(0, limit)

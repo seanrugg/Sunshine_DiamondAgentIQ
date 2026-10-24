@@ -26,4 +26,4 @@ What the agents teach from, as readable pages. The data lives in `data/coaching/
 
 ## Sunshine additions
 
-- [Situational baserunning](baserunning.md): lessons L012-L013, situations SIT006-SIT010, tips C020-C023 (draft)
+- [Situational baserunning](baserunning.md): runner reads, lessons L012-L013, situations SIT006, SIT007, SIT010, tips C020-C023 (draft, sourced)

@@ -114,8 +114,12 @@ export function buildKb() {
     situation_ids: r.situation_ids.split(';').filter(Boolean), verified: bool(r.verified),
   }));
 
+  const reads = csv('data/coaching/baserunning_reads.csv').map((r) => ({
+    id: r.read_id, runner: r.runner, outs: r.outs, ball: r.ball, read: r.read, source_id: r.source_id,
+  }));
+
   return {
-    built_at: new Date().toISOString(),
+    built_at: new Date().toISOString(), reads,
     league, house_rules: houseRules, rule_facts: facts, sources, house_pitch_rest: housePitchRest, ll_pitch_rest: pitchRest,
     lessons, insights, situations, stories,
   };

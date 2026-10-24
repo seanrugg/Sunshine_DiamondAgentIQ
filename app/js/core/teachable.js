@@ -5,8 +5,6 @@
 // philosophy, never invented. Runs offline; an AI model may only reword the
 // "moment" sentence (see answer.js).
 
-import { PHILOSOPHY_POINTS } from './philosophy.js';
-
 const ROLES = ['player', 'parent', 'coach', 'umpire'];
 const ROLE_LABEL = { player: 'Player', parent: 'Parent', coach: 'Coach', umpire: 'Umpire' };
 
@@ -95,20 +93,6 @@ function scoreLessons(kb, tags) {
     .sort((a, b) => b.score - a.score);
 }
 
-// A rule question with no lesson in it still teaches: the matching point of the team's philosophy.
-const TOPIC_PRINCIPLE = {
-  footwear: 7, bats: 7, equipment: 7, safety: 7, weather: 7, catcher: 7, pitch_count: 7, warmups: 7,
-  mercy_rule: 10, sportsmanship: 10, run_cap: 8, game_length: 8, playing_time: 8, batting_order: 8,
-};
-function principleFor(kb, rules) {
-  const topic = rules[0]?.topic;
-  if (topic === 'turf_care' || topic === 'home_dugout') {
-    return { source: 'Sunshine Ballpark', text: kb.league.welcome };
-  }
-  const i = TOPIC_PRINCIPLE[topic] ?? 5; // default: learn the rules so you understand calls rather than argue them
-  return { source: 'Our coaching philosophy', text: PHILOSOPHY_POINTS[i] };
-}
-
 export function pickTips(kb, question, role, division) {
   const q = String(question || '').toLowerCase();
   const topics = [];
@@ -185,7 +169,7 @@ const MOMENT = {
  * The teachable moment for an answer.
  * @returns {{ moment, lesson, principle, perspectives, channel, next_step, plan, situation, story, draft }}
  */
-export function buildTeachable(kb, input, { callType, rules = [], division = null }) {
+export function buildTeachable(kb, input, { callType, rules = [], division = null, reads = [] }) {
   const role = ROLES.includes(input.role) ? input.role : 'parent';
   const tags = momentTags(input.question, rules, callType);
   const ranked = scoreLessons(kb, tags);
@@ -214,18 +198,28 @@ export function buildTeachable(kb, input, { callType, rules = [], division = nul
   };
   const nextStep = (tips.asker && tips.asker.try_this) || plan[role === 'coach' ? 'team' : role === 'parent' ? 'home' : 'player'] || null;
 
-  const used = [lesson, situation, story, tips.asker].filter(Boolean);
+  // Only what applies. Emotional and judgment moments get the full coaching treatment; a rule or
+  // baserunning question gets the lesson only when one fits it closely, and no general filler.
+  const coachingMoment = callType === 'coaching' || callType === 'judgment' || callType === 'judgment_and_rule';
+  // Something went wrong on the field: that's when a lesson and a practice step apply to a rule or baserunning question.
+  const mistake = /thrown out|doubled off|picked off|tagged out|got tagged|ran through|ran into|missed (the|his|her|a) (sign|base|call)|didn't run|did not run|stopped running|got caught|why did (he|she|they|my)|kept running/.test(String(input.question).toLowerCase());
+  const lessonFits = lesson && (coachingMoment || (mistake && ((situation && situation.lesson_ids.includes(lesson.id)) ||
+    (reads.length && ['L012', 'L013'].includes(lesson.id)) || (ranked[0]?.lesson === lesson && ranked[0].score >= 3))));
+  const shownLesson = lessonFits ? lesson : null;
+  const tipFits = tips.asker && (coachingMoment || (mistake && /baserunning|base_coach|situational/.test(tips.asker.topic)));
+  const used = [shownLesson, situation, coachingMoment ? story : null, tipFits ? tips.asker : null].filter(Boolean);
   return {
-    moment: MOMENT[callType]?.(role) || MOMENT.coaching(role),
-    lesson: lesson ? { id: lesson.id, title: lesson.title, principle: lesson.principle, life_lesson: lesson.life_lesson } : null,
-    principle: lesson ? null : principleFor(kb, rules),
-    perspectives,
-    channel: channelFor(role, callType),
-    next_step: nextStep,
-    why: tips.asker?.why || null,
-    plan,
+    moment: coachingMoment ? (MOMENT[callType]?.(role) || MOMENT.coaching(role)) : null,
+    lesson: shownLesson ? { id: shownLesson.id, title: shownLesson.title, principle: coachingMoment ? shownLesson.principle : null, life_lesson: shownLesson.life_lesson } : null,
+    principle: null,
+    perspectives: shownLesson ? perspectives : [],
+    channel: coachingMoment ? channelFor(role, callType) : null,
+    next_step: tipFits ? tips.asker.try_this : null,
+    why: tipFits ? tips.asker.why || null : null,
+    beyond: coachingMoment && shownLesson ? shownLesson.life_lesson : null,
+    plan: callType === 'coaching' ? plan : { player: null, team: null, home: null },
     situation: situation ? { id: situation.id, name: situation.name, offense: situation.offense, defense: situation.defense, common_mistakes: situation.common_mistakes } : null,
-    story: story ? { id: story.id, title: story.title, text: story.text } : null,
+    story: callType === 'coaching' && story ? { id: story.id, title: story.title, text: story.text } : null,
     draft: used.some((x) => x.verified === false),
   };
 }

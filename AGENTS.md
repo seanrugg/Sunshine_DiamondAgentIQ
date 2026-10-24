@@ -11,7 +11,8 @@ Read README.md first. This is a one-day hackathon build: keep it simple.
 - **10U and 13U use Little League rules; 18U uses Babe Ruth League rules.** Never answer an 18U question from Little League facts.
 - **Pitch math stays in code** (`core/pitchRest.js`, from `data/league/pitch_rest.csv`). Never let the model compute rest days.
 - **The umpire is the authority on the field.** Judgment calls are never "wrong" in an answer.
-- **Every answer carries a teachable moment** (`core/teachable.js`), built only from `data/coaching/` and the philosophy. Never invent coaching content, and never let a model rewrite the team's lessons or per-role guidance; it may only reword the moment sentence.
+- **Only what applies.** An answer shows the governing rule (Sunshine house rule, else Little League for 10U/13U, Babe Ruth for 18U) and only the coaching that fits the question (`core/teachable.js`): the full teachable moment for coaching and judgment moments, the runner read or game situation for baserunning, nothing generic for a plain rule question. Never add text for the sake of it.
+- Coaching content comes only from `data/coaching/` and the philosophy; never invent it, and never let a model rewrite the team's lessons or per-role guidance (it may only reword the moment sentence).
 - Data files in `data/` are the source of truth. `app/data/kb.json` is generated: run `npm run build:data`, never edit it by hand.
 - When you change any file in `app/`, bump `VERSION` in `app/sw.js`. New app files must be added to `ASSETS` there (a test checks they exist). Never delete `webllm/*` caches.
 - Run `npm test` before every commit.

@@ -5,6 +5,7 @@ import { PHILOSOPHY, PHILOSOPHY_SHORT, DISCLAIMER } from './philosophy.js';
 import { computeRest } from './pitchRest.js';
 import { STRONG_MATCH } from './retrieve.js';
 import { buildTeachable } from './teachable.js';
+import { findReads, readLabel } from './baserunning.js';
 
 const JUDGMENT_WORDS = ['strike zone', 'balls and strikes', 'missed a call', 'missed the call', 'zone', 'safe', 'called', 'bad call', 'the call', 'tagged', 'balk', 'fair', 'foul', 'obstruction', 'interference', 'umpire', 'ump'];
 const RULE_WORDS = ['how many', 'allowed', 'rule', 'limit', 'legal', 'eligible', 'pitches', 'rest', 'bat', 'bats', 'innings', 'courtesy', 'cleats', 'dugout', 'mercy', 'forfeit', 'lineup', 'steal', 'slide', 'warm-up', 'warmup', 'gum', 'seeds'];
@@ -66,15 +67,17 @@ export function composeOffline(kb, input, retrieved) {
   const div = retrieved.division;
   const book = SANCTION_LABELS[div?.base_sanction] || 'Little League / Babe Ruth';
   // Order the sources by what actually answers the question (see retrieve.primary).
-  const relevantFacts = retrieved.rule_facts.filter((f) => f.score >= 2);
+  // Only rules that answer this question: the governing rule, rules on the same topic, and strong matches.
   const related = (retrieved.related_house_rules || []).filter((h) => h.score >= STRONG_MATCH);
+  const topFact = retrieved.rule_facts[0];
+  const onTopic = (f) => f.score >= STRONG_MATCH && (!topFact || f.topic === topFact.topic || f.score >= topFact.score - 1);
   let rules;
-  if (retrieved.primary === 'house') rules = [...retrieved.house_rules, ...relevantFacts];
+  if (retrieved.primary === 'house') rules = [...retrieved.house_rules, ...retrieved.rule_facts.filter((f) => f.score >= Math.max(STRONG_MATCH, (retrieved.house_rules[0]?.score ?? 0) - 1))];
   else if (retrieved.primary === 'rulebook') {
     // The house rules themselves name the rulebook as the fallback (H001 for 10U/13U, H002 for 18U).
     const basis = kb.house_rules.find((h) => h.topic === 'rulebook' && div && h.divisions.includes(div.id));
-    rules = [...relevantFacts.slice(0, 3), ...(basis ? [basis] : [])];
-  } else rules = [...related, ...relevantFacts.filter((f) => f.score >= STRONG_MATCH)];
+    rules = [...retrieved.rule_facts.filter(onTopic).slice(0, 3), ...(basis ? [basis] : [])];
+  } else rules = [...related, ...retrieved.rule_facts.filter((f) => f.score >= STRONG_MATCH)];
   rules = rules.slice(0, 4);
   // Judgment calls: always show how Sunshine handles questions about a call.
   if (callType === 'judgment' || callType === 'judgment_and_rule') {
@@ -87,7 +90,8 @@ export function composeOffline(kb, input, retrieved) {
     }
   }
   // The teachable moment: every answer carries one, built from the team's coaching material.
-  const teach = buildTeachable(kb, input, { callType, rules, division: div });
+  const br = findReads(kb, input.question);
+  const teach = buildTeachable(kb, input, { callType, rules, division: div, reads: br.reads });
   const tip = teach.next_step ? { text: teach.next_step } : null;
 
   // Strategy questions about a game situation (when to run, tag up, hold) are answered from the
@@ -95,12 +99,15 @@ export function composeOffline(kb, input, retrieved) {
   const sit = teach.situation;
   const sitData = sit && kb.situations.find((x) => x.id === sit.id);
   const BASERUNNING = ['two_runners_same_base', 'fly_ball_baserunning', 'two_out_baserunning', 'ground_ball_baserunning', 'base_coach_signals'];
-  const situationLed = !!sitData && BASERUNNING.includes(sitData.topic) && retrieved.primary !== 'house' &&
-    !(retrieved.primary === 'rulebook' && rules[0] && sitData.rule_fact_codes.includes(rules[0].id));
+  const ruleLed = retrieved.primary === 'house' ||
+    (retrieved.primary === 'rulebook' && rules[0] && ['two_runners_same_base', 'force_play', 'tag_up'].includes(rules[0].topic) && !br.reads.length);
+  // A house rule on leads and steals doesn't answer what to do on a batted ball, so the runner reads do.
+  const readsLed = br.reads.length > 0 && (retrieved.primary !== 'house' || retrieved.house_rules[0]?.topic === 'baserunning');
+  const situationLed = readsLed || (!!sitData && BASERUNNING.includes(sitData.topic) && !ruleLed);
   if (situationLed) {
-    const linked = kb.rule_facts.filter((f) => sitData.rule_fact_codes.includes(f.id) && (!div || f.sanction === div.base_sanction));
+    const linked = sitData ? kb.rule_facts.filter((f) => sitData.rule_fact_codes.includes(f.id) && (!div || f.sanction === div.base_sanction)) : [];
     const basis = kb.house_rules.find((h) => h.topic === 'rulebook' && div && h.divisions.includes(div.id));
-    rules = [...linked, ...rules.filter((r) => r.kind === 'house_rule' && r.topic !== 'rulebook' && (r.score ?? 0) >= STRONG_MATCH), ...(linked.length && basis ? [basis] : [])].slice(0, 4);
+    rules = [...linked, ...(linked.length && basis ? [basis] : [])].slice(0, 4);
   }
 
   const pitch = pitchQuestion(kb, input);
@@ -110,8 +117,13 @@ export function composeOffline(kb, input, retrieved) {
       `${pitch.over_limit ? `, and ${pitch.pitches} is over the ${pitch.division} daily limit of ${pitch.daily_max}` : ''}. Use the Pitch Count tab to get the exact date they can pitch again.`;
     const rule = kb.house_rules.find((h) => h.id === pitch.house_rule?.id);
     if (rule && !rules.some((r) => r.id === rule.id)) rules.unshift(rule);
+  } else if (readsLed) {
+    const r = br.reads[0];
+    const who = readLabel(r).replace(/, [^,]*$/, '');
+    verdict = br.reads.length === 1 ? `${readLabel(r)}: ${r.read}` : `${who}: it depends on where the ball is hit. The reads are below.`;
+    if (br.needs_outs && r.outs !== '2') verdict += ' With two outs, run hard on any batted ball.';
   } else if (situationLed) {
-    verdict = `This is situational baserunning: ${sit.name.toLowerCase()}. ${sit.offense}`;
+    verdict = `${sit.offense}`;
   } else if (callType === 'coaching') {
     verdict = teach.moment;
   } else if (callType === 'judgment') {
@@ -136,6 +148,7 @@ export function composeOffline(kb, input, retrieved) {
     rules: rules.map((r) => ({ id: r.id, text: r.text, ...citationOf(r, kb) })),
     pending_house_rules: retrieved.pending_house_rules.map((h) => ({ id: h.id, question: h.question })),
     teachable: teach,
+    reads: readsLed && br.reads.length > 1 ? br.reads.map((r) => ({ id: r.id, label: readLabel(r), read: r.read })) : [],
     for_role: teach.perspectives.find((p) => p.you) ? { label: ROLE_OPENERS[role], text: teach.perspectives.find((p) => p.you).text } : null,
     lesson: teach.lesson ? { id: teach.lesson.id, title: teach.lesson.title, life_lesson: teach.lesson.life_lesson } : null,
     tip,
@@ -169,6 +182,7 @@ export function buildPrompt(kb, input, retrieved, { compact = false, teach = nul
     const l = kb.lessons.find((x) => x.id === teach.lesson.id);
     ctx.push(`[${l.id}] TEACHABLE MOMENT LESSON "${l.title}": ${l.principle} Beyond the diamond: ${l.life_lesson} For a ${input.role}: ${l.for[input.role] || ''}`);
   } else if (teach?.principle) ctx.push(`[PHILOSOPHY] ${teach.principle.text}`);
+  for (const r of findReads(kb, input.question).reads) ctx.push(`[${r.id}] RUNNER READ (${readLabel(r)}): ${r.read}`);
   if (teach?.situation && !compact) ctx.push(`[${teach.situation.id}] GAME SITUATION "${teach.situation.name}": Offense: ${teach.situation.offense} Defense: ${teach.situation.defense}`);
   if (!teach) for (const l of retrieved.lessons) ctx.push(`[${l.id}] LESSON "${l.title}": ${l.principle} For a ${input.role}: ${l.for[input.role] || ''}`);
   for (const i of retrieved.insights) ctx.push(`[${i.id}] TIP (${i.topic}): ${i.text} Try this: ${i.try_this}`);
@@ -181,6 +195,7 @@ ${compact ? PHILOSOPHY_SHORT : PHILOSOPHY}
 
 Rules for your answer:
 - Use ONLY the numbered context below. Sunshine house rules override the rulebook (Little League for 10U and 13U, Babe Ruth League for 18U). If the context doesn't answer the question, say so and suggest asking a coach or board member.
+- Answer only what was asked; leave out anything that doesn't apply to this situation. If a RUNNER READ is given, it is the answer for that runner.
 - If no SUNSHINE HOUSE RULE below covers the question directly, say so and answer from the rulebook rules (Little League for 10U and 13U, Babe Ruth League for 18U): that is the league's fallback. If nothing below answers it, say the full rulebook applies and suggest checking it or asking a coach.
 - If a needed house rule is "not entered yet", say the league hasn't published it in the app yet.
 - Say whether it is the umpire's judgment, a written rule, both, or a coaching moment.
