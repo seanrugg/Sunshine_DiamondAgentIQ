@@ -12,6 +12,7 @@ Owner column is for the team whiteboard.
 | 4 | Deploy: turn on GitHub Pages (Actions) and install the app on two phones; test airplane mode. | |
 | 5 | Phones: on Pages, download the phone model on the newest phone (iPhone Safari and an Android Chrome if we have both), time a few answers, and pick the model for the demo. Try an older phone to show the Offline recommendation. | |
 | 5b | Provider: connect a Google AI Studio key on one phone (header pill → My AI provider → Load models → Test). | |
+| 5c | ~~Local model on Windows~~ Done: Ollama + `llama3.2:3b` on the Surface; guide in `docs/connect-ollama-windows.md`. | |
 | 6 | Demo script: 5 questions, one per role plus a pitch count (see `docs/demo-script.md`). | |
 
 ## Should have

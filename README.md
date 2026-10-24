@@ -56,6 +56,8 @@ It runs on [WebLLM](https://github.com/mlc-ai/web-llm) 0.2.86, vendored in `app/
 
 **My AI provider.** Presets for Google AI Studio, OpenRouter, Ollama and any OpenAI-compatible endpoint; *Load models* lists what the key can use (free OpenRouter models first) and *Test* checks the connection before saving. Both Google AI Studio and OpenRouter accept calls straight from the browser, so this works on GitHub Pages with no server. The key is stored only on that phone. Never put a league key in the app: anything shipped to Pages is public.
 
+**Local model on Windows.** Step-by-step setup with Ollama, recommended models by hardware, phones-on-Wi-Fi setup and troubleshooting: [docs/connect-ollama-windows.md](docs/connect-ollama-windows.md).
+
 **League server.** Leave the address blank when the app is served by the league server itself, or open a Pages copy once as `…/?api=https://league-server` to set it.
 
 ```
